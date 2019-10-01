@@ -1,0 +1,21 @@
+/.idea
+*.iml
+.project
+.settings
+*.log
+
+target/
+.classpath
+hh-api-app-stat-service/src/etc/service.properties
+
+# macOS junk
+.AppleDouble
+.DS_Store
+Icon?
+.Spotlight-V100
+.Trashes
+
+# Windows junk
+ehthumbs.db
+Thumbs.db
+Desktop.ini

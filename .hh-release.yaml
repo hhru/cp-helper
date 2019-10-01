@@ -1,0 +1,6 @@
+docker_files:
+  hh-api-app-stat: docker/Dockerfile
+build_image: registry.pyn.ru:5000/openjdk11-building:2019.02.14
+build_method: mvn_build
+update_method: mvn_update
+deploy_method: mvn_deploy
