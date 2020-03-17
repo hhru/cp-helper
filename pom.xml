@@ -16,16 +16,16 @@
         </repository>
     </repositories>
 
+    <artifactId>cp-helper</artifactId>
+    <packaging>jar</packaging>
+
+    <name>commercial proposal helper</name>
+
     <parent>
         <groupId>ru.hh.nab</groupId>
         <artifactId>nuts-and-bolts-parent</artifactId>
         <version>4.22.20</version>
     </parent>
-
-    <artifactId>cp-helper</artifactId>
-    <packaging>jar</packaging>
-
-    <name>commercial proposal helper</name>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -102,6 +102,27 @@
                         <settingsDir>${basedir}/src/etc/cp-helper</settingsDir>
                     </systemPropertyVariables>
                 </configuration>
+            </plugin>
+             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>ru.hh.cphelper.Main</mainClass>
+                                </transformer>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
