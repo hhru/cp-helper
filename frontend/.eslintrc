@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "react-app",
+    "hh"
+  ],
+  "import/resolver": {
+    "node": {
+        "moduleDirectory": [
+            "node_modules",
+            "src/"
+        ]
+    }
+  }
+}

@@ -1,0 +1,26 @@
+.hh-input {
+  background: #ffffff;
+  border: 1px solid #dfdedd;
+  box-sizing: border-box;
+  padding: 9px 10px;
+  height: 38px;
+  width: 100%;
+  margin: 5px 0;
+
+  &:focus, &:active {
+    border-color: #0f8fee;
+    outline: none;
+    position: relative;
+    z-index: 1;
+  }
+
+  &:invalid {
+    box-shadow: none;
+    border-color: #c52929;
+  }
+
+  &::placeholder {
+    color: #aeb5b9;
+    font: normal 14px/143% Arial;
+  }
+}

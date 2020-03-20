@@ -1,0 +1,11 @@
+.search {
+    display: flex;
+    &__select {
+        flex-grow: 7;
+        position: relative;
+    }
+    &__btn {
+        flex-grow: 3;
+        margin-left: 10px;
+    }
+}
