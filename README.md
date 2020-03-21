@@ -7,3 +7,12 @@ Commercial proposal helper
 
 ## Run
 `mvn exec:java`
+
+## Database
+`run.sh`
+
+Запускает Docker container с базой данных cp_helper .
+Скрипт для запуска команд в базе после инициализации - init.sql .
+
+
+

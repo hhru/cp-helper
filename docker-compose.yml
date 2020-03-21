@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: postgres:11.7-alpine
+    restart: always
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: cp_helper
+      POSTGRES_DB: cp_helper
+      POSTGRES_USER: cp_helper       
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cp_helper"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
