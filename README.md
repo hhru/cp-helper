@@ -14,4 +14,3 @@ Commercial proposal helper
 Запускает Docker container с базой данных cp_helper .
 Скрипт для запуска команд в базе после инициализации - init.sql .
 
-
