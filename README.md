@@ -15,4 +15,3 @@ Commercial proposal helper
 Скрипт для запуска команд в базе после инициализации - init.sql .
 
 
-
