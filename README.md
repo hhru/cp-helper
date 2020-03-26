@@ -16,3 +16,7 @@ Commercial proposal helper
 
 ## Create and run docker image
 `./build.sh`
+
+##Docker-compose
+Запуск контейнеров с базой данных, backend-сервисом и frontend react приложением
+`./run.sh`
