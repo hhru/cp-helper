@@ -7,3 +7,6 @@ Commercial proposal helper
 
 ## Run
 `mvn exec:java`
+
+## Create and run docker image
+`./build.sh`
