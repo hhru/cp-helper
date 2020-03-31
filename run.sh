@@ -1,3 +1,2 @@
 docker-compose down
-docker-compose up postgres
-
+docker-compose up --build

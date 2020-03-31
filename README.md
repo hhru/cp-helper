@@ -8,11 +8,6 @@ Commercial proposal helper
 ## Run
 `mvn exec:java`
 
-## Database
+## Docker-compose
+Запуск контейнеров с базой данных, backend-сервисом и frontend react приложением
 `run.sh`
-
-Запускает Docker container с базой данных cp_helper .
-Скрипт для запуска команд в базе после инициализации - init.sql .
-
-## Create and run docker image
-`./build.sh`
