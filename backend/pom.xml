@@ -44,6 +44,12 @@
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>ru.hh.nab</groupId>
+            <artifactId>nab-hibernate</artifactId>
+            <version>4.22.20</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

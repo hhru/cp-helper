@@ -1,4 +1,4 @@
-package ru.hh.cphelper;
+package ru.hh.cphelper.resource;
 
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
