@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import ru.hh.cphelper.dao.CompetitorsDao;
-import ru.hh.cphelper.entity.Competitors;
+import ru.hh.cphelper.entity.Competitor;
 import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.nab.datasource.DataSourceFactory;
 import ru.hh.nab.datasource.DataSourceType;
@@ -23,7 +23,7 @@ import javax.sql.DataSource;
 public class ProdConfig {
     @Bean
     public MappingConfig mappingConfig() {
-        return new MappingConfig(Competitors.class);
+        return new MappingConfig(Competitor.class);
     }
 
     @Bean

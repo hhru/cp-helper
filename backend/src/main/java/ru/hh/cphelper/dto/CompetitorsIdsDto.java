@@ -4,20 +4,20 @@ import java.util.List;
 
 public class CompetitorsIdsDto {
 
-    private List<Integer> competitorIds;
+    private List<Integer> competitorsIds;
 
     public CompetitorsIdsDto() {
     }
 
-    public CompetitorsIdsDto(List<Integer> competitorIds) {
-        this.competitorIds = competitorIds;
+    public CompetitorsIdsDto(List<Integer> competitorsIds) {
+        this.competitorsIds = competitorsIds;
     }
 
-    public List<Integer> getCompetitorIds() {
-        return competitorIds;
+    public List<Integer> getCompetitorsIds() {
+        return competitorsIds;
     }
 
-    public void setCompetitorIds(List<Integer> competitorIds) {
-        this.competitorIds = competitorIds;
+    public void setCompetitorsIds(List<Integer> competitorsIds) {
+        this.competitorsIds = competitorsIds;
     }
 }

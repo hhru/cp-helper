@@ -1,22 +1,41 @@
-package ru.hh.cphelper.dto;
+package ru.hh.cphelper.entity;
 
-public class CompetitorsDto {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.io.Serializable;
 
+@Entity
+@Table(name = "competitors")
+public class Competitor implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
-    private Integer employerId;
-    private Integer competitorId;
-    private Integer areaId;
-    private Float relevanceIndex;
 
-    public CompetitorsDto() {
+    @Column(name = "employer_id")
+    private Integer employerId;
+
+    @Column(name = "competitor_id")
+    private Integer competitorId;
+
+    @Column(name = "area_id")
+    private Integer areaId;
+
+    @Column(name = "relevance_index")
+    private Float relevanceIndex = 1.0f;
+
+    public Competitor() {
     }
 
-    public CompetitorsDto(Integer id, Integer employerId, Integer competitorId, Integer areaId, Float relevanceIndex) {
-        this.id = id;
+    public Competitor(Integer employerId, Integer competitorId, Integer areaId) {
         this.employerId = employerId;
         this.competitorId = competitorId;
         this.areaId = areaId;
-        this.relevanceIndex = relevanceIndex;
     }
 
     public Integer getId() {

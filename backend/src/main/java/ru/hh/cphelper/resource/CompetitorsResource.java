@@ -1,12 +1,12 @@
 package ru.hh.cphelper.resource;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import ru.hh.cphelper.dto.CompetitorsDto;
+import ru.hh.cphelper.dto.CompetitorDto;
 import ru.hh.cphelper.dto.CompetitorsIdsDto;
-import ru.hh.cphelper.dto.CompetitorsAddDto;
-import ru.hh.cphelper.mapper.CompetitorsMapper;
+import ru.hh.cphelper.dto.CompetitorMini;
+import ru.hh.cphelper.mapper.CompetitorsHelper;
 import ru.hh.cphelper.service.CompetitorsService;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -19,27 +19,25 @@ import javax.ws.rs.core.MediaType;
 public class CompetitorsResource {
 
     private final CompetitorsService competitorsService;
-    private final CompetitorsMapper competitorsMapper;
 
-    @Autowired
-    public CompetitorsResource(CompetitorsService competitorsService, CompetitorsMapper competitorsMapper) {
+    @Inject
+    public CompetitorsResource(CompetitorsService competitorsService) {
         this.competitorsService = competitorsService;
-        this.competitorsMapper = competitorsMapper;
     }
 
     @GET
     @Path("/{id}/competitors")
     @Produces(MediaType.APPLICATION_JSON)
     public CompetitorsIdsDto getCompetitors(@PathParam("id") Integer id) {
-        return competitorsMapper.map(competitorsService.getCompetitorsIds(id));
+        return CompetitorsHelper.map(competitorsService.getCompetitorsIds(id));
     }
 
     @POST
     @Path("/{id}/competitors")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public CompetitorsDto add(@PathParam("id") Integer id, CompetitorsAddDto competitorsAddDto) {
-        Integer idx = competitorsService.addCompetitor(competitorsMapper.map(id, competitorsAddDto));
-        return competitorsMapper.map(competitorsService.get(idx));
+    public CompetitorDto add(@PathParam("id") Integer id, CompetitorMini competitorMini) {
+        Integer idx = competitorsService.addCompetitor(CompetitorsHelper.map(id, competitorMini));
+        return CompetitorsHelper.map(competitorsService.get(idx));
     }
 }
