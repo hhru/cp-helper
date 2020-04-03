@@ -1,0 +1,16 @@
+.option {
+    border: none;
+    outline: none;
+    background: #FFF;
+    padding: 11px 12px;
+    height: 38px;
+    box-sizing: border-box;
+    width: 100%;
+    font: normal 14px/16px Arial;
+    line-height: 30px;
+    color: #333;
+        &:hover, &:focus {
+          background: #0F8FEE;
+          color: #FFF;
+        }
+  }

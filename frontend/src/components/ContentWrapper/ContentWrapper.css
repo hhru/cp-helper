@@ -1,0 +1,19 @@
+.hh-content-wrapper {
+    box-sizing: border-box;
+    min-width: 320px;
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+@media (min-width: 768px) {
+  .hh-content-wrapper {
+    max-width: none;
+    width: 720px;
+  }
+}
+@media (min-width: 1000px) {
+  .hh-content-wrapper {
+    width: 960px;
+  }
+}

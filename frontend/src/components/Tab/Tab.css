@@ -1,0 +1,21 @@
+.tab {
+    margin-top: 20px;
+    &__element {
+        font-family: ProximaNovaCond, Arial, sans-serif;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+            &_active {
+                background-color: #eee;
+            }
+    }
+}
+
+.tab-content {
+    height: 375px;
+    display: block;
+    border: 1px solid  #eee;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}

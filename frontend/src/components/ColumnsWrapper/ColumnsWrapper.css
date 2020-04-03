@@ -1,0 +1,10 @@
+.columns-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -5px;
+}
+@media (min-width: 768px) {
+    .columns-row {
+        margin: 0 -15px;
+    }  
+}
