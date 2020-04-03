@@ -16,6 +16,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 @Path("/employer")
 public class CompetitorsResource {
@@ -47,9 +48,7 @@ public class CompetitorsResource {
     @Path("/{id}/competitors")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public CompetitorDto delete(@PathParam("id") Integer id, CompetitorMini competitorMini) {
-        Competitor competitor = CompetitorsHelper.map(id, competitorMini);
-        Competitor competitor1 = competitorsService.delete(competitor);
-        return CompetitorsHelper.map(competitor1);
+    public Response delete(@PathParam("id") Integer id, CompetitorMini competitorMini) {
+        return competitorsService.delete(CompetitorsHelper.map(id, competitorMini));
     }
 }

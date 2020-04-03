@@ -6,6 +6,7 @@ import ru.hh.cphelper.dao.CompetitorsDao;
 import ru.hh.cphelper.entity.Competitor;
 
 import javax.inject.Inject;
+import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,7 +40,7 @@ public class CompetitorsService {
     }
 
     @Transactional
-    public Competitor delete(Competitor competitor) {
+    public Response delete(Competitor competitor) {
         return competitorsDao.delete(competitor);
     }
 }

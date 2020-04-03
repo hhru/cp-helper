@@ -1,6 +1,5 @@
 package ru.hh.cphelper.dao;
 
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -12,6 +11,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Component
@@ -59,11 +59,12 @@ public class CompetitorsDao {
         return session.createQuery(cr).getSingleResult();
     }
 
-    public Competitor delete(Competitor competitor) {
-        Competitor competitorToDelete = get(competitor);
-        sessionFactory.getCurrentSession().delete(competitorToDelete);
-        return competitorToDelete;
+    public Response delete(Competitor competitor) {
+        try {
+            sessionFactory.getCurrentSession().delete(get(competitor));
+            return Response.status(204).build();
+        } catch (Exception e) {
+            return Response.status(404).build();
+        }
     }
-
-
 }
