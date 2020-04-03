@@ -7,11 +7,13 @@ CREATE TABLE competitors (
     CONSTRAINT uniq_comp UNIQUE(employer_id, competitor_id, area_id)
 );
 
-INSERT INTO competitors(employer_id, competitor_id) VALUES (1, 2);
-INSERT INTO competitors(employer_id, competitor_id, area_id, relevance_index) VALUES (1, 3, 11, 0.4);
-INSERT INTO competitors(employer_id, competitor_id, area_id, relevance_index) VALUES (2, 1, 55, 0.57);
-INSERT INTO competitors(employer_id, competitor_id, area_id, relevance_index) VALUES (3, 2, 99, 0.29);
-INSERT INTO competitors(employer_id, competitor_id, relevance_index) VALUES (2, 99, 0.29);
+INSERT INTO competitors(employer_id, competitor_id, area_id, relevance_index) VALUES (1455, 1870, 113, 0.9);
+INSERT INTO competitors(employer_id, competitor_id, area_id, relevance_index) VALUES (1455, 84585, 113, 0.75);
+INSERT INTO competitors(employer_id, competitor_id, area_id, relevance_index) VALUES (1455, 2096237, 113, 0.5);
+INSERT INTO competitors(employer_id, competitor_id, area_id, relevance_index) VALUES (1455, 2605703, 113, 0.66);
+INSERT INTO competitors(employer_id, competitor_id, area_id, relevance_index) VALUES (1455, 2624107, 113, 0.44);
+INSERT INTO competitors(employer_id, competitor_id, area_id, relevance_index) VALUES (1455, 1269556, 113, 0.7);
+
 
 
 
