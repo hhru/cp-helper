@@ -3,11 +3,13 @@ package ru.hh.cphelper.resource;
 import ru.hh.cphelper.dto.CompetitorDto;
 import ru.hh.cphelper.dto.CompetitorsIdsDto;
 import ru.hh.cphelper.dto.CompetitorMini;
+import ru.hh.cphelper.entity.Competitor;
 import ru.hh.cphelper.mapper.CompetitorsHelper;
 import ru.hh.cphelper.service.CompetitorsService;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -37,7 +39,17 @@ public class CompetitorsResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public CompetitorDto add(@PathParam("id") Integer id, CompetitorMini competitorMini) {
-        Integer idx = competitorsService.addCompetitor(CompetitorsHelper.map(id, competitorMini));
-        return CompetitorsHelper.map(competitorsService.get(idx));
+        Integer compId = competitorsService.add(CompetitorsHelper.map(id, competitorMini));
+        return CompetitorsHelper.map(competitorsService.get(compId));
+    }
+
+    @DELETE
+    @Path("/{id}/competitors")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public CompetitorDto delete(@PathParam("id") Integer id, CompetitorMini competitorMini) {
+        Competitor competitor = CompetitorsHelper.map(id, competitorMini);
+        Competitor competitor1 = competitorsService.delete(competitor);
+        return CompetitorsHelper.map(competitor1);
     }
 }

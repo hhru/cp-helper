@@ -28,13 +28,18 @@ public class CompetitorsService {
     }
 
     @Transactional
-    public Integer addCompetitor(Competitor competitor) {
-        competitorsDao.addCompetitor(competitor);
+    public Integer add(Competitor competitor) {
+        competitorsDao.add(competitor);
         return competitor.getId();
     }
 
     @Transactional(readOnly = true)
     public Competitor get(Integer id) {
         return competitorsDao.get(id);
+    }
+
+    @Transactional
+    public Competitor delete(Competitor competitor) {
+        return competitorsDao.delete(competitor);
     }
 }
