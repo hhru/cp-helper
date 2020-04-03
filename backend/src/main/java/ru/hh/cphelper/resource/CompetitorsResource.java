@@ -1,9 +1,7 @@
 package ru.hh.cphelper.resource;
 
-import ru.hh.cphelper.dto.CompetitorDto;
 import ru.hh.cphelper.dto.CompetitorsIdsDto;
 import ru.hh.cphelper.dto.CompetitorMini;
-import ru.hh.cphelper.entity.Competitor;
 import ru.hh.cphelper.mapper.CompetitorsHelper;
 import ru.hh.cphelper.service.CompetitorsService;
 
@@ -38,16 +36,13 @@ public class CompetitorsResource {
     @POST
     @Path("/{id}/competitors")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public CompetitorDto add(@PathParam("id") Integer id, CompetitorMini competitorMini) {
-        Integer compId = competitorsService.add(CompetitorsHelper.map(id, competitorMini));
-        return CompetitorsHelper.map(competitorsService.get(compId));
+    public Response add(@PathParam("id") Integer id, CompetitorMini competitorMini) {
+        return competitorsService.add(CompetitorsHelper.map(id, competitorMini));
     }
 
     @DELETE
     @Path("/{id}/competitors")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public Response delete(@PathParam("id") Integer id, CompetitorMini competitorMini) {
         return competitorsService.delete(CompetitorsHelper.map(id, competitorMini));
     }

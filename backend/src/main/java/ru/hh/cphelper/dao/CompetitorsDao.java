@@ -31,9 +31,14 @@ public class CompetitorsDao {
         return query.getResultList();
     }
 
-    public Competitor add(Competitor competitor) {
-        sessionFactory.getCurrentSession().save(competitor);
-        return competitor;
+    public Response add(Competitor competitor) {
+        try {
+            get(competitor);
+            return Response.status(400).build();
+        } catch (Exception e) {
+            sessionFactory.getCurrentSession().save(competitor);
+            return Response.status(200).build();
+        }
     }
 
     public Competitor get(Integer id) {

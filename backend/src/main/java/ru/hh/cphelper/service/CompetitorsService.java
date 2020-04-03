@@ -29,9 +29,8 @@ public class CompetitorsService {
     }
 
     @Transactional
-    public Integer add(Competitor competitor) {
-        competitorsDao.add(competitor);
-        return competitor.getId();
+    public Response add(Competitor competitor) {
+        return competitorsDao.add(competitor);
     }
 
     @Transactional(readOnly = true)
