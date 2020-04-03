@@ -11,8 +11,8 @@ import ru.hh.nab.testbase.NabTestConfig;
 @Import(NabTestConfig.class)
 public class TestConfig {
 
-//  @Bean
-//  Function<String, String> serverPortAwareBean(String jettyBaseUrl) {
-//    return path -> jettyBaseUrl + path;
-//  }
+  @Bean
+  Function<String, String> serverPortAwareBean(String jettyBaseUrl) {
+    return path -> jettyBaseUrl + path;
+  }
 }

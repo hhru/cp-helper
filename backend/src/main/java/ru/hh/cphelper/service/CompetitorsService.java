@@ -25,6 +25,7 @@ public class CompetitorsService {
         return competitorsDao.getCompetitors(id)
                 .stream()
                 .map(Competitor::getCompetitorId)
+                .distinct()
                 .collect(Collectors.toList());
     }
 
