@@ -27,7 +27,7 @@ public class ProdConfig {
     }
 
     @Bean
-    DataSource dataSource(DataSourceFactory dataSourceFactory, FileSettings settings) {
+    public DataSource dataSource(DataSourceFactory dataSourceFactory, FileSettings settings) {
         return dataSourceFactory.create(DataSourceType.MASTER, false, settings);
     }
 

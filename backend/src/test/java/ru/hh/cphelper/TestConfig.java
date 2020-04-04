@@ -1,6 +1,5 @@
 package ru.hh.cphelper;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,7 +12,7 @@ import ru.hh.nab.testbase.NabTestConfig;
 public class TestConfig {
 
   @Bean
-  Function<String, String> serverPortAwareBean(@Qualifier("serviceName") String jettyBaseUrl) {
+  Function<String, String> serverPortAwareBean(String jettyBaseUrl) {
     return path -> jettyBaseUrl + path;
   }
 }
