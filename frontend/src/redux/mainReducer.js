@@ -4,5 +4,5 @@ import {searchReducer} from './search/searchReducer';
 
 
 export default combineReducers({
-    search: searchReducer,
+    search: searchReducer
 });
