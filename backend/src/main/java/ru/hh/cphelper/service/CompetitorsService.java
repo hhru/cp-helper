@@ -34,11 +34,6 @@ public class CompetitorsService {
         return competitorsDao.add(competitor);
     }
 
-    @Transactional(readOnly = true)
-    public Competitor get(Integer id) {
-        return competitorsDao.get(id);
-    }
-
     @Transactional
     public Response delete(Competitor competitor) {
         return competitorsDao.delete(competitor);

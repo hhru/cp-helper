@@ -34,15 +34,11 @@ public class CompetitorsDao {
     public Response add(Competitor competitor) {
         try {
             get(competitor);
-            return Response.status(400).build();
+            return Response.status(Response.Status.BAD_REQUEST).build();
         } catch (Exception e) {
             sessionFactory.getCurrentSession().save(competitor);
-            return Response.status(200).build();
+            return Response.status(Response.Status.OK).build();
         }
-    }
-
-    public Competitor get(Integer id) {
-        return sessionFactory.getCurrentSession().get(Competitor.class, id);
     }
 
     public Competitor get(Competitor competitor) {
@@ -67,9 +63,9 @@ public class CompetitorsDao {
     public Response delete(Competitor competitor) {
         try {
             sessionFactory.getCurrentSession().delete(get(competitor));
-            return Response.status(204).build();
+            return Response.status(Response.Status.NO_CONTENT).build();
         } catch (Exception e) {
-            return Response.status(404).build();
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
 }
