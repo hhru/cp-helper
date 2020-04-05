@@ -1,4 +1,9 @@
 import React from 'react';
+
+import ButtonIcon from 'components/ButtonIcon/ButtonIcon';
+import DeleteIcon from 'components/Icons/DeleteIcon';
+
+
 import './Competitor.css';
 
 const Competitor = ({logo, name}) => {
@@ -10,6 +15,11 @@ const Competitor = ({logo, name}) => {
             </div>
             <div className="competitor__name">
                 {name}
+            </div>
+            <div className="competitor__delete">
+                <ButtonIcon>
+                    <DeleteIcon size={20}/>
+                </ButtonIcon>
             </div>
         </div>
     );

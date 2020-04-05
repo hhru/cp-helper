@@ -2,7 +2,9 @@ import React, { useEffect } from 'react';
 import {connect} from 'react-redux';
 
 import Button from 'components/Button/Button';
+import ButtonIcon from 'components/ButtonIcon/ButtonIcon';
 import Competitor from './Competitor/Competitor';
+import AddIcon from 'components/Icons/AddIcon';
 
 import {COMPETITORS_LIST} from 'components/MainComponent';
 
@@ -31,6 +33,11 @@ const CompetitorsList = ({ currentTab, openCompanySearch, competitors, companyId
                         logo={el.logo}
                     />,
                 )}
+            </div>
+            <div className="competitors-list-section__add">
+                <ButtonIcon>
+                    <AddIcon size={30}/>
+                </ButtonIcon>
             </div>
             <div className="competitors-list-section__btn">
                 <Button onClick={openCompanySearch}>К предыдущему шагу</Button>
