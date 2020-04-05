@@ -22,26 +22,27 @@
     <name>commercial proposal helper</name>
 
     <parent>
-        <groupId>ru.hh.nab</groupId>
-        <artifactId>nuts-and-bolts-parent</artifactId>
-        <version>4.22.20</version>
+        <groupId>ru.hh.public-pom</groupId>
+        <artifactId>public-pom</artifactId>
+        <version>1.41</version>
     </parent>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <nab.version>4.23.0</nab.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>ru.hh.nab</groupId>
             <artifactId>nab-starter</artifactId>
-            <version>${project.version}</version>
+            <version>${nab.version}</version>
         </dependency>
         <dependency>
             <groupId>ru.hh.nab</groupId>
             <artifactId>nab-testbase</artifactId>
-            <version>${project.version}</version>
+            <version>${nab.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

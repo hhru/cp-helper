@@ -13,7 +13,3 @@ INSERT INTO competitors(employer_id, competitor_id, area_id, relevance_index) VA
 INSERT INTO competitors(employer_id, competitor_id, area_id, relevance_index) VALUES (1455, 2605703, 113, 0.66);
 INSERT INTO competitors(employer_id, competitor_id, area_id, relevance_index) VALUES (1455, 2624107, 113, 0.44);
 INSERT INTO competitors(employer_id, competitor_id, area_id, relevance_index) VALUES (1455, 1269556, 113, 0.7);
-
-
-
-
