@@ -19,14 +19,14 @@ const CompanySearch = ({ currentTab, openCompetitorsList, companyId, areaId }) =
     return (
         <section className="company-search-section">
             <div className="search">
-                <div className="search__select">
+                <div className="search__areaselect">
                     <AreasSearch/>
                 </div>
                 <div className="search__select">
                     <Search/>
                 </div>
                 <div className="search__btn">
-                    <Button onClick={openCompetitorsList} disabled={!companyId }>Показать конкурентов</Button>
+                    <Button onClick={openCompetitorsList} disabled={!companyId && !areaId }>Показать конкурентов</Button>
                 </div>
             </div>
             <div className="history">
@@ -39,6 +39,6 @@ const CompanySearch = ({ currentTab, openCompetitorsList, companyId, areaId }) =
 export default connect(
     state => ({
         companyId: state.search.companyId,
-        //areaId: state.areaSearch.areaId
+        areaId: state.areaSearch.areaId
     }),
 )(CompanySearch);

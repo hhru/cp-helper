@@ -1,5 +1,8 @@
 .search {
     display: flex;
+    &__areaselect {
+        margin-right: 10px;
+    }
     &__select {
         flex-grow: 7;
         position: relative;
