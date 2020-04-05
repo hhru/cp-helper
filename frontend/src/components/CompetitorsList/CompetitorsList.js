@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import {connect} from 'react-redux';
 
 import Button from 'components/Button/Button';
@@ -36,25 +36,31 @@ const CompetitorsList = ({
 
     return (
         <section className="competitors-list-section">
-            <div className="competitors-list-section__competitors">
-                { !competitors && <div className="competitors-list-section__loader">
+            {!competitors && 
+                <div className="competitors-list-section__loader">
                     <Loader/>
-                </div>}
-                { competitors && Object.values(competitors).map(el =>
-                    <Competitor
-                        key={el.id}
-                        id={el.id}
-                        name={el.name}
-                        logo={el.logo}
-                        deleteCompetitor={() => deleteCompetitor(competitors, el.id)}
-                    />,
-                )}
-            </div>
-            <div className="competitors-list-section__add">
-                <ButtonIcon>
-                    <AddIcon size={30}/>
-                </ButtonIcon>
-            </div>
+                </div>
+            }
+            {competitors && 
+                <Fragment>
+                    <div className="competitors-list-section__competitors">
+                        { Object.values(competitors).map(el =>
+                            <Competitor
+                                key={el.id}
+                                id={el.id}
+                                name={el.name}
+                                logo={el.logo}
+                                deleteCompetitor={() => deleteCompetitor(competitors, el.id)}
+                            />,
+                        )}
+                    </div>
+                    <div className="competitors-list-section__add">
+                        <ButtonIcon>
+                            <AddIcon size={30}/>
+                        </ButtonIcon>
+                    </div>
+                </Fragment>
+            }
             <div className="competitors-list-section__btn">
                 <Button onClick={openCompanySearch}>К предыдущему шагу</Button>
                 <Button onClick={openCorporateOffer}>К следующему шагу</Button>
