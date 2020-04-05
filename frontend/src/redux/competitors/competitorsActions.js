@@ -23,8 +23,10 @@ export function fetchCompetitors(companyId) {
                 companyId => axios.get(urlAPI + companyId),
             )).then(
             (values) => {
-                const competitors =
-                values.map(el => ({id: el.data.id, name: el.data.name, logo: el.data.logo_urls[90]}));
+                let competitors = {};
+                values.forEach( (el) => {
+                    competitors[el.data.id] = {id: el.data.id, name: el.data.name, logo: el.data.logo_urls[90]}
+                })
                 dispatch(fetchCompetitorsAction(competitors));
             });
     };
