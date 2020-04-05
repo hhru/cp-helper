@@ -10,7 +10,7 @@ import './CompetitorsList.css';
 import { fetchCompetitors } from '../../redux/competitors/competitorsActions';
 
 
-const CompetitorsList = ({ currentTab, openCompanySearch, competitors, companyId, fetchCompetitors}) => {
+const CompetitorsList = ({ currentTab, openCompanySearch, competitors, companyId, fetchCompetitors, openCorporateOffer}) => {
 
     if (currentTab !== COMPETITORS_LIST) {
         return null;
@@ -34,6 +34,7 @@ const CompetitorsList = ({ currentTab, openCompanySearch, competitors, companyId
             </div>
             <div className="competitors-list-section__btn">
                 <Button onClick={openCompanySearch}>К предыдущему шагу</Button>
+                <Button onClick={openCorporateOffer}>К следующему шагу</Button>
             </div>
         </section>
     );
