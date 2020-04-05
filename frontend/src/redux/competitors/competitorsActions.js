@@ -1,10 +1,18 @@
 import axios from 'axios';
 
 export const FETCH_COMPETITORS = 'FETCH_COMPETITORS';
+export const DELETE_COMPETITOR = 'DELETE_COMPETITOR';
 
 export const fetchCompetitorsAction = (competitors) => {
     return {
         type: FETCH_COMPETITORS,
+        competitors,
+    };
+};
+
+export const deleteCompetitorAction = (competitors) => {
+    return {
+        type: DELETE_COMPETITOR,
         competitors,
     };
 };
@@ -32,3 +40,10 @@ export function fetchCompetitors(companyId) {
     };
 }
 
+export function deleteCompetitor(competitors, deleteId) {
+    let competitorsNew = {...competitors};
+    delete competitorsNew[deleteId];
+    return (dispatch) => {
+        dispatch(deleteCompetitorAction(competitorsNew));
+    };
+}

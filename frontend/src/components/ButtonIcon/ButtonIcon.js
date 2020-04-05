@@ -3,9 +3,11 @@ import React from 'react';
 import './ButtonIcon.css';
 
 
-const ButtonIcon = ({ children }) => (
+const ButtonIcon = ({ children, onClick}) => (
 
-    <button className="hh-button-icon">
+    <button 
+        className="hh-button-icon"
+        onClick={onClick}>
         {children}
     </button>
 );

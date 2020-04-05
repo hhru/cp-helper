@@ -3,10 +3,10 @@ import React from 'react';
 import ButtonIcon from 'components/ButtonIcon/ButtonIcon';
 import DeleteIcon from 'components/Icons/DeleteIcon';
 
-
 import './Competitor.css';
 
-const Competitor = ({logo, name}) => {
+
+const Competitor = ({logo, name, deleteCompetitor}) => {
 
     return (
         <div className="competitor">
@@ -17,7 +17,7 @@ const Competitor = ({logo, name}) => {
                 {name}
             </div>
             <div className="competitor__delete">
-                <ButtonIcon>
+                <ButtonIcon onClick={deleteCompetitor}> 
                     <DeleteIcon size={20}/>
                 </ButtonIcon>
             </div>
