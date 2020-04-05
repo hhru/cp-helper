@@ -5,9 +5,10 @@ import Input from 'components/Input/Input';
 import SelectWrapper from 'components/Select/SelectWrapper/SelectWrapper';
 import SelectItem from 'components/Select/SelectItem/SelectItem';
 
-import {fetchArea, chooseArea} from 'redux/search/searchActions';
+import {fetchArea, chooseArea} from 'redux/AreaSearch/areaSearchAction';
+import {initArea} from 'redux/AreaInit/areaInitAction';
 
-const AreasSearch = ({ fetchArea, areas, chooseArea, areaId }) => {
+const AreasSearch = ({ initArea, plainAreas, fetchArea, areas, chooseArea, areaId }) => {
 
     const [selectOpen, setSelectOpen] = useState(false);
     const [inputAreaValue, setInputAreaValue] = useState('');
@@ -18,6 +19,10 @@ const AreasSearch = ({ fetchArea, areas, chooseArea, areaId }) => {
 
     const handleInputChange = () => {
         setInputAreaValue(inputArea.current.value);
+        if ((Array.isArray(plainAreas)) && (plainAreas.length == 0)) {
+            initArea();
+        }
+        console.log('in change input', plainAreas);
         fetchArea(inputArea.current.value);
         setSelectOpen(true);
         if (areaId) {
@@ -61,11 +66,13 @@ const AreasSearch = ({ fetchArea, areas, chooseArea, areaId }) => {
 
 export default connect(
     state => ({
-        areaId: state.search.areaId,
-        areas: state.search.areas,
+        areaId: state.areaSearch.areaId,
+        areas: state.areaSearch.areas,
+        plainAreas: state.areaInit.plainAreas
     }),
     {
         fetchArea,
         chooseArea,
+        initArea
     },
 )(AreasSearch);

@@ -26,6 +26,6 @@ const CompetitorsList = ({ currentTab, openCompanySearch, companyId, areaId }) =
 export default connect(
     state => ({
         companyId: state.search.companyId,
-        areaId: state.search.areaId
+        areaId: state.areaSearch.areaId
     }),
 )(CompetitorsList);

@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 
 import Button from '../Button/Button';
 import Search from './components/Search/Search';
-import AreasSearch from './components/Search/AreasSearch';
+import AreasSearch from '../AreaSearch/AreasSearch';
 import SearchHistory from './components/SearchHistory/SearchHistory';
 
 import {COMPANY_SEARCH} from '../MainComponent';
@@ -11,7 +11,7 @@ import {COMPANY_SEARCH} from '../MainComponent';
 import './CompanySearch.css';
 
 
-const CompanySearch = ({ currentTab, openCompetitorsList, companyId, areaId }) => {
+const CompanySearch = ({ currentTab, openCompetitorsList, companyId, areaId, plainAreas }) => {
 
     if (currentTab !== COMPANY_SEARCH) {
         return null;
@@ -39,6 +39,7 @@ const CompanySearch = ({ currentTab, openCompetitorsList, companyId, areaId }) =
 export default connect(
     state => ({
         companyId: state.search.companyId,
-        areaId: state.search.areaId
+        areaId: state.search.areaId,
+        plainAreas: state.areaInit.plainAreas
     }),
 )(CompanySearch);
