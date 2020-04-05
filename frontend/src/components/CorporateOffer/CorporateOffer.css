@@ -1,0 +1,10 @@
+.corporate-offer-section {
+    font-family: ProximaNovaCond, Arial, sans-serif;
+    color: #333;
+    &__offer{
+        margin-bottom: 15px;
+    }
+    &__btn {
+        margin-top: 30px;
+    }
+}

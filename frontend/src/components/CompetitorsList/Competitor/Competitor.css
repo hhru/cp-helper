@@ -1,0 +1,20 @@
+.competitor {
+    display: flex;
+    height: 60px;
+    border: 1px solid  #eee;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    position: relative;
+    &__logo {
+        margin-right: 10px;
+    }
+    &__name {
+        position: absolute;
+        left: 40%;
+    }
+    &__delete {
+        position: absolute;
+        right: 20px;
+    }
+}
