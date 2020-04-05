@@ -1,6 +1,6 @@
 package ru.hh.cphelper.dto;
 
-public class CompetitorDto extends CompetitorMini {
+public class CompetitorDto extends CompetitorMiniDto {
 
     private Integer id;
     private Integer employerId;

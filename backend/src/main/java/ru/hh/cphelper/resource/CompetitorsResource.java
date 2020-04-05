@@ -1,7 +1,7 @@
 package ru.hh.cphelper.resource;
 
 import ru.hh.cphelper.dto.CompetitorsIdsDto;
-import ru.hh.cphelper.dto.CompetitorMini;
+import ru.hh.cphelper.dto.CompetitorMiniDto;
 import ru.hh.cphelper.mapper.CompetitorsHelper;
 import ru.hh.cphelper.service.CompetitorsService;
 
@@ -36,14 +36,23 @@ public class CompetitorsResource {
     @POST
     @Path("/{id}/competitors")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response add(@PathParam("id") Integer id, CompetitorMini competitorMini) {
-        return competitorsService.add(CompetitorsHelper.map(id, competitorMini));
+    public Response add(@PathParam("id") Integer id, CompetitorMiniDto competitorMiniDto) {
+        if (competitorsService.add(CompetitorsHelper.map(id, competitorMiniDto))) {
+            return Response.status(Response.Status.OK).build();
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
     }
 
     @DELETE
     @Path("/{id}/competitors")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response delete(@PathParam("id") Integer id, CompetitorMini competitorMini) {
-        return competitorsService.delete(CompetitorsHelper.map(id, competitorMini));
+    public Response delete(@PathParam("id") Integer id, CompetitorMiniDto competitorMiniDto) {
+        try {
+            competitorsService.delete(CompetitorsHelper.map(id, competitorMiniDto));
+            return Response.status(Response.Status.NO_CONTENT).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 }

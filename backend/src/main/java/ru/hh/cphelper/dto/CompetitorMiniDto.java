@@ -1,14 +1,14 @@
 package ru.hh.cphelper.dto;
 
-public class CompetitorMini {
+public class CompetitorMiniDto {
 
     private Integer competitorId;
     private Integer areaId;
 
-    public CompetitorMini() {
+    public CompetitorMiniDto() {
     }
 
-    public CompetitorMini(Integer competitorId, Integer areaId) {
+    public CompetitorMiniDto(Integer competitorId, Integer areaId) {
         this.competitorId = competitorId;
         this.areaId = areaId;
     }

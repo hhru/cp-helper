@@ -1,12 +1,11 @@
 package ru.hh.cphelper;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import ru.hh.cphelper.dao.CompetitorsDao;
 import ru.hh.cphelper.entity.Competitor;
+import ru.hh.cphelper.service.CompetitorsService;
 import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.nab.datasource.DataSourceFactory;
 import ru.hh.nab.datasource.DataSourceType;
@@ -17,9 +16,7 @@ import ru.hh.nab.starter.NabProdConfig;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableTransactionManagement(proxyTargetClass = true)
-@Import({NabProdConfig.class, NabHibernateProdConfig.class, CompetitorsDao.class})
-@ComponentScan(basePackages = "ru.hh.cphelper")
+@Import({NabProdConfig.class, NabHibernateProdConfig.class, CompetitorsDao.class, CompetitorsService.class})
 public class ProdConfig {
     @Bean
     public MappingConfig mappingConfig() {

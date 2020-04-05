@@ -2,7 +2,6 @@ package ru.hh.cphelper.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
 import ru.hh.cphelper.entity.Competitor;
 
@@ -11,8 +10,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.ws.rs.core.Response;
-import java.util.List;
+import java.util.stream.Stream;
 
 @Component
 public class CompetitorsDao {
@@ -24,25 +22,29 @@ public class CompetitorsDao {
         this.sessionFactory = sessionFactory;
     }
 
-    public List<Competitor> getCompetitors(Integer employerId) {
-        Query<Competitor> query = sessionFactory.getCurrentSession()
-                .createQuery("from Competitor c where c.employerId=:id", Competitor.class);
-        query.setParameter("id", employerId);
-        return query.getResultList();
+    private Session getCurrentSession() {
+        return sessionFactory.getCurrentSession();
     }
 
-    public Response add(Competitor competitor) {
+    public Stream<Competitor> getCompetitors(Integer employerId) {
+        return getCurrentSession()
+                .createQuery("from Competitor c where c.employerId=:id", Competitor.class)
+                .setParameter("id", employerId)
+                .stream();
+    }
+
+    public boolean add(Competitor competitor) {
         try {
             get(competitor);
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return false;
         } catch (Exception e) {
-            sessionFactory.getCurrentSession().save(competitor);
-            return Response.status(Response.Status.OK).build();
+            getCurrentSession().save(competitor);
+            return true;
         }
     }
 
     public Competitor get(Competitor competitor) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = getCurrentSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<Competitor> cr = cb.createQuery(Competitor.class);
         Root<Competitor> root = cr.from(Competitor.class);
@@ -60,12 +62,7 @@ public class CompetitorsDao {
         return session.createQuery(cr).getSingleResult();
     }
 
-    public Response delete(Competitor competitor) {
-        try {
-            sessionFactory.getCurrentSession().delete(get(competitor));
-            return Response.status(Response.Status.NO_CONTENT).build();
-        } catch (Exception e) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+    public void delete(Competitor competitor) {
+        getCurrentSession().delete(get(competitor));
     }
 }

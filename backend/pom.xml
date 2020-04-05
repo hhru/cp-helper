@@ -30,7 +30,7 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <nab.version>4.23.0</nab.version>
+        <nab.version>4.22.20</nab.version>
     </properties>
 
     <dependencies>
@@ -48,8 +48,7 @@
         <dependency>
             <groupId>ru.hh.nab</groupId>
             <artifactId>nab-hibernate</artifactId>
-            <version>4.22.20</version>
-            <scope>compile</scope>
+            <version>${nab.version}</version>
         </dependency>
     </dependencies>
 

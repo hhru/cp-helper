@@ -6,7 +6,6 @@ import ru.hh.cphelper.dao.CompetitorsDao;
 import ru.hh.cphelper.entity.Competitor;
 
 import javax.inject.Inject;
-import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,19 +22,18 @@ public class CompetitorsService {
     @Transactional(readOnly = true)
     public List<Integer> getCompetitorsIds(Integer id) {
         return competitorsDao.getCompetitors(id)
-                .stream()
                 .map(Competitor::getCompetitorId)
                 .distinct()
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public Response add(Competitor competitor) {
+    public boolean add(Competitor competitor) {
         return competitorsDao.add(competitor);
     }
 
     @Transactional
-    public Response delete(Competitor competitor) {
-        return competitorsDao.delete(competitor);
+    public void delete(Competitor competitor) {
+        competitorsDao.delete(competitor);
     }
 }
