@@ -7,17 +7,28 @@ import Competitor from './Competitor/Competitor';
 import AddIcon from 'components/Icons/AddIcon';
 import Loader from 'components/Loader/Loader';
 
-import {COMPETITORS_LIST} from 'components/MainComponent';
+import { COMPETITORS_LIST } from 'components/MainComponent';
+
+import { fetchCompetitors, deleteCompetitor } from 'redux/competitors/competitorsActions';
 
 import './CompetitorsList.css';
-import { fetchCompetitors } from '../../redux/competitors/competitorsActions';
 
 
-const CompetitorsList = ({ currentTab, openCompanySearch, competitors, companyId, fetchCompetitors, openCorporateOffer}) => {
+const CompetitorsList = ({ 
+    currentTab,
+    openCompanySearch,
+    competitors,
+    companyId,
+    fetchCompetitors,
+    openCorporateOffer,
+    deleteCompetitor,
+}) => {
 
     if (currentTab !== COMPETITORS_LIST) {
         return null;
     }
+
+    console.log(competitors);
 
     useEffect( () => {
         fetchCompetitors(companyId);
@@ -35,6 +46,7 @@ const CompetitorsList = ({ currentTab, openCompanySearch, competitors, companyId
                         id={el.id}
                         name={el.name}
                         logo={el.logo}
+                        deleteCompetitor={() => deleteCompetitor(competitors, el.id)}
                     />,
                 )}
             </div>
@@ -58,5 +70,6 @@ export default connect(
     }),
     {
         fetchCompetitors,
+        deleteCompetitor,
     },
 )(CompetitorsList);
