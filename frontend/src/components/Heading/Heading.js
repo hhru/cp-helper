@@ -4,7 +4,7 @@ import './Heading.css';
 
 
 const Heading = ({children, level}) => (
-    <div className={`hh-heading__level${level}`}>
+    <div className={`hh-heading hh-heading_level${level}`}>
         {children}
     </div>
 );
