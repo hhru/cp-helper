@@ -13,4 +13,8 @@
         position: absolute;
         left: 40%;
     }
+    &__delete {
+        position: absolute;
+        right: 20px;
+    }
 }
