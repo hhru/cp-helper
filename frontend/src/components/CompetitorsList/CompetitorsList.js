@@ -29,7 +29,7 @@ const CompetitorsList = ({ currentTab, openCompanySearch, competitors, companyId
                 { !competitors && <div className="competitors-list-section__loader">
                     <Loader/>
                 </div>}
-                { competitors && competitors.map(el =>
+                { competitors && Object.values(competitors).map(el =>
                     <Competitor
                         key={el.id}
                         id={el.id}
