@@ -1,4 +1,4 @@
-import React, {useState, Fragment} from 'react';
+import React, {useState, Fragment, useEffect} from 'react';
 import {connect} from 'react-redux';
 
 import Input from 'components/Input/Input';
@@ -6,24 +6,60 @@ import SelectWrapper from 'components/Select/SelectWrapper/SelectWrapper';
 import SelectItem from 'components/Select/SelectItem/SelectItem';
 
 import {fetchArea, chooseArea} from 'redux/AreaSearch/areaSearchAction';
-import {initArea} from 'redux/AreaInit/areaInitAction';
+import axios from 'axios';
 
-const AreasSearch = ({ initArea, plainAreas, fetchArea, areas, chooseArea, areaId }) => {
+async function initAreas() {
+    const url = `https://api.hh.ru/areas`;
+    const areas = await axios.get(url);
+    const result = getPlainAreas(areas.data);
+    return result;
+}
+
+function getPlainAreas(hierachyAreas) {
+    let plainAreas = [];
+    hierachyAreas.forEach(
+        function(area) {
+            Array.prototype.push.apply(plainAreas, recurseAreaProcessing(area));
+        }
+    );
+    return plainAreas;
+}
+
+function recurseAreaProcessing(area) {
+    if (area.areas.length == 0) {;
+        return [{"id" : area.id, "name" : area.name}];
+    } else {
+        let result = [{"id" : area.id, "name" : area.name}];
+        area.areas.forEach(
+            function(ar) {
+                Array.prototype.push.apply(result, recurseAreaProcessing(ar));
+            }
+        );
+        return result;
+    }
+}
+
+const AreasSearch = ({ fetchArea, areas, chooseArea, areaId }) => {
 
     const [selectOpen, setSelectOpen] = useState(false);
     const [inputAreaValue, setInputAreaValue] = useState('');
+    const [plainAreas, setPlainAreas] = useState([]);
 
     const SELECT_ITEMS_LENGTH = 7;
 
     const inputArea = React.useRef(null);
 
+    
+    
+    useEffect(() => {
+        if (plainAreas.length == 0) {
+            initAreas().then(result => setPlainAreas(result));
+        }
+    }, []);
+    
     const handleInputChange = () => {
         setInputAreaValue(inputArea.current.value);
-        if ((Array.isArray(plainAreas)) && (plainAreas.length == 0)) {
-            initArea();
-        }
-        console.log('in change input', plainAreas);
-        fetchArea(inputArea.current.value);
+        fetchArea(inputArea.current.value, plainAreas);
         setSelectOpen(true);
         if (areaId) {
             chooseArea(null);
@@ -68,11 +104,9 @@ export default connect(
     state => ({
         areaId: state.areaSearch.areaId,
         areas: state.areaSearch.areas,
-        plainAreas: state.areaInit.plainAreas
     }),
     {
         fetchArea,
         chooseArea,
-        initArea
     },
 )(AreasSearch);
