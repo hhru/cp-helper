@@ -5,6 +5,7 @@ import Button from 'components/Button/Button';
 import ButtonIcon from 'components/ButtonIcon/ButtonIcon';
 import Competitor from './Competitor/Competitor';
 import AddIcon from 'components/Icons/AddIcon';
+import Loader from 'components/Loader/Loader';
 
 import {COMPETITORS_LIST} from 'components/MainComponent';
 
@@ -25,6 +26,9 @@ const CompetitorsList = ({ currentTab, openCompanySearch, competitors, companyId
     return (
         <section className="competitors-list-section">
             <div className="competitors-list-section__competitors">
+                { !competitors && <div className="competitors-list-section__loader">
+                    <Loader/>
+                </div>}
                 { competitors && competitors.map(el =>
                     <Competitor
                         key={el.id}
