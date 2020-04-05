@@ -6,7 +6,7 @@ import ContentWrapper from 'components/ContentWrapper/ContentWrapper';
 import ColumnsWrapper from 'components/ColumnsWrapper/ColumnsWrapper';
 import Columns from 'components/Columns/Columns';
 
-import {COMPANY_SEARCH, COMPETITORS_LIST} from '../MainComponent';
+import {COMPANY_SEARCH, COMPETITORS_LIST, CORPORATE_OFFER} from '../MainComponent';
 
 import './Tab.css';
 
@@ -33,7 +33,10 @@ const Tab = ({children, currentTab}) => {
                         </div>
                     </Columns>
                     <Columns s={1} m={2} l={4}>
-                        <div className="tab__element">
+                        <div className={classNames(
+                            'tab__element',
+                            {'tab__element_active': currentTab === CORPORATE_OFFER},
+                        )}>
                             3. Корпоративное предложение
                         </div>
                     </Columns>
