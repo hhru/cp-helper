@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect, Fragment, useState } from 'react';
 import {connect} from 'react-redux';
 
 import Button from 'components/Button/Button';
@@ -6,10 +6,12 @@ import ButtonIcon from 'components/ButtonIcon/ButtonIcon';
 import Competitor from './Competitor/Competitor';
 import AddIcon from 'components/Icons/AddIcon';
 import Loader from 'components/Loader/Loader';
+import Search from 'components/Search/Search';
 
 import { COMPETITORS_LIST } from 'components/MainComponent';
 
-import { fetchCompetitors, deleteCompetitor } from 'redux/competitors/competitorsActions';
+import { fetchCompetitors, deleteCompetitor, addCompetitor } from 'redux/competitors/competitorsActions';
+import { chooseCompetitor } from 'redux/search/searchActions';
 
 import './CompetitorsList.css';
 
@@ -21,12 +23,17 @@ const CompetitorsList = ({
     companyId,
     fetchCompetitors,
     openCorporateOffer,
+    competitorId,
     deleteCompetitor,
+    chooseCompetitor,
+    addCompetitor,
 }) => {
 
     if (currentTab !== COMPETITORS_LIST) {
         return null;
     }
+
+    const [searchOpen, setSearchOpen] = useState(false);
 
     useEffect( () => {
         fetchCompetitors(companyId);
@@ -53,11 +60,21 @@ const CompetitorsList = ({
                         )}
                     </div>
                     <div className="competitors-list-section__add">
-                        <ButtonIcon>
+                        <ButtonIcon onClick={ () => {setSearchOpen(true)}}>
                             <AddIcon size={30}/>
                         </ButtonIcon>
                     </div>
                 </Fragment>
+            }
+            {searchOpen && 
+                <div className="search">
+                    <div className="search__select">
+                        <Search choose={chooseCompetitor}/>
+                    </div>
+                    <div className="search__btn">
+                        <Button onClick={() => addCompetitor(competitors, competitorId)} disabled={!competitorId}>Выбрать компанию</Button>
+                    </div>
+                </div>
             }
             <div className="competitors-list-section__btn">
                 <Button onClick={openCompanySearch}>К предыдущему шагу</Button>
@@ -70,10 +87,13 @@ const CompetitorsList = ({
 export default connect(
     state => ({
         companyId: state.search.companyId,
+        competitorId: state.search.competitorId,
         competitors: state.competitors.competitors,
     }),
     {
         fetchCompetitors,
+        chooseCompetitor,
         deleteCompetitor,
+        addCompetitor,
     },
 )(CompetitorsList);

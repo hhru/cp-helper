@@ -1,5 +1,5 @@
 import {createReducer} from 'redux-create-reducer';
-import {FETCH_COMPETITORS, DELETE_COMPETITOR} from './competitorsActions';
+import {FETCH_COMPETITORS, DELETE_COMPETITOR, ADD_COMPETITOR} from './competitorsActions';
 
 export const initialState = {
     competitors: undefined,
@@ -14,6 +14,12 @@ export const competitorsReducer = createReducer(initialState, {
         };
     },
     [DELETE_COMPETITOR](state, action) {
+        return {
+            ...state,
+            competitors: action.competitors,
+        };
+    },
+    [ADD_COMPETITOR](state, action) {
         return {
             ...state,
             competitors: action.competitors,
