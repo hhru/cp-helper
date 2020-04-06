@@ -21,4 +21,28 @@
         justify-content: center;
         margin-bottom: 30px;
     }
+    &__search {
+        background-color: white;
+        width: 70%;
+        padding: 20px;
+        position: fixed;
+        left: 15%;
+        right: 15%;
+        top: 40%;
+    }
+}
+
+.background-section {
+    display: block;
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.35);
+}
+
+.close {
+    margin: -15px -15px 0 0;
 }

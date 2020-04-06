@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import Button from '../Button/Button';
 import Search from 'components/Search/Search';
 import SearchHistory from './components/SearchHistory/SearchHistory';
 
@@ -19,14 +18,11 @@ const CompanySearch = ({ currentTab, openCompetitorsList, companyId, chooseCompa
     }
     return (
         <section className="company-search-section">
-            <div className="search">
-                <div className="search__select">
-                    <Search choose={chooseCompany}/>
-                </div>
-                <div className="search__btn">
-                    <Button onClick={openCompetitorsList} disabled={!companyId}>Показать конкурентов</Button>
-                </div>
-            </div>
+            <Search 
+                choose={chooseCompany}
+                onClick={openCompetitorsList}
+                disabled={companyId}
+            />
             <div className="history">
                 <SearchHistory/>
             </div>
