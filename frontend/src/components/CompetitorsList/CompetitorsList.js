@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 
 import Button from 'components/Button/Button';
 import ButtonIcon from 'components/ButtonIcon/ButtonIcon';
+import CloseIcon from 'components/Icons/CloseIcon';
 import Competitor from './Competitor/Competitor';
 import AddIcon from 'components/Icons/AddIcon';
 import Loader from 'components/Loader/Loader';
@@ -39,6 +40,19 @@ const CompetitorsList = ({
         fetchCompetitors(companyId);
     }, []);
 
+    const clickSearch = () => {
+        addCompetitor(competitors, competitorId);
+        setSearchOpen(false);
+    };
+
+    const clickAdd = () => {
+        setSearchOpen(true);
+    }
+
+    const clickClose = () => {
+        setSearchOpen(false);
+    }
+
     return (
         <section className="competitors-list-section">
             {!competitors && 
@@ -60,19 +74,26 @@ const CompetitorsList = ({
                         )}
                     </div>
                     <div className="competitors-list-section__add">
-                        <ButtonIcon onClick={ () => {setSearchOpen(true)}}>
+                        <ButtonIcon onClick={clickAdd}>
                             <AddIcon size={30}/>
                         </ButtonIcon>
                     </div>
                 </Fragment>
             }
             {searchOpen && 
-                <div className="search">
-                    <div className="search__select">
-                        <Search choose={chooseCompetitor}/>
-                    </div>
-                    <div className="search__btn">
-                        <Button onClick={() => addCompetitor(competitors, competitorId)} disabled={!competitorId}>Выбрать компанию</Button>
+                <div className="background-section">
+                    <div className="competitors-list-section__search">
+                        <Search 
+                            choose={chooseCompetitor}
+                            onClick={clickSearch}
+                            disabled={competitorId}
+                        >
+                            <div className="close">
+                                <ButtonIcon onClick={clickClose}>
+                                    <CloseIcon size={30}/>
+                                </ButtonIcon>
+                            </div>
+                        </Search>
                     </div>
                 </div>
             }
