@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import Button from '../Button/Button';
-import Search from './components/Search/Search';
+import Search from 'components/Search/Search';
 import SearchHistory from './components/SearchHistory/SearchHistory';
 
 import {COMPANY_SEARCH} from '../MainComponent';

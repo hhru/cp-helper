@@ -28,8 +28,6 @@ const CompetitorsList = ({
         return null;
     }
 
-    console.log(competitors);
-
     useEffect( () => {
         fetchCompetitors(companyId);
     }, []);
