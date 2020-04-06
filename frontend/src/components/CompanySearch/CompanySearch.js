@@ -5,12 +5,14 @@ import Button from '../Button/Button';
 import Search from 'components/Search/Search';
 import SearchHistory from './components/SearchHistory/SearchHistory';
 
+import {chooseCompany} from 'redux/search/searchActions';
+
 import {COMPANY_SEARCH} from '../MainComponent';
 
 import './CompanySearch.css';
 
 
-const CompanySearch = ({ currentTab, openCompetitorsList, companyId }) => {
+const CompanySearch = ({ currentTab, openCompetitorsList, companyId, chooseCompany }) => {
 
     if (currentTab !== COMPANY_SEARCH) {
         return null;
@@ -19,7 +21,7 @@ const CompanySearch = ({ currentTab, openCompetitorsList, companyId }) => {
         <section className="company-search-section">
             <div className="search">
                 <div className="search__select">
-                    <Search/>
+                    <Search choose={chooseCompany}/>
                 </div>
                 <div className="search__btn">
                     <Button onClick={openCompetitorsList} disabled={!companyId}>Показать конкурентов</Button>
@@ -36,4 +38,7 @@ export default connect(
     state => ({
         companyId: state.search.companyId,
     }),
+    {
+        chooseCompany
+    }
 )(CompanySearch);

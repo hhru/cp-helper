@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export const FETCH_COMPANY = 'FETCH_COMPANY';
 export const CHOOSE_COMPANY = 'CHOOSE_COMPANY';
+export const CHOOSE_COMPETITOR = 'CHOOSE_COMPETITOR';
 
 export const fetchCompanyAction = (companies) => {
     return {
@@ -14,6 +15,13 @@ export const chooseCompanyAction = (companyId) => {
     return {
         type: CHOOSE_COMPANY,
         companyId,
+    };
+};
+
+export const chooseCompetitorAction = (competitorId) => {
+    return {
+        type: CHOOSE_COMPETITOR,
+        competitorId,
     };
 };
 
@@ -30,5 +38,11 @@ export function fetchCompany(companyName) {
 export function chooseCompany(company) {
     return (dispatch) => {
         dispatch(chooseCompanyAction(company));
+    };
+}
+
+export function chooseCompetitor(competitor) {
+    return (dispatch) => {
+        dispatch(chooseCompetitorAction(competitor));
     };
 }

@@ -5,10 +5,10 @@ import Input from 'components/Input/Input';
 import SelectWrapper from 'components/Select/SelectWrapper/SelectWrapper';
 import SelectItem from 'components/Select/SelectItem/SelectItem';
 
-import {fetchCompany, chooseCompany} from 'redux/search/searchActions';
+import {fetchCompany} from 'redux/search/searchActions';
 
 
-const Search = ({ fetchCompany, companies, chooseCompany, companyId }) => {
+const Search = ({ fetchCompany, companies, choose }) => {
 
     const [selectOpen, setSelectOpen] = useState(false);
     const [inputCompanyValue, setInputCompanyValue] = useState('');
@@ -21,15 +21,12 @@ const Search = ({ fetchCompany, companies, chooseCompany, companyId }) => {
         setInputCompanyValue(inputCompany.current.value);
         fetchCompany(inputCompany.current.value);
         setSelectOpen(true);
-        if (companyId) {
-            chooseCompany(null);
-        }
     };
 
     const clickCompany = (id, name) => {
         setSelectOpen(false);
         setInputCompanyValue(name);
-        chooseCompany(id);
+        choose(id);
     };
 
     return (
@@ -62,11 +59,9 @@ const Search = ({ fetchCompany, companies, chooseCompany, companyId }) => {
 
 export default connect(
     state => ({
-        companyId: state.search.companyId,
         companies: state.search.companies,
     }),
     {
         fetchCompany,
-        chooseCompany,
     },
 )(Search);
