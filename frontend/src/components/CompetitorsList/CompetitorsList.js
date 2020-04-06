@@ -37,12 +37,15 @@ const CompetitorsList = ({
     const [searchOpen, setSearchOpen] = useState(false);
 
     useEffect( () => {
-        fetchCompetitors(companyId);
+        if (!competitors) {
+            fetchCompetitors(companyId);
+        }
     }, []);
 
     const clickSearch = () => {
         addCompetitor(competitors, competitorId);
         setSearchOpen(false);
+        chooseCompetitor(undefined);
     };
 
     const clickAdd = () => {
@@ -86,7 +89,7 @@ const CompetitorsList = ({
                         <Search 
                             choose={chooseCompetitor}
                             onClick={clickSearch}
-                            disabled={competitorId}
+                            payload={competitorId}
                         >
                             <div className="close">
                                 <ButtonIcon onClick={clickClose}>
