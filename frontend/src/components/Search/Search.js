@@ -11,7 +11,7 @@ import {fetchCompany} from 'redux/search/searchActions';
 import './Search.css';
 
 
-const Search = ({ children, fetchCompany, companies, choose, onClick, disabled }) => {
+const Search = ({ children, fetchCompany, companies, choose, onClick, payload }) => {
 
     const [selectOpen, setSelectOpen] = useState(false);
     const [inputCompanyValue, setInputCompanyValue] = useState('');
@@ -24,6 +24,9 @@ const Search = ({ children, fetchCompany, companies, choose, onClick, disabled }
         setInputCompanyValue(inputCompany.current.value);
         fetchCompany(inputCompany.current.value);
         setSelectOpen(true);
+        if (payload) {
+            choose(undefined);
+        }
     };
 
     const clickCompany = (id, name) => {
@@ -59,7 +62,7 @@ const Search = ({ children, fetchCompany, companies, choose, onClick, disabled }
                 }
             </div>
             <div className="search__btn">
-                <Button onClick={onClick} disabled={!disabled}>Выбрать компанию</Button>
+                <Button onClick={onClick} disabled={!payload}>Выбрать компанию</Button>
             </div>
             {children}
         </div>

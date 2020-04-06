@@ -1,27 +1,36 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 
 import Search from 'components/Search/Search';
-import SearchHistory from './components/SearchHistory/SearchHistory';
+import SearchHistory from './SearchHistory/SearchHistory';
 
 import {chooseCompany} from 'redux/search/searchActions';
+import {resetCompetitors} from 'redux/competitors/competitorsActions';
 
 import {COMPANY_SEARCH} from '../MainComponent';
 
 import './CompanySearch.css';
 
 
-const CompanySearch = ({ currentTab, openCompetitorsList, companyId, chooseCompany }) => {
+const CompanySearch = ({ currentTab, openCompetitorsList, companyId, chooseCompany, resetCompetitors }) => {
 
     if (currentTab !== COMPANY_SEARCH) {
         return null;
     }
+
+    useEffect( () => {
+        if (companyId) {
+            chooseCompany(undefined);
+            resetCompetitors();
+        }
+    }, []);
+
     return (
         <section className="company-search-section">
             <Search 
                 choose={chooseCompany}
                 onClick={openCompetitorsList}
-                disabled={companyId}
+                payload={companyId}
             />
             <div className="history">
                 <SearchHistory/>
@@ -35,6 +44,7 @@ export default connect(
         companyId: state.search.companyId,
     }),
     {
-        chooseCompany
+        chooseCompany,
+        resetCompetitors,
     }
 )(CompanySearch);
