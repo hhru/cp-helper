@@ -12,7 +12,6 @@ export const updateCompetitorsAction = (competitors) => {
 };
 
 export function fetchCompetitors(companyId) {
-<<<<<<< HEAD
 
     return (dispatch) => {
         axios.get('/employer/' + companyId + '/competitors').then(competitorsIds => 
@@ -46,7 +45,6 @@ export function deleteCompetitor(competitors, deleteId, companyId) {
     };
 }
 
-<<<<<<< HEAD
 export function addCompetitor(competitors, addId, companyId) {
     
     axios.post('/employer/' + companyId + '/competitors', {
