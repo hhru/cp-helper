@@ -8,11 +8,13 @@ import Competitor from './Competitor/Competitor';
 import AddIcon from 'components/Icons/AddIcon';
 import Loader from 'components/Loader/Loader';
 import Search from 'components/Search/Search';
+import ChooseCompanyButton from '../ChooseCompnayButton/ChooseCompnayButton';
 
 import { COMPETITORS_LIST } from 'components/MainComponent';
 
 import { fetchCompetitors, deleteCompetitor, addCompetitor } from 'redux/competitors/competitorsActions';
-import { chooseCompetitor } from 'redux/search/searchActions';
+import { fetchCompany, chooseCompetitor } from 'redux/search/searchActions';
+
 
 import './CompetitorsList.css';
 
@@ -28,6 +30,8 @@ const CompetitorsList = ({
     deleteCompetitor,
     chooseCompetitor,
     addCompetitor,
+    fetchCompany,
+    companies
 }) => {
 
     if (currentTab !== COMPETITORS_LIST) {
@@ -86,11 +90,17 @@ const CompetitorsList = ({
             {searchOpen && 
                 <div className="background-section">
                     <div className="competitors-list-section__search">
-                        <Search 
+                        <Search
+                            fetch={fetchCompany}
+                            items={companies}
                             choose={chooseCompetitor}
+                            payload={competitorId}
+                            placeholderText={'Введите название компании'}
+                        >
+                        <ChooseCompanyButton
                             onClick={clickSearch}
                             payload={competitorId}
-                        >
+                        />
                             <div className="close">
                                 <ButtonIcon onClick={clickClose}>
                                     <CloseIcon size={30}/>
@@ -113,8 +123,10 @@ export default connect(
         companyId: state.search.companyId,
         competitorId: state.search.competitorId,
         competitors: state.competitors.competitors,
+        companies: state.search.companies
     }),
     {
+        fetchCompany,
         fetchCompetitors,
         chooseCompetitor,
         deleteCompetitor,

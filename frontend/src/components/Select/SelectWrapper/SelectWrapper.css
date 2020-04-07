@@ -4,4 +4,5 @@
     box-shadow: 0 30px 30px rgba(0, 0, 0, 0.15), 0 20px 20px rgba(0, 0, 0, 0.10);
     overflow-x: hidden;
     overflow-y: scroll;
+    z-index: 1;
 }

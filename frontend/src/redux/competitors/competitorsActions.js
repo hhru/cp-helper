@@ -12,6 +12,7 @@ export const updateCompetitorsAction = (competitors) => {
 };
 
 export function fetchCompetitors(companyId) {
+<<<<<<< HEAD
 
     return (dispatch) => {
         axios.get('/employer/' + companyId + '/competitors').then(competitorsIds => 
@@ -37,7 +38,7 @@ export function deleteCompetitor(competitors, deleteId, companyId) {
         data: {
             "competitorId": deleteId,
             "areaId": "113"}
-    })
+    });
     let competitorsNew = {...competitors};
     delete competitorsNew[deleteId];
     return (dispatch) => {
@@ -45,12 +46,13 @@ export function deleteCompetitor(competitors, deleteId, companyId) {
     };
 }
 
+<<<<<<< HEAD
 export function addCompetitor(competitors, addId, companyId) {
     
     axios.post('/employer/' + companyId + '/competitors', {
         "competitorId": addId,
         "areaId": "113"
-    })
+    });
     let competitorsNew = {...competitors};
     return (dispatch) => {
         axios.get(URL_API + addId).then( (el) => {
