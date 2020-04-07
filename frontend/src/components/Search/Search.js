@@ -1,37 +1,40 @@
 import React, {useState, Fragment} from 'react';
-import {connect} from 'react-redux';
 
 import Input from 'components/Input/Input';
-import Button from '../Button/Button';
 import SelectWrapper from 'components/Select/SelectWrapper/SelectWrapper';
 import SelectItem from 'components/Select/SelectItem/SelectItem';
-
-import {fetchCompany} from 'redux/search/searchActions';
 
 import './Search.css';
 
 
-const Search = ({ children, fetchCompany, companies, choose, onClick, payload }) => {
+const Search = ({ 
+    children, 
+    fetch, 
+    items,
+    choose, 
+    payload, 
+    placeholderText
+ }) => {
 
     const [selectOpen, setSelectOpen] = useState(false);
-    const [inputCompanyValue, setInputCompanyValue] = useState('');
+    const [inputValue, setInputValue] = useState('');
 
     const SELECT_ITEMS_LENGTH = 7;
 
-    const inputCompany = React.useRef(null);
+    const input = React.useRef(null);
 
     const handleInputChange = () => {
-        setInputCompanyValue(inputCompany.current.value);
-        fetchCompany(inputCompany.current.value);
+        setInputValue(input.current.value);
+        fetch(input.current.value);
         setSelectOpen(true);
         if (payload) {
             choose(undefined);
         }
     };
 
-    const clickCompany = (id, name) => {
+    const click = (id, name) => {
         setSelectOpen(false);
-        setInputCompanyValue(name);
+        setInputValue(name);
         choose(id);
     };
 
@@ -39,30 +42,27 @@ const Search = ({ children, fetchCompany, companies, choose, onClick, payload })
         <div className="search">
             <div className="search__select">
                 <Input
-                    ref={inputCompany}
-                    placeholderText={'Введите название компании'}
+                    ref={input}
+                    placeholderText={placeholderText}
                     onChange={handleInputChange}
-                    value={inputCompanyValue}
+                    value={inputValue}
                 />
                 {
-                    selectOpen && companies && <SelectWrapper lines=
+                    selectOpen && items && <SelectWrapper lines=
                         {
-                            companies.length > SELECT_ITEMS_LENGTH - 1 ? SELECT_ITEMS_LENGTH : companies.length
+                            items.length > SELECT_ITEMS_LENGTH - 1 ? SELECT_ITEMS_LENGTH : items.length
                         }>
                         {
-                            companies.map(el =>
+                            items.map(el =>
                                 <SelectItem
                                     key={el.id}
                                     id={el.id}
                                     name={el.name}
-                                    onClick={() => clickCompany(el.id, el.name)}
+                                    onClick={() => click(el.id, el.name)}
                                 />,
                             )}
                     </SelectWrapper>
                 }
-            </div>
-            <div className="search__btn">
-                <Button onClick={onClick} disabled={!payload}>Выбрать компанию</Button>
             </div>
             {children}
         </div>
@@ -70,11 +70,4 @@ const Search = ({ children, fetchCompany, companies, choose, onClick, payload })
     );
 };
 
-export default connect(
-    state => ({
-        companies: state.search.companies,
-    }),
-    {
-        fetchCompany,
-    },
-)(Search);
+export default Search;
