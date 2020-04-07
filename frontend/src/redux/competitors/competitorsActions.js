@@ -34,8 +34,9 @@ export function fetchCompetitors(companyId) {
 export function deleteCompetitor(competitors, deleteId, companyId) {
 
     axios.delete('/employer/' + companyId + '/competitors', {
-        "competitorId": deleteId,
-        "areaId": "113"
+        data: {
+            "competitorId": deleteId,
+            "areaId": "113"}
     })
     let competitorsNew = {...competitors};
     delete competitorsNew[deleteId];
