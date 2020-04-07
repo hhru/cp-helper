@@ -12,29 +12,31 @@ export const updateCompetitorsAction = (competitors) => {
 };
 
 export function fetchCompetitors(companyId) {
-    // eslint-disable-next-line no-console
-    console.log(companyId);
-    const competitorsIds = {
-        // eslint-disable-next-line quote-props
-        "competitorsIds": [1870, 84585, 2096237, 2605703, 2624107, 1269556],
-    };
+
     return (dispatch) => {
-        Promise.all(
-            competitorsIds.competitorsIds.map(
-                companyId => axios.get(URL_API + companyId),
-            )).then(
-            (values) => {
-                let competitors = {};
-                values.forEach( (el) => {
-                    let logo = el.data.logo_urls ? el.data.logo_urls[90] : null;
-                    competitors[el.data.id] = {id: el.data.id, name: el.data.name, logo: logo}
+        axios.get('/employer/' + companyId + '/competitors').then(competitorsIds => 
+            Promise.all(
+                competitorsIds.data.competitorsIds.map(
+                    companyId => axios.get(URL_API + companyId),
+                )).then(
+                (values) => {
+                    let competitors = {};
+                    values.forEach( (el) => {
+                        let logo = el.data.logo_urls ? el.data.logo_urls[90] : null;
+                        competitors[el.data.id] = {id: el.data.id, name: el.data.name, logo: logo}
+                    })
+                    dispatch(updateCompetitorsAction(competitors));
                 })
-                dispatch(updateCompetitorsAction(competitors));
-            });
+        )
     };
 }
 
-export function deleteCompetitor(competitors, deleteId) {
+export function deleteCompetitor(competitors, deleteId, companyId) {
+
+    axios.delete('/employer/' + companyId + '/competitors', {
+        "competitorId": deleteId,
+        "areaId": "113"
+    })
     let competitorsNew = {...competitors};
     delete competitorsNew[deleteId];
     return (dispatch) => {
@@ -42,7 +44,12 @@ export function deleteCompetitor(competitors, deleteId) {
     };
 }
 
-export function addCompetitor(competitors, addId) {
+export function addCompetitor(competitors, addId, companyId) {
+    
+    axios.post('/employer/' + companyId + '/competitors', {
+        "competitorId": addId,
+        "areaId": "113"
+    })
     let competitorsNew = {...competitors};
     return (dispatch) => {
         axios.get(URL_API + addId).then( (el) => {

@@ -43,7 +43,7 @@ const CompetitorsList = ({
     }, []);
 
     const clickSearch = () => {
-        addCompetitor(competitors, competitorId);
+        addCompetitor(competitors, competitorId, companyId);
         setSearchOpen(false);
         chooseCompetitor(undefined);
     };
@@ -72,7 +72,7 @@ const CompetitorsList = ({
                                 id={el.id}
                                 name={el.name}
                                 logo={el.logo}
-                                deleteCompetitor={() => deleteCompetitor(competitors, el.id)}
+                                deleteCompetitor={() => deleteCompetitor(competitors, el.id, companyId)}
                             />,
                         )}
                     </div>
