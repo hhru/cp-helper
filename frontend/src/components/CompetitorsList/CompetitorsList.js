@@ -8,7 +8,6 @@ import Competitor from './Competitor/Competitor';
 import AddIcon from 'components/Icons/AddIcon';
 import Loader from 'components/Loader/Loader';
 import Search from 'components/Search/Search';
-import ChooseCompanyButton from '../ChooseCompnayButton/ChooseCompnayButton';
 
 import { COMPETITORS_LIST } from 'components/MainComponent';
 
@@ -97,15 +96,14 @@ const CompetitorsList = ({
                             payload={competitorId}
                             placeholderText={'Введите название компании'}
                         >
-                        <ChooseCompanyButton
-                            onClick={clickSearch}
-                            payload={competitorId}
-                        />
-                            <div className="close">
-                                <ButtonIcon onClick={clickClose}>
-                                    <CloseIcon size={30}/>
-                                </ButtonIcon>
-                            </div>
+                        <div className="search-btn">
+                            <Button onClick={clickSearch} disabled={!competitorId}>Выбрать компанию</Button>
+                        </div>
+                        <div className="close">
+                            <ButtonIcon onClick={clickClose}>
+                                <CloseIcon size={30}/>
+                            </ButtonIcon>
+                        </div>
                         </Search>
                     </div>
                 </div>
