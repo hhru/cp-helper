@@ -37,7 +37,7 @@ const Tab = ({children, currentTab}) => {
                             'tab__element',
                             {'tab__element_active': currentTab === CORPORATE_OFFER},
                         )}>
-                            3. Корпоративное предложение
+                            3. Коммерческое предложение
                         </div>
                     </Columns>
                 </ColumnsWrapper>
