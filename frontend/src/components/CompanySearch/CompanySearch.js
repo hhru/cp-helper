@@ -89,3 +89,4 @@ export default connect(
         initialAreas
     }
 )(CompanySearch);
+
