@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  cp-helper-backend:
+    expose:
+      - "5005"
+    ports:
+    - "5005:5005"
+    entrypoint: ["java",
+                 "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:5005",
+                 "-DsettingsDir=/etc/cp-helper",
+                 "-jar",
+                 "/usr/local/bin/cp-helper.jar"]
