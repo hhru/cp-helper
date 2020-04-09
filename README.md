@@ -10,5 +10,5 @@ Commercial proposal helper
 
 ## Docker-compose
 Запуск контейнеров с базой данных, backend-сервисом и frontend react приложением
-`run.sh`
+`run.sh`  
 `run.sh --dev` - запуск в режиме debug
