@@ -27,7 +27,6 @@ services:
     restart: always
     ports:
       - "9999:9999"
-      - "5005:5005"
 
   cp-helper-frontend:
     build:

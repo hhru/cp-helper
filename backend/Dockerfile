@@ -6,5 +6,5 @@ RUN mvn -f /usr/src/app/pom.xml clean package
 FROM openjdk:11-jdk-slim
 COPY --from=build /usr/src/app/target/cp-helper-1.41.jar /usr/local/bin/cp-helper.jar
 COPY ./src/etc /etc
-EXPOSE 9999 5005
-ENTRYPOINT ["java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:5005", "-DsettingsDir=/etc/cp-helper", "-jar", "/usr/local/bin/cp-helper.jar"]
+EXPOSE 9999
+ENTRYPOINT java $JVM_OPTS -DsettingsDir=/etc/cp-helper -jar /usr/local/bin/cp-helper.jar
