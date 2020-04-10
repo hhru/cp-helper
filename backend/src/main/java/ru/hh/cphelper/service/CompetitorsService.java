@@ -20,20 +20,25 @@ public class CompetitorsService {
     }
 
     @Transactional(readOnly = true)
-    public List<Integer> getCompetitorsIds(Integer id) {
-        return competitorsDao.getCompetitors(id)
+    public List<Integer> getCompetitorsIds(Integer employerId) {
+        return competitorsDao.getCompetitors(employerId)
                 .map(Competitor::getCompetitorId)
                 .distinct()
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public boolean add(Competitor competitor) {
-        return competitorsDao.add(competitor);
+    public void delete(Competitor competitor) {
+        Competitor competitorToDelete;
+        if ((competitorToDelete = competitorsDao.find(competitor)) != null) {
+            competitorsDao.delete(competitorToDelete);
+        }
     }
 
     @Transactional
-    public void delete(Competitor competitor) {
-        competitorsDao.delete(competitor);
+    public void add(Competitor competitor) {
+        if (competitorsDao.find(competitor) == null) {
+            competitorsDao.save(competitor);
+        }
     }
 }

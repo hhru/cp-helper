@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import ru.hh.cphelper.entity.Competitor;
 
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -33,17 +34,7 @@ public class CompetitorsDao {
                 .stream();
     }
 
-    public boolean add(Competitor competitor) {
-        try {
-            get(competitor);
-            return false;
-        } catch (Exception e) {
-            getCurrentSession().save(competitor);
-            return true;
-        }
-    }
-
-    public Competitor get(Competitor competitor) {
+    public Competitor find(Competitor competitor) {
         Session session = getCurrentSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<Competitor> cr = cb.createQuery(Competitor.class);
@@ -59,10 +50,18 @@ public class CompetitorsDao {
         }
 
         cr.select(root).where(predicates);
-        return session.createQuery(cr).getSingleResult();
+        try {
+            return session.createQuery(cr).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     public void delete(Competitor competitor) {
-        getCurrentSession().delete(get(competitor));
+        getCurrentSession().delete(competitor);
+    }
+
+    public void save(Competitor competitor) {
+        getCurrentSession().save(competitor);
     }
 }

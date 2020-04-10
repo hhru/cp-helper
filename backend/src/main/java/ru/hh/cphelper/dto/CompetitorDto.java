@@ -1,39 +1,32 @@
 package ru.hh.cphelper.dto;
 
-public class CompetitorDto extends CompetitorMiniDto {
+public class CompetitorDto {
 
-    private Integer id;
-    private Integer employerId;
-    private Float relevanceIndex;
+    private Integer competitorId;
+    private Integer areaId;
 
-    public CompetitorDto(Integer competitorId, Integer areaId, Integer id, Integer employerId, Float relevanceIndex) {
-        super(competitorId, areaId);
-        this.id = id;
-        this.employerId = employerId;
-        this.relevanceIndex = relevanceIndex;
+    public CompetitorDto() {
     }
 
-    public Integer getId() {
-        return id;
+    public CompetitorDto(Integer competitorId, Integer areaId) {
+        this.competitorId = competitorId;
+        this.areaId = areaId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Integer getCompetitorId() {
+        return competitorId;
     }
 
-    public Integer getEmployerId() {
-        return employerId;
+    public void setCompetitorId(Integer competitorId) {
+        this.competitorId = competitorId;
     }
 
-    public void setEmployerId(Integer employerId) {
-        this.employerId = employerId;
+    public Integer getAreaId() {
+        return areaId;
     }
 
-    public Float getRelevanceIndex() {
-        return relevanceIndex;
+    public void setAreaId(Integer areaId) {
+        this.areaId = areaId;
     }
 
-    public void setRelevanceIndex(Float relevanceIndex) {
-        this.relevanceIndex = relevanceIndex;
-    }
 }
