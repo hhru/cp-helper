@@ -1,5 +1,5 @@
 --colums VacancyId, ResumeID, UserID, EmloyerID, CreationDate, ID goes to vw_VacancyResponses
-INSERT into VacancyDataMart.mart.VacancyResponses 
+INSERT into VacancyDataMart.mart.VacancyResponses
 (RegionID ,VacancyID ,PublicationDate ,VacancyStateID ,ResumeID ,UserID ,EmployerID ,UserTypeID ,SiteID ,ResumeCreationDate ,UserCreationDate ,EmployerType ,ResponseCreationDate ,ResumeRegionID ,ResponseAppType ,ResponsePlatform ,VacancyCreationDate ,ResumeColorTypeID ,ID ,VacancyCollarTypeId ,MetallicId ,VacancyTypeID ,ResumeProfAreaId )
 VALUES
 (1,1,GETDATE(),3,101,201,3911579,7,8,GETDATE(),GETDATE(),9,GETDATE(),10,'ggg','ggg',GETDATE(),12,401,14,15,16,17),
@@ -35,4 +35,3 @@ VALUES
 (39, 3911579, 3911579, 3911579, 3911579, 2, 1455, GETDATE(), GETDATE(), GETDATE(), 'avito_code', 4, 4, 100.00, 100.00, 100.00, 'Moscow', 'Hiring', 3911579, 'hh', 0, '0', 'servicename_hh', 'no_special_offer', 'not barter', 23, 'adjustment', 'headunit', 0, 0, 'CASH', 0),
 (18, 1870, 1870, 1870, 1870, 3, 1870, GETDATE(), GETDATE(), GETDATE(), 'rabotaru_code', 2, 2, 150.00, 150.00, 150.00, 'Moscow', 'Hiring', 1870, 'hh', 0, '0', 'servicename_hh', 'no_special_offer', 'not barter', 23, 'adjustment', 'headunit', 0, 0, 'CASH', 0)
 ;
-

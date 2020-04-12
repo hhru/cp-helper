@@ -14,8 +14,8 @@ VacancyDataMart.dbo.vw_VacancyResponses - тут лежат отклики
 ! VacancyDataMart.dbo.vw_VacancyResponses это view, а не table. Она агрегирует данные из VacancyDataMart.mart.VacancyResponses 
 Чтобы данные там появились, их надо Insert VacancyDataMart.mart.VacancyResponses .
 
-
-
+Коды компаний из апи:
 3911579 авито
 1870 работа ру
 1455 Хэдхантер
+

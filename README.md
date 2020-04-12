@@ -9,6 +9,7 @@ Commercial proposal helper
 `mvn exec:java`
 
 ## Docker-compose
-Запуск контейнеров с базой данных, backend-сервисом и frontend react приложением
+Запуск контейнеров с базой данных, backend-сервисом, frontend react приложением, kafka и zookeeper
 `run.sh`  
 `run.sh --dev` - запуск в режиме debug
+
