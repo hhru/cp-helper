@@ -1,15 +1,14 @@
 .hh-heading {
     font-family: ProximaNovaCond, Arial, sans-serif;
-    margin: 0 0 10px;
-        &__level1 {
+        &_level1 {
             font-size: 26px;
             line-height: 36px;
         }
-        &__level2 {
+        &_level2 {
             font-size: 20px;
             line-height: 24px;
         }
-        &__level3 {
+        &_level3 {
             font-size: 16px;
             line-height: 18px;
         }
@@ -17,15 +16,16 @@
 
 @media (min-width: 768px) {
     .hh-heading {
-        &__level1 {
+        font-family: ProximaNovaCond, Arial, sans-serif;
+        &_level1 {
             font-size: 36px;
             line-height: 44px;
         }
-        &__level2 {
+        &_level2 {
             font-size: 30px;
             line-height: 37px;
         }
-        &__level3 {
+        &_level3 {
             font-size: 20px;
             line-height: 24px;
         }
