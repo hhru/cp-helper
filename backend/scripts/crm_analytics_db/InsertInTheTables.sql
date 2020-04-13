@@ -1,6 +1,6 @@
---colums VacancyId, ResumeID, UserID, EmloyerID, CreationDate, ID goes to vw_VacancyResponses
+--colums VacancyId, ResumeID, UserID, EmloyerID, CreationDate, ID go to vw_VacancyResponses
 INSERT into VacancyDataMart.mart.VacancyResponses
-(RegionID ,VacancyID ,PublicationDate ,VacancyStateID ,ResumeID ,UserID ,EmployerID ,UserTypeID ,SiteID ,ResumeCreationDate ,UserCreationDate ,EmployerType ,ResponseCreationDate ,ResumeRegionID ,ResponseAppType ,ResponsePlatform ,VacancyCreationDate ,ResumeColorTypeID ,ID ,VacancyCollarTypeId ,MetallicId ,VacancyTypeID ,ResumeProfAreaId )
+(RegionID, VacancyID, PublicationDate, VacancyStateID, ResumeID, UserID, EmployerID, UserTypeID, SiteID, ResumeCreationDate, UserCreationDate, EmployerType, ResponseCreationDate, ResumeRegionID, ResponseAppType, ResponsePlatform, VacancyCreationDate, ResumeColorTypeID, ID, VacancyCollarTypeId, MetallicId, VacancyTypeID, ResumeProfAreaId)
 VALUES
 (1,1,GETDATE(),3,101,201,3911579,7,8,GETDATE(),GETDATE(),9,GETDATE(),10,'ggg','ggg',GETDATE(),12,401,14,15,16,17),
 (1,1,GETDATE(),3,102,202,3911579,7,8,GETDATE(),GETDATE(),9,GETDATE(),10,'ggg','ggg',GETDATE(),12,402,14,15,16,17),

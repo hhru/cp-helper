@@ -1,6 +1,11 @@
-./run.sh
+## Build
+`mvn clean install`
 
-поднимает контейнер с базой данных MS SQL и запускает скрипты из scripts
+## Run
+`mvn exec:java`
+
+MS SQL database:
+При запуске основного docker-compose поднимает базу и исполняет скрипты из scripts/crm_analytics_db
 Адрес localhost:1433
 Логин: sa
 Пароль: cp_helper3A!
@@ -12,7 +17,7 @@ ActivationAnalysisData.dbo.spending - размещения вакансий ра
 VacancyDataMart.dbo.vw_VacancyResponses - тут лежат отклики
 
 ! VacancyDataMart.dbo.vw_VacancyResponses это view, а не table. Она агрегирует данные из VacancyDataMart.mart.VacancyResponses 
-Чтобы данные там появились, их надо Insert VacancyDataMart.mart.VacancyResponses .
+Чтобы данные там появились, их надо Insert VacancyDataMart.mart.VacancyResponses
 
 Коды компаний из апи:
 3911579 авито
