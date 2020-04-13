@@ -24,7 +24,7 @@ const Search = ({
     const input = React.useRef(null);
 
     const handleInputChange = () => {
-        setInputCompanyValue(input.current.value);
+        setInputValue(input.current.value);
         fetch(input.current.value);
         setSelectOpen(true);
         if (payload) {
