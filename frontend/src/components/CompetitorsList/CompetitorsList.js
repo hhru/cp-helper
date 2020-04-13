@@ -28,6 +28,7 @@ const CompetitorsList = ({
     deleteCompetitor,
     chooseCompetitor,
     addCompetitor,
+    areaId
 }) => {
 
     if (currentTab !== COMPETITORS_LIST) {
@@ -116,6 +117,7 @@ export default connect(
         companyId: state.search.companyId,
         competitorId: state.search.competitorId,
         competitors: state.competitors.competitors,
+        areaId: state.areas.areaId,
     }),
     {
         fetchCompetitors,
