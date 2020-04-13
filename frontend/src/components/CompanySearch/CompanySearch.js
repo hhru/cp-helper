@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 
 import Search from 'components/Search/Search';
 import SearchHistory from './SearchHistory/SearchHistory';
+import Button from '../Button/Button';
 
 import {chooseCompany, resetCompany } from 'redux/search/searchActions';
 import {resetCompetitors} from 'redux/competitors/competitorsActions';
@@ -27,11 +28,16 @@ const CompanySearch = ({ currentTab, openCompetitorsList, companyId, chooseCompa
 
     return (
         <section className="company-search-section">
-            <Search 
-                choose={chooseCompany}
-                onClick={openCompetitorsList}
-                payload={companyId}
-            />
+            <div className="company-search-section__search">
+                <Search 
+                    choose={chooseCompany}
+                    onClick={openCompetitorsList}
+                    payload={companyId}
+                />
+                <div className="company-search-section__btn">
+                    <Button onClick={openCompetitorsList} disabled={!companyId}>Выбрать компанию</Button>
+                </div>
+            </div>
             <div className="history">
                 <SearchHistory/>
             </div>

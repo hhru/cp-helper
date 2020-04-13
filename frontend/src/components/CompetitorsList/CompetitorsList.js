@@ -91,11 +91,14 @@ const CompetitorsList = ({
                             onClick={clickSearch}
                             payload={competitorId}
                         >
-                            <div className="close">
-                                <ButtonIcon onClick={clickClose}>
-                                    <CloseIcon size={30}/>
-                                </ButtonIcon>
-                            </div>
+                        <div className="search__btn">
+                            <Button onClick={clickSearch} disabled={!competitorId}>Выбрать компанию</Button>
+                        </div>
+                        <div className="close">
+                            <ButtonIcon onClick={clickClose}>
+                                <CloseIcon size={30}/>
+                            </ButtonIcon>
+                        </div>
                         </Search>
                     </div>
                 </div>
