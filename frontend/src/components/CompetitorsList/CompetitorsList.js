@@ -13,6 +13,7 @@ import { COMPETITORS_LIST } from 'components/MainComponent';
 
 import { fetchCompetitors, deleteCompetitor, addCompetitor } from 'redux/competitors/competitorsActions';
 import { chooseCompetitor } from 'redux/search/searchActions';
+import {chooseCompany, fetchCompany } from 'redux/search/searchActions';
 
 import './CompetitorsList.css';
 
@@ -28,7 +29,10 @@ const CompetitorsList = ({
     deleteCompetitor,
     chooseCompetitor,
     addCompetitor,
-    areaId
+    areaId,
+    fetchCompany,
+    chooseCompany,
+    companies
 }) => {
 
     if (currentTab !== COMPETITORS_LIST) {
@@ -88,9 +92,11 @@ const CompetitorsList = ({
                 <div className="background-section">
                     <div className="competitors-list-section__search">
                         <Search 
+                            fetch={fetchCompany}
+                            items={companies}
                             choose={chooseCompetitor}
-                            onClick={clickSearch}
                             payload={competitorId}
+                            placeholderText={'Введите название компании'}
                         >
                         <div className="search__btn">
                             <Button onClick={clickSearch} disabled={!competitorId}>Выбрать компанию</Button>
@@ -118,11 +124,14 @@ export default connect(
         competitorId: state.search.competitorId,
         competitors: state.competitors.competitors,
         areaId: state.areas.areaId,
+        companies: state.search.companies,
     }),
     {
         fetchCompetitors,
         chooseCompetitor,
         deleteCompetitor,
         addCompetitor,
+        fetchCompany,
+        chooseCompany,
     },
 )(CompetitorsList);
