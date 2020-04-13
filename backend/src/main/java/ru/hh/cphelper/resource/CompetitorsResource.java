@@ -2,7 +2,7 @@ package ru.hh.cphelper.resource;
 
 import ru.hh.cphelper.dto.CompetitorsIdsDto;
 import ru.hh.cphelper.dto.CompetitorDto;
-import ru.hh.cphelper.helper.CompetitorsHelper;
+import ru.hh.cphelper.utils.CompetitorsHelper;
 import ru.hh.cphelper.service.CompetitorsService;
 
 import javax.inject.Inject;

@@ -1,4 +1,4 @@
-package ru.hh.cphelper.helper;
+package ru.hh.cphelper.utils;
 
 import ru.hh.cphelper.dto.CompetitorsIdsDto;
 import ru.hh.cphelper.dto.CompetitorDto;
