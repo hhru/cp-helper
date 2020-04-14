@@ -1,6 +1,6 @@
 import {createReducer} from 'redux-create-reducer';
 
-import {FETCH_AREA, CHOOSE_AREA, INIT_AREAS} from './areaSearchAction';
+import {FILTER_AREA, CHOOSE_AREA, INIT_AREAS} from './areasAction';
 
 
 export const initialState = {
@@ -11,7 +11,7 @@ export const initialState = {
 
 export const areaSearchReducer = createReducer(initialState, {
 
-    [FETCH_AREA](state, action) {
+    [FILTER_AREA](state, action) {
         return {
             ...state,
             filteredAreas: action.filteredAreas,

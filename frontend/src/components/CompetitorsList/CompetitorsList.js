@@ -11,9 +11,8 @@ import Search from 'components/Search/Search';
 
 import { COMPETITORS_LIST } from 'components/MainComponent';
 
-import { fetchCompetitors, deleteCompetitor, addCompetitor } from 'redux/competitors/competitorsActions';
-import { chooseCompetitor } from 'redux/search/searchActions';
-import {chooseCompany, fetchCompany } from 'redux/search/searchActions';
+import { fetchCompetitors, deleteCompetitor, addCompetitor, chooseCompetitor } from 'redux/competitors/competitorsActions';
+import {chooseCompany, fetchCompany } from 'redux/search/companiesActions';
 
 import './CompetitorsList.css';
 
@@ -119,11 +118,11 @@ const CompetitorsList = ({
 
 export default connect(
     state => ({
-        companyId: state.search.companyId,
-        competitorId: state.search.competitorId,
+        companyId: state.companies.companyId,
+        competitorId: state.competitors.competitorId,
         competitors: state.competitors.competitors,
         areaId: state.areas.areaId,
-        companies: state.search.companies,
+        companies: state.companies.companies,
     }),
     {
         fetchCompetitors,

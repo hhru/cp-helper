@@ -1,11 +1,11 @@
 import axios from 'axios';
+import {EMPLOYERS_HH_API_URL, BASE_URL} from 'utils/constant.js';
 
 export const FETCH_COMPETITORS = 'FETCH_COMPETITORS';
 export const ADD_COMPETITOR = 'ADD_COMPETITOR';
 export const DELETE_COMPETITOR = 'DELETE_COMPETITOR';
 export const RESET_COMPETITORS = 'RESET_COMPETITORS';
 
-const URL_API = 'https://api.hh.ru/employers/';
 const LOGO_SIZE = 90;
 
 export const fetchCompetitorsAction = (competitors) => {
@@ -45,10 +45,10 @@ export const chooseCompetitorAction = (competitorId) => {
 export function fetchCompetitors(companyId) {
 
     return (dispatch) => {
-        axios.get('/employer/' + companyId + '/competitors').then(competitorsIds => 
+        axios.get(BASE_URL + companyId + '/competitors').then(competitorsIds => 
             Promise.all(
                 competitorsIds.data.competitorsIds.map(
-                    companyId => axios.get(URL_API + companyId),
+                    companyId => axios.get(EMPLOYERS_HH_API_URL + '/' + companyId),
                 )).then(
                 (values) => {
                     let competitors = {};
@@ -64,7 +64,7 @@ export function fetchCompetitors(companyId) {
 
 export function deleteCompetitor(id, companyId) {
 
-    axios.delete('/employer/' + companyId + '/competitors', { 
+    axios.delete(BASE_URL + companyId + '/competitors', { 
         data: {
             "competitorId": id,
             "areaId": "113"
@@ -77,7 +77,7 @@ export function deleteCompetitor(id, companyId) {
 
 export function addCompetitor(id, companyId) {
     
-    axios.post('/employer/' + companyId + '/competitors', {
+    axios.post(BASE_URL + companyId + '/competitors', {
         "competitorId": id,
         "areaId": "113"
     })

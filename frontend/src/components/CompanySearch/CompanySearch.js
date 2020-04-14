@@ -5,9 +5,9 @@ import Search from 'components/Search/Search';
 import SearchHistory from './SearchHistory/SearchHistory';
 import Button from '../Button/Button';
 
-import {chooseCompany, resetCompany, fetchCompany } from 'redux/search/searchActions';
+import {chooseCompany, resetCompany, fetchCompany } from 'redux/search/companiesActions';
 import {resetCompetitors} from 'redux/competitors/competitorsActions';
-import {fetchArea, chooseArea, initialAreas} from 'redux/areas/areaSearchAction';
+import {fetchArea, chooseArea, initAreas} from 'redux/areas/areasAction';
 
 import {COMPANY_SEARCH} from '../MainComponent';
 
@@ -23,7 +23,7 @@ const CompanySearch = ({
     resetCompetitors,
     fetchCompany,
     companies,
-    initialAreas,
+    initAreas,
     plainAreas,
     fetchArea,
     chooseArea,
@@ -40,8 +40,8 @@ const CompanySearch = ({
             resetCompany();
             resetCompetitors();
         }
-        if (plainAreas == undefined) {
-            initialAreas();
+        if (!plainAreas) {
+            initAreas();
         }
     }, []);
 
@@ -75,8 +75,8 @@ const CompanySearch = ({
 
 export default connect(
     state => ({
-        companyId: state.search.companyId,
-        companies: state.search.companies,
+        companyId: state.companies.companyId,
+        companies: state.companies.companies,
         areaId: state.areas.areaId,
         plainAreas: state.areas.planeAreas,
         filteredAreas: state.areas.filteredAreas,
@@ -88,6 +88,6 @@ export default connect(
         fetchCompany,
         fetchArea,
         chooseArea,
-        initialAreas,
+        initAreas,
     }
 )(CompanySearch);

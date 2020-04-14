@@ -1,12 +1,13 @@
 import axios from 'axios';
+import AREAS_HH_API_URL from 'utils/constant.js';
 
-export const FETCH_AREA = 'FETCH_AREA';
+export const FILTER_AREA = 'FILTER_AREA';
 export const CHOOSE_AREA = 'CHOOSE_AREA';
 export const INIT_AREAS = 'INIT_AREAS';
 
-export const fetchAreaAction = (filteredAreas) => {
+export const filterAreaAction = (filteredAreas) => {
     return {
-        type: FETCH_AREA,
+        type: FILTER_AREA,
         filteredAreas,
     };
 } 
@@ -25,17 +26,17 @@ export const initAreaAction = (plainAreas)  => {
     };
 };
 
-export function fetchArea(areaName) {
+export function filterArea(areaName) {
     return (dispatch, getState) => {
         const plainAreas = getState().areas.plainAreas;
         let filteredAreas =  plainAreas.filter(
             area => 
-                area.name.toUpperCase().indexOf(areaName.toUpperCase()) == 0
+                area.name.toUpperCase().indexOf(areaName.toUpperCase()) === 0
             );
         if (filteredAreas.length > 10) {
             filteredAreas = filteredAreas.slice(0, 9);
         }
-        dispatch(fetchAreaAction(filteredAreas));
+        dispatch(filterAreaAction(filteredAreas));
     }
 }
 
@@ -45,17 +46,12 @@ export function chooseArea(areaId) {
     };
 }
 
-export function initialAreas() {
-    const url = `https://api.hh.ru/areas`;
+export function initAreas() {
     return (dispatch) => {
-        axios.get(url)
+        axios.get(AREAS_HH_API_URL)
             .then((res) => {
                 let plainAreas = getPlainAreas(res.data);
-                plainAreas.sort((a, b) => {
-                    if (a.name < b.name) return -1;
-                    else if (a.name > b.name) return 1;
-                    else return 0;
-                });
+                plainAreas.sort((a,b) => (a.name > b.name));
                 dispatch(initAreaAction(plainAreas));
             });
     };   
@@ -63,10 +59,7 @@ export function initialAreas() {
 
 function getPlainAreas(hierachyAreas) {
     let plainAreas = [];
-    hierachyAreas.forEach((area) => {
-            Array.prototype.push.apply(plainAreas, recurseAreaProcessing(area));
-        }
-    );
+    hierachyAreas.forEach((area) => plainAreas.push(recurseAreaProcessing(area)));
     return plainAreas;
 }
 
@@ -75,11 +68,7 @@ function recurseAreaProcessing(area) {
         return [{"id" : area.id, "name" : area.name}];
     } else {
         let result = [{"id" : area.id, "name" : area.name}];
-        area.areas.forEach(
-            function(ar) {
-                Array.prototype.push.apply(result, recurseAreaProcessing(ar));
-            }
-        );
+        area.areas.forEach((ar) => result.push(recurseAreaProcessing(ar)));
         return result;
     }
 }
