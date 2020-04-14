@@ -1,64 +1,74 @@
 package ru.hh.cphelper;
 
+
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.test.context.ContextConfiguration;
-import ru.hh.cphelper.dao.CompetitorsDao;
 import ru.hh.cphelper.entity.Competitor;
 import ru.hh.cphelper.service.CompetitorsService;
-import ru.hh.nab.testbase.NabTestBase;
+import javax.inject.Inject;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
-@ContextConfiguration(classes = CpHelperTestConfig.class)
-@RunWith(MockitoJUnitRunner.class)
-public class CompetitorsServiceTest extends NabTestBase {
+import java.util.ArrayList;
+import java.util.List;
 
-    @Mock
-    private CompetitorsDao competitorsDaoMock;
+import static org.junit.Assert.assertEquals;
 
-    @Mock
-    Competitor competitorMock;
+public class CompetitorsServiceTest extends CpHelperTestBase {
 
-    @InjectMocks
-    private CompetitorsService competitorsService;
+    @Inject
+    CompetitorsService competitorsService;
 
     @Test
     public void addCompetitorExists() {
-        when(competitorsDaoMock.find(isA(Competitor.class))).thenReturn(competitorMock);
-        competitorsService.add(competitorMock);
-        verify(competitorsDaoMock, times(0)).save(any());
+        Competitor competitor = new Competitor(1, 2, 3);
+        transactionalScope.write(() -> currentSession().save(competitor));
+        transactionalScope.write(() -> competitorsService.add(competitor));
+        int competitorsListSize = transactionalScope.read(() -> currentSession().createQuery("FROM Competitor", Competitor.class).getResultList().size());
+        assertEquals(1, competitorsListSize);
     }
 
     @Test
-    public void addCompetitorNotExist() {
-        when(competitorsDaoMock.find(isA(Competitor.class))).thenReturn(null);
-        doNothing().when(competitorsDaoMock).save(isA(Competitor.class));
-        competitorsService.add(competitorMock);
-        verify(competitorsDaoMock, times(1)).save(isA(Competitor.class));
+    public void addCompetitorNotExists() {
+        Competitor competitor = new Competitor(1, 2, 3);
+        transactionalScope.write(() -> currentSession().save(competitor));
+        Competitor competitorToAdd = new Competitor(1, 2, null);
+        transactionalScope.write(() -> competitorsService.add(competitorToAdd));
+        int competitorsListSize = transactionalScope.read(() -> currentSession().createQuery("FROM Competitor", Competitor.class).getResultList().size());
+        assertEquals(2, competitorsListSize);
+
     }
 
     @Test
     public void deleteCompetitorExists() {
-        when(competitorsDaoMock.find(isA(Competitor.class))).thenReturn(competitorMock);
-        doNothing().when(competitorsDaoMock).delete(isA(Competitor.class));
-        competitorsService.delete(competitorMock);
-        verify(competitorsDaoMock, times(1)).delete(isA(Competitor.class));
+        Competitor competitor = new Competitor(1, 2, 3);
+        transactionalScope.write(() -> currentSession().save(competitor));
+        transactionalScope.write(() -> competitorsService.delete(competitor));
+        int competitorsListSize = transactionalScope.read(() -> currentSession().createQuery("FROM Competitor", Competitor.class).getResultList().size());
+        assertEquals(0, competitorsListSize);
     }
 
     @Test
-    public void deleteCompetitorNotExist() {
-        when(competitorsDaoMock.find(isA(Competitor.class))).thenReturn(null);
-        competitorsService.delete(competitorMock);
-        verify(competitorsDaoMock, times(0)).delete(any());
+    public void deleteCompetitorNotExists() {
+        Competitor competitor = new Competitor(1, 2, 3);
+        transactionalScope.write(() -> currentSession().save(competitor));
+        Competitor competitorToDelete = new Competitor(1, 2, null);
+        transactionalScope.write(() -> competitorsService.delete(competitorToDelete));
+        int competitorsListSize = transactionalScope.read(() -> currentSession().createQuery("FROM Competitor", Competitor.class).getResultList().size());
+        assertEquals(1, competitorsListSize);
     }
 
+    @Test
+    public void getCompetitorsIdsTest() {
+        Integer employerId = 1;
+        List<Competitor> competitors = new ArrayList<Competitor>() {
+            {
+                add(new Competitor(employerId, 2, 3));
+                add(new Competitor(employerId, 2, null));
+                add(new Competitor(employerId, 4, 5));
+
+            }
+        };
+        transactionalScope.write(() -> competitors.forEach(comp -> currentSession().save(comp)));
+        List<Integer> actualCompetitorsIds = transactionalScope.read(() -> competitorsService.getCompetitorsIds(employerId));
+        assertEquals(List.of(2, 4), actualCompetitorsIds);
+    }
 }

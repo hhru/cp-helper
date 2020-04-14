@@ -10,8 +10,6 @@ import ru.hh.nab.starter.NabProdConfig;
 @Configuration
 @Import({NabProdConfig.class,
         NabHibernateProdConfig.class,
-        CpHelperCommonConfig.class,
-        CompetitorsDao.class,
-        CompetitorsService.class})
+        CpHelperCommonConfig.class})
 public class CpHelperProdConfig {
 }
