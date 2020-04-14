@@ -130,6 +130,5 @@ export default connect(
         deleteCompetitor,
         addCompetitor,
         fetchCompany,
-        chooseCompany,
     },
 )(CompetitorsList);

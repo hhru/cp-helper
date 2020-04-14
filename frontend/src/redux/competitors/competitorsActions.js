@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {EMPLOYERS_HH_API_URL, BASE_URL} from 'utils/constants';
+import {EMPLOYERS_HH_API_URL, CP_HELPER_BASE_URL} from 'utils/constants';
 
 export const FETCH_COMPETITORS = 'FETCH_COMPETITORS';
 export const ADD_COMPETITOR = 'ADD_COMPETITOR';
@@ -46,7 +46,7 @@ export const chooseCompetitorAction = (competitorId) => {
 export function fetchCompetitors(companyId) {
 
     return (dispatch) => {
-        axios.get(BASE_URL + companyId + '/competitors').then(competitorsIds => 
+        axios.get(CP_HELPER_BASE_URL + companyId + '/competitors').then(competitorsIds => 
             Promise.all(
                 competitorsIds.data.competitorsIds.map(
                     companyId => axios.get(EMPLOYERS_HH_API_URL + '/' + companyId),
@@ -65,7 +65,7 @@ export function fetchCompetitors(companyId) {
 
 export function deleteCompetitor(id, companyId) {
 
-    axios.delete(BASE_URL + companyId + '/competitors', { 
+    axios.delete(CP_HELPER_BASE_URL + companyId + '/competitors', { 
         data: {
             "competitorId": id,
             "areaId": "113"
@@ -78,7 +78,7 @@ export function deleteCompetitor(id, companyId) {
 
 export function addCompetitor(id, companyId) {
     
-    axios.post(BASE_URL + companyId + '/competitors', {
+    axios.post(CP_HELPER_BASE_URL + companyId + '/competitors', {
         "competitorId": id,
         "areaId": "113"
     })
