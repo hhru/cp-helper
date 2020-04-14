@@ -12,7 +12,7 @@ import Search from 'components/Search/Search';
 import { COMPETITORS_LIST } from 'components/MainComponent';
 
 import { fetchCompetitors, deleteCompetitor, addCompetitor, chooseCompetitor } from 'redux/competitors/competitorsActions';
-import {chooseCompany, fetchCompany } from 'redux/companies/companiesActions';
+import { fetchCompany } from 'redux/companies/companiesActions';
 
 import './CompetitorsList.css';
 
