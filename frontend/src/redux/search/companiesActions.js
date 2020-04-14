@@ -18,13 +18,6 @@ export const chooseCompanyAction = (companyId) => {
     };
 };
 
-export const chooseCompetitorAction = (competitorId) => {
-    return {
-        type: CHOOSE_COMPETITOR,
-        competitorId,
-    };
-};
-
 export function fetchCompany(companyName) {
     const url = `https://api.hh.ru/employers?text=${encodeURIComponent(companyName)}`;
     return (dispatch) => {
@@ -38,12 +31,6 @@ export function fetchCompany(companyName) {
 export function chooseCompany(company) {
     return (dispatch) => {
         dispatch(chooseCompanyAction(company));
-    };
-}
-
-export function chooseCompetitor(competitor) {
-    return (dispatch) => {
-        dispatch(chooseCompetitorAction(competitor));
     };
 }
 

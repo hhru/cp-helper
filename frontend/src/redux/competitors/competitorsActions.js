@@ -35,6 +35,13 @@ export const resetCompetitorsAction = () => {
     };
 };
 
+export const chooseCompetitorAction = (competitorId) => {
+    return {
+        type: CHOOSE_COMPETITOR,
+        competitorId,
+    };
+};
+
 export function fetchCompetitors(companyId) {
 
     return (dispatch) => {
@@ -85,5 +92,11 @@ export function addCompetitor(id, companyId) {
 export function resetCompetitors() {
     return (dispatch) => {
         dispatch(resetCompetitorsAction());
+    };
+}
+
+export function chooseCompetitor(competitor) {
+    return (dispatch) => {
+        dispatch(chooseCompetitorAction(competitor));
     };
 }

@@ -31,7 +31,6 @@ const CompetitorsList = ({
     addCompetitor,
     areaId,
     fetchCompany,
-    chooseCompany,
     companies
 }) => {
 

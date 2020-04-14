@@ -63,7 +63,7 @@ const CompanySearch = ({
                     placeholderText={'Введите название компании'}
                 />
                 <div className="company-search-section__btn">
-                    <Button onClick={openCompetitorsList} disabled={!companyId}>Выбрать компанию</Button>
+                    <Button onClick={openCompetitorsList} disabled={!(companyId && areaId)}>Выбрать компанию</Button>
                 </div>
             </div>
             <div className="history">
