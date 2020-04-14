@@ -9,10 +9,14 @@ import org.springframework.context.annotation.Import;
 import org.springframework.core.io.ClassPathResource;
 import ru.hh.nab.hibernate.NabHibernateCommonConfig;
 import ru.hh.nab.testbase.NabTestConfig;
+import ru.hh.nab.testbase.hibernate.NabHibernateTestBaseConfig;
 
 @Configuration
-@Import({NabTestConfig.class, NabHibernateCommonConfig.class})
-public class TestConfig {
+@Import({NabTestConfig.class,
+        NabHibernateCommonConfig.class,
+        CpHelperCommonConfig.class,
+        NabHibernateTestBaseConfig.class})
+public class CpHelperTestConfig {
 
   @Bean
   Function<String, String> serverPortAwareBean(String jettyBaseUrl) {

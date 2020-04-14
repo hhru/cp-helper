@@ -18,7 +18,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@ContextConfiguration(classes = TestConfig.class)
+@ContextConfiguration(classes = CpHelperTestConfig.class)
 @RunWith(MockitoJUnitRunner.class)
 public class CompetitorsServiceTest extends NabTestBase {
 

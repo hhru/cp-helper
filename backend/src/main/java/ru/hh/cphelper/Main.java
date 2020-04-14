@@ -6,7 +6,7 @@ public class Main {
 
   public static void main(String[] args) {
     NabApplication.builder()
-      .configureJersey(JerseyConfig.class).bindToRoot()
-      .build().run(ProdConfig.class);
+      .configureJersey(CpHelperJerseyConfig.class).bindToRoot()
+      .build().run(CpHelperProdConfig.class);
   }
 }

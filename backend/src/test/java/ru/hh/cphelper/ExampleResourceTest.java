@@ -6,14 +6,13 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import ru.hh.cphelper.resource.ExampleResource;
 import ru.hh.nab.starter.NabApplication;
-import ru.hh.nab.testbase.NabTestBase;
 
 import javax.ws.rs.core.Response;
 
 import static org.junit.Assert.assertEquals;
 
-@ContextConfiguration(classes = TestConfig.class)
-public class ExampleResourceTest extends NabTestBase {
+@ContextConfiguration(classes = CpHelperTestConfig.class)
+public class ExampleResourceTest extends CpHelperTestBase {
 
   @Test
   public void hello() {

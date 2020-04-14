@@ -10,7 +10,7 @@ import ru.hh.nab.testbase.NabTestBase;
 
 import javax.inject.Inject;
 
-@ContextConfiguration(classes = TestConfig.class)
+@ContextConfiguration(classes = CpHelperTestConfig.class)
 public abstract class CpHelperTestBase extends NabTestBase {
 
     @Inject
@@ -26,7 +26,7 @@ public abstract class CpHelperTestBase extends NabTestBase {
     @After
     public void tearDown() {
         transactionalScope.write(() -> {
-            currentSession().createQuery("DELETE FROM competitors").executeUpdate();
+            currentSession().createQuery("DELETE FROM Competitor").executeUpdate();
         });
     }
 }
