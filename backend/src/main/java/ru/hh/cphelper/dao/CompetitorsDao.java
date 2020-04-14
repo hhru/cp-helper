@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import ru.hh.cphelper.entity.Competitor;
 
 import javax.inject.Inject;
-import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -50,11 +49,7 @@ public class CompetitorsDao {
         }
 
         cr.select(root).where(predicates);
-        try {
-            return session.createQuery(cr).getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }
+        return session.createQuery(cr).uniqueResult();
     }
 
     public void delete(Competitor competitor) {

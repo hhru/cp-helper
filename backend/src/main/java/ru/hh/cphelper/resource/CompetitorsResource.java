@@ -44,8 +44,7 @@ public class CompetitorsResource {
     @DELETE
     @Path("/{id}/competitors")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response delete(@PathParam("id") Integer employerId, CompetitorDto competitorDto) {
+    public void delete(@PathParam("id") Integer employerId, CompetitorDto competitorDto) {
         competitorsService.delete(CompetitorsHelper.map(employerId, competitorDto));
-        return Response.status(Response.Status.NO_CONTENT).build();
     }
 }
