@@ -5,9 +5,9 @@ import Search from 'components/Search/Search';
 import SearchHistory from './SearchHistory/SearchHistory';
 import Button from '../Button/Button';
 
-import {chooseCompany, resetCompany, fetchCompany } from 'redux/search/companiesActions';
+import {chooseCompany, resetCompany, fetchCompany } from 'redux/companies/companiesActions';
 import {resetCompetitors} from 'redux/competitors/competitorsActions';
-import {fetchArea, chooseArea, initAreas} from 'redux/areas/areasAction';
+import {filterArea, chooseArea, initAreas} from 'redux/areas/areasAction';
 
 import {COMPANY_SEARCH} from '../MainComponent';
 
@@ -25,7 +25,7 @@ const CompanySearch = ({
     companies,
     initAreas,
     plainAreas,
-    fetchArea,
+    filterArea,
     chooseArea,
     filteredAreas,
     areaId
@@ -49,7 +49,7 @@ const CompanySearch = ({
         <section className="company-search-section">
             <div className="company-search-section__search">
                 <Search 
-                    fetch={fetchArea}
+                    fetch={filterArea}
                     items={filteredAreas}
                     choose={chooseArea}
                     payload={areaId}
@@ -86,7 +86,7 @@ export default connect(
         resetCompetitors,
         resetCompany,
         fetchCompany,
-        fetchArea,
+        filterArea,
         chooseArea,
         initAreas,
     }

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import AREAS_HH_API_URL from 'utils/constant.js';
+import {AREAS_HH_API_URL} from 'utils/constants';
 
 export const FILTER_AREA = 'FILTER_AREA';
 export const CHOOSE_AREA = 'CHOOSE_AREA';
@@ -59,7 +59,7 @@ export function initAreas() {
 
 function getPlainAreas(hierachyAreas) {
     let plainAreas = [];
-    hierachyAreas.forEach((area) => plainAreas.push(recurseAreaProcessing(area)));
+    hierachyAreas.forEach((area) => plainAreas = plainAreas.concat(recurseAreaProcessing(area)));
     return plainAreas;
 }
 
@@ -68,7 +68,7 @@ function recurseAreaProcessing(area) {
         return [{"id" : area.id, "name" : area.name}];
     } else {
         let result = [{"id" : area.id, "name" : area.name}];
-        area.areas.forEach((ar) => result.push(recurseAreaProcessing(ar)));
+        area.areas.forEach((ar) => result = result.concat(recurseAreaProcessing(ar)));
         return result;
     }
 }

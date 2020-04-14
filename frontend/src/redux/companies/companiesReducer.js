@@ -1,6 +1,6 @@
 import {createReducer} from 'redux-create-reducer';
 
-import {FETCH_COMPANY, CHOOSE_COMPANY} from './searchActions';
+import {FETCH_COMPANY, CHOOSE_COMPANY} from './companiesActions';
 
 
 export const initialState = {

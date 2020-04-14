@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 
-import {companiesReducer} from './search/companiesReducer';
+import {companiesReducer} from './companies/companiesReducer';
 import {competitorsReducer} from './competitors/competitorsReducer';
 import {areaSearchReducer} from './areas/areasReducer';
 
