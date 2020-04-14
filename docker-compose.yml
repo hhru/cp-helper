@@ -107,5 +107,3 @@ services:
           done
         # So that the container doesn't shut down, sleep this thread
         sleep infinity
-
-
