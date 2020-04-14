@@ -5,8 +5,6 @@ import org.junit.Test;
 import ru.hh.cphelper.entity.Competitor;
 import ru.hh.cphelper.service.CompetitorsService;
 import javax.inject.Inject;
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +20,8 @@ public class CompetitorsServiceTest extends CpHelperTestBase {
         Competitor competitor = new Competitor(1, 2, 3);
         transactionalScope.write(() -> currentSession().save(competitor));
         transactionalScope.write(() -> competitorsService.add(competitor));
-        int competitorsListSize = transactionalScope.read(() -> currentSession().createQuery("FROM Competitor", Competitor.class).getResultList().size());
+        int competitorsListSize = transactionalScope.read(() ->
+                currentSession().createQuery("FROM Competitor", Competitor.class).getResultList().size());
         assertEquals(1, competitorsListSize);
     }
 
@@ -32,7 +31,8 @@ public class CompetitorsServiceTest extends CpHelperTestBase {
         transactionalScope.write(() -> currentSession().save(competitor));
         Competitor competitorToAdd = new Competitor(1, 2, null);
         transactionalScope.write(() -> competitorsService.add(competitorToAdd));
-        int competitorsListSize = transactionalScope.read(() -> currentSession().createQuery("FROM Competitor", Competitor.class).getResultList().size());
+        int competitorsListSize = transactionalScope.read(() ->
+                currentSession().createQuery("FROM Competitor", Competitor.class).getResultList().size());
         assertEquals(2, competitorsListSize);
 
     }
@@ -42,7 +42,8 @@ public class CompetitorsServiceTest extends CpHelperTestBase {
         Competitor competitor = new Competitor(1, 2, 3);
         transactionalScope.write(() -> currentSession().save(competitor));
         transactionalScope.write(() -> competitorsService.delete(competitor));
-        int competitorsListSize = transactionalScope.read(() -> currentSession().createQuery("FROM Competitor", Competitor.class).getResultList().size());
+        int competitorsListSize = transactionalScope.read(() ->
+                currentSession().createQuery("FROM Competitor", Competitor.class).getResultList().size());
         assertEquals(0, competitorsListSize);
     }
 
@@ -52,7 +53,8 @@ public class CompetitorsServiceTest extends CpHelperTestBase {
         transactionalScope.write(() -> currentSession().save(competitor));
         Competitor competitorToDelete = new Competitor(1, 2, null);
         transactionalScope.write(() -> competitorsService.delete(competitorToDelete));
-        int competitorsListSize = transactionalScope.read(() -> currentSession().createQuery("FROM Competitor", Competitor.class).getResultList().size());
+        int competitorsListSize = transactionalScope.read(() ->
+                currentSession().createQuery("FROM Competitor", Competitor.class).getResultList().size());
         assertEquals(1, competitorsListSize);
     }
 

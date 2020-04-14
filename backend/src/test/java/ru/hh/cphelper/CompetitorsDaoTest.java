@@ -3,7 +3,6 @@ package ru.hh.cphelper;
 import org.junit.Test;
 import ru.hh.cphelper.dao.CompetitorsDao;
 import ru.hh.cphelper.entity.Competitor;
-
 import javax.inject.Inject;
 
 import static org.junit.Assert.assertEquals;
