@@ -1,12 +1,14 @@
 package ru.hh.cphelper;
 
 import org.junit.Test;
+import org.springframework.test.context.ContextConfiguration;
 import ru.hh.cphelper.dao.CompetitorsDao;
 import ru.hh.cphelper.entity.Competitor;
 import javax.inject.Inject;
 
 import static org.junit.Assert.assertEquals;
 
+@ContextConfiguration(classes = CpHelperTestConfig.class)
 public class CompetitorsDaoTest extends CpHelperTestBase {
 
     @Inject
