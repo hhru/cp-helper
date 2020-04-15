@@ -5,7 +5,7 @@
   padding: 9px 10px;
   height: 38px;
   width: 100%;
-  margin: 5px 0;
+  margin: 5px 10px 5px 0;
 
   &:focus, &:active {
     border-color: #0f8fee;
@@ -14,13 +14,14 @@
     z-index: 1;
   }
 
-  &:invalid {
-    box-shadow: none;
-    border-color: #c52929;
-  }
-
   &::placeholder {
     color: #aeb5b9;
     font: normal 14px/143% Arial;
+  }
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 }
