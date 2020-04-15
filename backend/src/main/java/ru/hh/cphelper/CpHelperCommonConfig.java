@@ -15,8 +15,10 @@ import ru.hh.nab.hibernate.datasource.RoutingDataSource;
 import javax.sql.DataSource;
 
 @Configuration
-@Import({CompetitorsDao.class,
-        CompetitorsService.class})
+@Import({
+    CompetitorsDao.class,
+    CompetitorsService.class
+})
 public class CpHelperCommonConfig {
     @Bean
     public MappingConfig mappingConfig() {

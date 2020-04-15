@@ -11,10 +11,12 @@ import ru.hh.nab.testbase.NabTestConfig;
 import ru.hh.nab.testbase.hibernate.NabHibernateTestBaseConfig;
 
 @Configuration
-@Import({NabTestConfig.class,
-        NabHibernateCommonConfig.class,
-        CpHelperCommonConfig.class,
-        NabHibernateTestBaseConfig.class})
+@Import({
+    NabTestConfig.class,
+    NabHibernateCommonConfig.class,
+    CpHelperCommonConfig.class,
+    NabHibernateTestBaseConfig.class
+})
 public class CpHelperTestConfig {
 
   @Bean

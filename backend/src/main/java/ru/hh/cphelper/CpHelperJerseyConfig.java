@@ -6,6 +6,9 @@ import ru.hh.cphelper.resource.CompetitorsResource;
 import ru.hh.cphelper.resource.ExampleResource;
 
 @Configuration
-@Import({ExampleResource.class, CompetitorsResource.class})
+@Import({
+    ExampleResource.class,
+    CompetitorsResource.class
+})
 public class CpHelperJerseyConfig {
 }
