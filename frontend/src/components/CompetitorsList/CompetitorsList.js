@@ -11,8 +11,8 @@ import Search from 'components/Search/Search';
 
 import { COMPETITORS_LIST } from 'components/MainComponent';
 
-import { fetchCompetitors, deleteCompetitor, addCompetitor } from 'redux/competitors/competitorsActions';
-import { chooseCompetitor } from 'redux/search/searchActions';
+import { fetchCompetitors, deleteCompetitor, addCompetitor, chooseCompetitor } from 'redux/competitors/competitorsActions';
+import { fetchCompany } from 'redux/companies/companiesActions';
 
 import './CompetitorsList.css';
 
@@ -28,6 +28,9 @@ const CompetitorsList = ({
     deleteCompetitor,
     chooseCompetitor,
     addCompetitor,
+    areaId,
+    fetchCompany,
+    companies
 }) => {
 
     if (currentTab !== COMPETITORS_LIST) {
@@ -87,15 +90,20 @@ const CompetitorsList = ({
                 <div className="background-section">
                     <div className="competitors-list-section__search">
                         <Search 
+                            fetch={fetchCompany}
+                            items={companies}
                             choose={chooseCompetitor}
-                            onClick={clickSearch}
                             payload={competitorId}
+                            placeholderText={'Введите название компании'}
                         >
-                            <div className="close">
-                                <ButtonIcon onClick={clickClose}>
-                                    <CloseIcon size={30}/>
-                                </ButtonIcon>
-                            </div>
+                        <div className="search__btn">
+                            <Button onClick={clickSearch} disabled={!competitorId}>Выбрать компанию</Button>
+                        </div>
+                        <div className="close">
+                            <ButtonIcon onClick={clickClose}>
+                                <CloseIcon size={30}/>
+                            </ButtonIcon>
+                        </div>
                         </Search>
                     </div>
                 </div>
@@ -110,14 +118,17 @@ const CompetitorsList = ({
 
 export default connect(
     state => ({
-        companyId: state.search.companyId,
-        competitorId: state.search.competitorId,
+        companyId: state.companies.companyId,
+        competitorId: state.competitors.competitorId,
         competitors: state.competitors.competitors,
+        areaId: state.areas.areaId,
+        companies: state.companies.companies,
     }),
     {
         fetchCompetitors,
         chooseCompetitor,
         deleteCompetitor,
         addCompetitor,
+        fetchCompany,
     },
 )(CompetitorsList);

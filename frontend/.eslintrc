@@ -1,7 +1,7 @@
 {
   "extends": [
     "react-app",
-    "hh"
+    "@hh.ru/eslint-config"
   ],
   "import/resolver": {
     "node": {

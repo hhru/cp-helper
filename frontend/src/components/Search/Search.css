@@ -1,11 +1,9 @@
 .search {
     display: flex;
+    width: 100%;
     &__select {
-        flex-grow: 7;
+        margin-right: 10px;
+        width: 100%;
         position: relative;
-    }
-    &__btn {
-        flex-grow: 3;
-        margin-left: 10px;
     }
 }

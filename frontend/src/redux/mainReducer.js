@@ -1,10 +1,12 @@
 import {combineReducers} from 'redux';
 
-import {searchReducer} from './search/searchReducer';
+import {companiesReducer} from './companies/companiesReducer';
 import {competitorsReducer} from './competitors/competitorsReducer';
+import {areaSearchReducer} from './areas/areasReducer';
 
 
 export default combineReducers({
-    search: searchReducer,
+    companies: companiesReducer,
     competitors: competitorsReducer,
+    areas: areaSearchReducer,
 });
