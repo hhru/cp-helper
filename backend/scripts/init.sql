@@ -3,16 +3,9 @@ CREATE TABLE competitors (
     employer_id integer NOT NULL,
     competitor_id integer NOT NULL,
     area_id integer DEFAULT NULL,
-    relevance_index float DEFAULT 1.0
+    relevance_index float DEFAULT 1.0,
+    CONSTRAINT uniq_comp UNIQUE(employer_id, competitor_id, area_id)
 );
-
-CREATE UNIQUE INDEX competitors_unique_area_not_null
-    ON competitors (employer_id, competitor_id, area_id)
-    WHERE area_id IS NOT NULL;
-
-CREATE UNIQUE INDEX competitors_unique_area_null
-    ON competitors (employer_id, competitor_id)
-    WHERE area_id IS NULL;
 
 INSERT INTO competitors(employer_id, competitor_id, area_id, relevance_index)
 VALUES (1455, 1870, 113, 0.9),
@@ -21,3 +14,25 @@ VALUES (1455, 1870, 113, 0.9),
        (1455, 2605703, 113, 0.66),
        (1455, 2624107, 113, 0.44),
        (1455, 1269556, 113, 0.7);
+
+create TABLE day_report (
+    id bigserial PRIMARY KEY,
+    service_id integer NOT NULL,
+    service_quantity integer NOT NULL,
+    service_name varchar(220) DEFAULT ''::varchar NOT NULL,
+    service_order_date timestamp NOT NULL,
+    responses_quantity integer NOT NULL,
+    employer_id integer DEFAULT NULL,
+    prof_area varchar(50) DEFAULT ''::varchar
+);
+
+create index idx_day_report_employer_id on day_report(employer_id);
+
+comment on table day_report is 'Once per day updated table of the most efficient Headhunter services by employer';
+comment on column day_report.service_quantity is 'Amount of the service ordered';
+
+insert  into day_report(service_id, service_quantity, service_name, service_order_date, responses_quantity, employer_id, prof_area) 
+values(
+	3, 22, 'Access to a resume database', now(), 555, 1455, 'Hiring'
+);
+
