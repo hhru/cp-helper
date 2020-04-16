@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "competitors")
@@ -76,5 +77,24 @@ public class Competitor implements Serializable {
 
     public void setRelevanceIndex(Float relevanceIndex) {
         this.relevanceIndex = relevanceIndex;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Competitor that = (Competitor) o;
+        return employerId.equals(that.employerId) &&
+                competitorId.equals(that.competitorId) &&
+                Objects.equals(areaId, that.areaId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(employerId, competitorId, areaId);
     }
 }

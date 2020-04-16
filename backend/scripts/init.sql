@@ -3,9 +3,16 @@ CREATE TABLE competitors (
     employer_id integer NOT NULL,
     competitor_id integer NOT NULL,
     area_id integer DEFAULT NULL,
-    relevance_index float DEFAULT 1.0,
-    CONSTRAINT uniq_comp UNIQUE(employer_id, competitor_id, area_id)
+    relevance_index float DEFAULT 1.0
 );
+
+CREATE UNIQUE INDEX competitors_unique_area_not_null
+    ON competitors (employer_id, competitor_id, area_id)
+    WHERE area_id IS NOT NULL;
+
+CREATE UNIQUE INDEX competitors_unique_area_null
+    ON competitors (employer_id, competitor_id)
+    WHERE area_id IS NULL;
 
 INSERT INTO competitors(employer_id, competitor_id, area_id, relevance_index)
 VALUES (1455, 1870, 113, 0.9),

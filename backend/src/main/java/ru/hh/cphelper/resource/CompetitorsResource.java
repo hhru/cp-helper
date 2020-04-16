@@ -1,8 +1,8 @@
 package ru.hh.cphelper.resource;
 
 import ru.hh.cphelper.dto.CompetitorsIdsDto;
-import ru.hh.cphelper.dto.CompetitorMiniDto;
-import ru.hh.cphelper.mapper.CompetitorsHelper;
+import ru.hh.cphelper.dto.CompetitorDto;
+import ru.hh.cphelper.utils.CompetitorsHelper;
 import ru.hh.cphelper.service.CompetitorsService;
 
 import javax.inject.Inject;
@@ -29,30 +29,22 @@ public class CompetitorsResource {
     @GET
     @Path("/{id}/competitors")
     @Produces(MediaType.APPLICATION_JSON)
-    public CompetitorsIdsDto getCompetitors(@PathParam("id") Integer id) {
-        return CompetitorsHelper.map(competitorsService.getCompetitorsIds(id));
+    public CompetitorsIdsDto getCompetitors(@PathParam("id") Integer employerId) {
+        return CompetitorsHelper.map(competitorsService.getCompetitorsIds(employerId));
     }
 
     @POST
     @Path("/{id}/competitors")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response add(@PathParam("id") Integer id, CompetitorMiniDto competitorMiniDto) {
-        if (competitorsService.add(CompetitorsHelper.map(id, competitorMiniDto))) {
-            return Response.status(Response.Status.OK).build();
-        } else {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
+    public Response add(@PathParam("id") Integer employerId, CompetitorDto competitorDto) {
+        competitorsService.add(CompetitorsHelper.map(employerId, competitorDto));
+        return Response.status(Response.Status.OK).build();
     }
 
     @DELETE
     @Path("/{id}/competitors")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response delete(@PathParam("id") Integer id, CompetitorMiniDto competitorMiniDto) {
-        try {
-            competitorsService.delete(CompetitorsHelper.map(id, competitorMiniDto));
-            return Response.status(Response.Status.NO_CONTENT).build();
-        } catch (Exception e) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+    public void delete(@PathParam("id") Integer employerId, CompetitorDto competitorDto) {
+        competitorsService.delete(CompetitorsHelper.map(employerId, competitorDto));
     }
 }

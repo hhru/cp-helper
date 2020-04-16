@@ -10,18 +10,20 @@ import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.nab.datasource.DataSourceFactory;
 import ru.hh.nab.datasource.DataSourceType;
 import ru.hh.nab.hibernate.MappingConfig;
-import ru.hh.nab.hibernate.NabHibernateProdConfig;
+import ru.hh.nab.hibernate.NabHibernateCommonConfig;
 import ru.hh.nab.hibernate.datasource.RoutingDataSource;
-import ru.hh.nab.starter.NabProdConfig;
+import ru.hh.nab.starter.NabCommonConfig;
 
 import javax.sql.DataSource;
 
 @Configuration
-@Import({NabProdConfig.class,
-        NabHibernateProdConfig.class,
-        CompetitorsDao.class,
-        CompetitorsService.class})
-public class ProdConfig {
+@Import({
+    NabCommonConfig.class,
+    NabHibernateCommonConfig.class,
+    CompetitorsDao.class,
+    CompetitorsService.class
+})
+public class CpHelperCommonConfig {
     @Bean
     public MappingConfig mappingConfig() {
         return new MappingConfig(Competitor.class);
@@ -37,5 +39,4 @@ public class ProdConfig {
 
         return routingDataSource;
     }
-
 }

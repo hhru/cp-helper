@@ -33,17 +33,7 @@ public class CompetitorsDao {
                 .stream();
     }
 
-    public boolean add(Competitor competitor) {
-        try {
-            get(competitor);
-            return false;
-        } catch (Exception e) {
-            getCurrentSession().save(competitor);
-            return true;
-        }
-    }
-
-    public Competitor get(Competitor competitor) {
+    public Competitor find(Competitor competitor) {
         Session session = getCurrentSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<Competitor> cr = cb.createQuery(Competitor.class);
@@ -59,10 +49,14 @@ public class CompetitorsDao {
         }
 
         cr.select(root).where(predicates);
-        return session.createQuery(cr).getSingleResult();
+        return session.createQuery(cr).uniqueResult();
     }
 
     public void delete(Competitor competitor) {
-        getCurrentSession().delete(get(competitor));
+        getCurrentSession().delete(competitor);
+    }
+
+    public void save(Competitor competitor) {
+        getCurrentSession().save(competitor);
     }
 }
