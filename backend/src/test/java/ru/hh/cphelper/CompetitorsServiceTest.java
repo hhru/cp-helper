@@ -1,8 +1,6 @@
 package ru.hh.cphelper;
 
-
 import org.junit.Test;
-import org.springframework.test.context.ContextConfiguration;
 import ru.hh.cphelper.entity.Competitor;
 import ru.hh.cphelper.service.CompetitorsService;
 import javax.inject.Inject;
@@ -10,7 +8,6 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-@ContextConfiguration(classes = CpHelperTestConfig.class)
 public class CompetitorsServiceTest extends CpHelperTestBase {
 
     @Inject

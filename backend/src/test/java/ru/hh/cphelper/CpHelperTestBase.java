@@ -1,11 +1,11 @@
 package ru.hh.cphelper;
 
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.After;
 import org.springframework.test.context.ContextConfiguration;
 import ru.hh.nab.hibernate.transaction.TransactionalScope;
+import ru.hh.nab.starter.NabApplication;
 import ru.hh.nab.testbase.NabTestBase;
 
 import javax.inject.Inject;
@@ -28,5 +28,10 @@ public abstract class CpHelperTestBase extends NabTestBase {
         transactionalScope.write(() -> {
             currentSession().createQuery("DELETE FROM Competitor").executeUpdate();
         });
+    }
+
+    @Override
+    protected NabApplication getApplication() {
+        return CpHelperMain.build();
     }
 }

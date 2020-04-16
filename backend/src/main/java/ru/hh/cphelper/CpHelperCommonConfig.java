@@ -10,12 +10,16 @@ import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.nab.datasource.DataSourceFactory;
 import ru.hh.nab.datasource.DataSourceType;
 import ru.hh.nab.hibernate.MappingConfig;
+import ru.hh.nab.hibernate.NabHibernateCommonConfig;
 import ru.hh.nab.hibernate.datasource.RoutingDataSource;
+import ru.hh.nab.starter.NabCommonConfig;
 
 import javax.sql.DataSource;
 
 @Configuration
 @Import({
+    NabCommonConfig.class,
+    NabHibernateCommonConfig.class,
     CompetitorsDao.class,
     CompetitorsService.class
 })
