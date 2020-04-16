@@ -4,6 +4,5 @@ Commercial proposal helper
 
 ## Docker-compose
 Запуск контейнеров с базой данных, backend-сервисом, frontend react приложением, kafka и zookeeper
-`run.sh`  
-`run.sh --dev` - запуск в режиме debug
-
+`bash run.sh`  
+`bash run.sh --dev` - запуск в режиме debug
