@@ -7,7 +7,7 @@ const Input = forwardRef(({ children, inputType, placeholderText, onChange, valu
     return (
         <input
             ref={ref}
-            className="hh-input"
+            className={'hh-input'}
             type={inputType}
             placeholder={placeholderText}
             onChange={onChange}

@@ -57,6 +57,12 @@ export function initAreas() {
     };   
 }
 
+export function resetArea() {
+    return (dispatch) => {
+        dispatch(chooseAreaAction(undefined));
+    };
+}
+
 function getPlainAreas(hierachyAreas) {
     let plainAreas = [];
     hierachyAreas.forEach((area) => plainAreas = plainAreas.concat(recurseAreaProcessing(area)));
