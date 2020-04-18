@@ -5,7 +5,6 @@ import ContentWrapper from 'components/ContentWrapper/ContentWrapper';
 
 import './Footer.css';
 
-
 const Footer = () => {
 
     const now = new Date();

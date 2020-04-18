@@ -1,5 +1,6 @@
 /* eslint-disable quote-props */
 import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import ContentWrapper from 'components/ContentWrapper/ContentWrapper';
@@ -10,7 +11,6 @@ import {COMPANY_SEARCH, COMPETITORS_LIST, CORPORATE_OFFER} from '../MainComponen
 
 import './Tab.css';
 
-
 const Tab = ({children, currentTab}) => {
     return (
         <ContentWrapper>
@@ -19,7 +19,7 @@ const Tab = ({children, currentTab}) => {
                     <Columns s={1} m={2} l={4}>
                         <div className={classNames(
                             'tab__element',
-                            {'tab__element_active': currentTab === COMPANY_SEARCH},
+                            {'tab__element_active': currentTab === COMPANY_SEARCH}
                         )}>
                             1. Поиск по компаниям
                         </div>
@@ -27,7 +27,7 @@ const Tab = ({children, currentTab}) => {
                     <Columns s={1} m={2} l={4}>
                         <div className={classNames(
                             'tab__element',
-                            {'tab__element_active': currentTab === COMPETITORS_LIST},
+                            {'tab__element_active': currentTab === COMPETITORS_LIST}
                         )}>
                             2. Просмотр конкурентов
                         </div>
@@ -35,7 +35,7 @@ const Tab = ({children, currentTab}) => {
                     <Columns s={1} m={2} l={4}>
                         <div className={classNames(
                             'tab__element',
-                            {'tab__element_active': currentTab === CORPORATE_OFFER},
+                            {'tab__element_active': currentTab === CORPORATE_OFFER}
                         )}>
                             3. Корпоративное предложение
                         </div>
@@ -47,6 +47,14 @@ const Tab = ({children, currentTab}) => {
             </div>
         </ContentWrapper>
     );
+};
+
+Tab.propTypes = {
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node,
+    ]).isRequired,
+    currentTab: PropTypes.string.isRequired,
 };
 
 export default Tab;

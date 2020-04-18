@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './SelectItem.css';
-
 
 const SelectItem = ({inputType, onClick, name, ...rest}) => (
     <input
@@ -16,6 +16,12 @@ const SelectItem = ({inputType, onClick, name, ...rest}) => (
 
 SelectItem.defaultProps = {
     inputType: 'text',
+};
+
+SelectItem.propTypes = {
+    inputType: PropTypes.string,
+    onClick: PropTypes.func.isRequired,
+    name: PropTypes.string.isRequired,
 };
 
 export default SelectItem;

@@ -2,7 +2,6 @@ import {createReducer} from 'redux-create-reducer';
 
 import {FETCH_COMPANY, CHOOSE_COMPANY} from './companiesActions';
 
-
 export const initialState = {
     companyId: undefined,
     companies: undefined,

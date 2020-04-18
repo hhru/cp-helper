@@ -1,27 +1,24 @@
 import React, {useEffect, useState, useRef} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import Search from 'components/Search/Search';
-import SearchHistory from './SearchHistory/SearchHistory';
+import SearchHistory from 'components/CompanySearch/SearchHistory/SearchHistory';
 import Checkbox from 'components/Checkbox/Checkbox';
 import Input from 'components/Input/Input';
-import Button from '../Button/Button';
+import Button from 'components/Button/Button';
 
 import {chooseCompany, resetCompany, fetchCompany } from 'redux/companies/companiesActions';
 import {resetCompetitors} from 'redux/competitors/competitorsActions';
 import {filterArea, chooseArea, initAreas, resetArea} from 'redux/areas/areasAction';
 
-import {COMPANY_SEARCH} from '../MainComponent';
-
 import './CompanySearch.css';
 
-
-const CompanySearch = ({ 
-    currentTab, 
-    openCompetitorsList, 
-    companyId, 
-    chooseCompany, 
-    resetCompany, 
+const CompanySearch = ({
+    openCompetitorsList,
+    companyId,
+    chooseCompany,
+    resetCompany,
     resetCompetitors,
     fetchCompany,
     companies,
@@ -34,15 +31,11 @@ const CompanySearch = ({
     resetArea,
 }) => {
 
-    if (currentTab !== COMPANY_SEARCH) {
-        return null;
-    }
-
     const [isSearchById, setIsSearchById] = useState(false);
 
     const companyIdInput = useRef(null);
 
-    useEffect( () => {
+    useEffect(() => {
         if (companyId) {
             resetCompany();
             resetCompetitors();
@@ -55,24 +48,24 @@ const CompanySearch = ({
 
     const inputCompanyId = () => {
         chooseCompany(companyIdInput.current.value);
-    }
+    };
 
     const changeTypeSearch = () => {
         setIsSearchById(!isSearchById);
-    }
+    };
 
     return (
         <section className="company-search-section">
             <div className="company-search-section__search">
-                { isSearchById ? 
+                { isSearchById ?
                     <Input
                         placeholderText={'Введите идентификатор компании'}
                         ref={companyIdInput}
                         onChange={inputCompanyId}
                         inputType={"number"}
-                    /> 
+                    />
                     :
-                    <Search 
+                    <Search
                         fetch={fetchCompany}
                         items={companies}
                         choose={chooseCompany}
@@ -80,7 +73,7 @@ const CompanySearch = ({
                         placeholderText={'Введите название компании'}
                     />
                 }
-                <Search 
+                <Search
                     fetch={filterArea}
                     items={filteredAreas}
                     choose={chooseArea}
@@ -92,7 +85,7 @@ const CompanySearch = ({
                 </div>
             </div>
             <div className="company-search-section__checkboxId">
-                <Checkbox 
+                <Checkbox
                     labelText="Искать по идентификатору компании"
                     id="searchId"
                     onChange={changeTypeSearch}
@@ -105,8 +98,25 @@ const CompanySearch = ({
     );
 };
 
+CompanySearch.propTypes = {
+    openCompetitorsList: PropTypes.func.isRequired,
+    companyId: PropTypes.string,
+    chooseCompany: PropTypes.func,
+    resetCompany: PropTypes.func,
+    resetCompetitors: PropTypes.func,
+    fetchCompany: PropTypes.func,
+    companies: PropTypes.array,
+    initAreas: PropTypes.func,
+    plainAreas: PropTypes.array,
+    filterArea: PropTypes.func,
+    chooseArea: PropTypes.func,
+    filteredAreas: PropTypes.array,
+    areaId: PropTypes.string,
+    resetArea: PropTypes.func,
+};
+
 export default connect(
-    state => ({
+    (state) => ({
         companyId: state.companies.companyId,
         companies: state.companies.companies,
         areaId: state.areas.areaId,
