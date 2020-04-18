@@ -8,6 +8,7 @@ import Competitor from './Competitor/Competitor';
 import AddIcon from 'components/Icons/AddIcon';
 import Loader from 'components/Loader/Loader';
 import Search from 'components/Search/Search';
+import CompetitorsForm from 'components/forms/CompetitorsForm/CompetitorsForm';
 
 import { COMPETITORS_LIST } from 'components/MainComponent';
 
@@ -61,6 +62,7 @@ const CompetitorsList = ({
 
     return (
         <section className="competitors-list-section">
+            <CompetitorsForm competitors={competitors} />
             {!competitors && 
                 <div className="competitors-list-section__loader">
                     <Loader/>

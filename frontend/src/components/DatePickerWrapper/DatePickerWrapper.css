@@ -1,0 +1,5 @@
+.hh-datepicker-wrapper {
+  & > label {
+    margin-right: 8px;
+  }
+}
