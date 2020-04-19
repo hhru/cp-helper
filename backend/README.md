@@ -5,7 +5,7 @@
 `mvn exec:java`
 
 ## Api
-GET /report/services/
+GET /report/services
 По списку работадателей (employerId) возвращает список самых эффективных услуг. 
 Поля: Код работодателя, код услуги, имя услуги, количество заказанных услуг, количество откликов на вакансии по услуге, дата заказа услуги работодателем.
 employerId, serviceId, serviceName, serviceQuantity, responseQuantity, orderDate:
@@ -13,7 +13,7 @@ employerId, serviceId, serviceName, serviceQuantity, responseQuantity, orderDate
 GET /report/services?employerId=1&employerId=1455
 
 Пример
-/report/services/?employerId=1455
+/report/services?employerId=1455
 Возвращает 
 [{"employerId":1455,"serviceId":3,"serviceName":"Access to the resume database","serviceQuantity":22,"responseQuantity":555,"orderDate":{"year":2020,"month":"APRIL","dayOfWeek":"SUNDAY","dayOfYear":110,"era":"CE","monthValue":4,"dayOfMonth":19,"chronology":{"calendarType":"iso8601","id":"ISO"},"leapYear":true}}]
 
