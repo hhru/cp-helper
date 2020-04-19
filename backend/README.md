@@ -5,10 +5,12 @@
 `mvn exec:java`
 
 ## Api
-/report/services/
+GET /report/services/
 По списку работадателей (employerId) возвращает список самых эффективных услуг. 
 Поля: Код работодателя, код услуги, имя услуги, количество заказанных услуг, количество откликов на вакансии по услуге, дата заказа услуги работодателем.
 employerId, serviceId, serviceName, serviceQuantity, responseQuantity, orderDate:
+
+GET /report/services?employerId=1&employerId=1455
 
 Пример
 /report/services/?employerId=1455
