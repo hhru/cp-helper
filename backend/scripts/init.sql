@@ -20,10 +20,10 @@ create TABLE day_report (
     service_id integer NOT NULL,
     service_quantity integer NOT NULL,
     service_name varchar(220) DEFAULT ''::varchar NOT NULL,
-    service_order_date timestamp NOT NULL,
-    responses_quantity integer NOT NULL,
+    service_order_date date NOT NULL,
+    response_quantity integer NOT NULL,
     employer_id integer DEFAULT NULL,
-    prof_area varchar(50) DEFAULT ''::varchar
+    prof_area varchar(100) DEFAULT ''::varchar
 );
 
 create index idx_day_report_employer_id on day_report(employer_id);
@@ -33,6 +33,6 @@ comment on column day_report.service_quantity is 'Amount of the service ordered'
 
 insert  into day_report(service_id, service_quantity, service_name, service_order_date, responses_quantity, employer_id, prof_area) 
 values(
-	3, 22, 'Access to a resume database', now(), 555, 1455, 'Hiring'
+	3, 22, 'Access to the resume database', now(), 555, 1455, 'Hiring'
 );
 
