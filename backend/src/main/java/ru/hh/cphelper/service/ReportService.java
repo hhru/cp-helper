@@ -23,5 +23,4 @@ public class ReportService {
     public List<Report> getReports(List<Integer> employerId) {
         return reportDao.getReports(employerId).collect(Collectors.toList());
     }
-
 }

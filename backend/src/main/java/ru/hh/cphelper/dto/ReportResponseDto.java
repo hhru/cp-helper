@@ -19,7 +19,8 @@ public class ReportResponseDto {
     public ReportResponseDto() {
     }
 
-    public ReportResponseDto(Integer employerId, Integer serviceId, String serviceName, Integer serviceQuantity, Integer responseQuantity, LocalDate orderDate) {
+    public ReportResponseDto(Integer employerId, Integer serviceId, String serviceName, Integer serviceQuantity,
+                             Integer responseQuantity, LocalDate orderDate) {
         this.employerId = employerId;
         this.serviceId = serviceId;
         this.serviceName = serviceName;

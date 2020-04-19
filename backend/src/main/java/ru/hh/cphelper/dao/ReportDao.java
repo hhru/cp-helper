@@ -31,8 +31,9 @@ public class ReportDao {
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Report> criteriaQuery = criteriaBuilder.createQuery(Report.class);
         Root<Report> root = criteriaQuery.from(Report.class);
-        CriteriaBuilder.In<Integer> inClause = criteriaBuilder.in(root.get("employer_id"));
-        criteriaQuery.select(root).where(root.get("employer_id").in(employerId));
-        return session.createQuery(criteriaQuery).stream();
+        return session.createQuery(criteriaQuery
+                .select(root)
+                .where(root.get("employerId").in(employerId)))
+                .stream();
     }
 }

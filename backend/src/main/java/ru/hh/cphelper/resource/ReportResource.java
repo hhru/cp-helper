@@ -29,5 +29,4 @@ public class ReportResource {
                                             final List<Integer> employerId) {
         return ReportHelper.map(reportService.getReports(employerId));
     }
-
 }

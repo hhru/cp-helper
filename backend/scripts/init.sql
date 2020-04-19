@@ -31,7 +31,7 @@ create index idx_day_report_employer_id on day_report(employer_id);
 comment on table day_report is 'Once per day updated table of the most efficient Headhunter services by employer';
 comment on column day_report.service_quantity is 'Amount of the service ordered';
 
-insert  into day_report(service_id, service_quantity, service_name, service_order_date, responses_quantity, employer_id, prof_area) 
+insert  into day_report(service_id, service_quantity, service_name, service_order_date, response_quantity, employer_id, prof_area) 
 values(
 	3, 22, 'Access to the resume database', now(), 555, 1455, 'Hiring'
 );

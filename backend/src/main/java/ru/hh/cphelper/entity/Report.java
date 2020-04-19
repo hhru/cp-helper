@@ -43,7 +43,8 @@ public class Report implements Serializable {
     public Report() {
     }
 
-    public Report(Long id, Integer serviceId, Integer serviceQuantity, String serviceName, LocalDate serviceOrderDate, Integer responseQuantity, Integer employerId, String profArea) {
+    public Report(Long id, Integer serviceId, Integer serviceQuantity, String serviceName,
+                  LocalDate serviceOrderDate, Integer responseQuantity, Integer employerId, String profArea) {
         this.id = id;
         this.serviceId = serviceId;
         this.serviceQuantity = serviceQuantity;
