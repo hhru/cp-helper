@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 
@@ -14,108 +15,109 @@ import java.time.LocalDate;
 @Table(name = "day_report")
 public class Report implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id")
+  private Long id;
 
-    @Column(name = "service_id")
-    private Integer serviceId;
+  @Column(name = "service_id")
+  private Integer serviceId;
 
-    @Column(name = "service_quantity")
-    private Integer serviceQuantity;
+  @Column(name = "service_count")
+  private Integer serviceCount;
 
-    @Column(name = "service_name")
-    private String serviceName;
+  @Column(name = "service_name")
+  private String serviceName;
 
-    @Column(name = "service_order_date")
-    private LocalDate serviceOrderDate;
+  @Column(name = "service_order_date")
+  private LocalDate serviceOrderDate;
 
-    @Column(name = "response_quantity")
-    private Integer responseQuantity;
+  @Column(name = "response_quantity")
+  private Integer responseQuantity;
 
-    @Column(name = "employer_id")
-    private Integer employerId;
+  @Column(name = "employer_id")
+  private Integer employerId;
 
-    @Column(name = "prof_area")
-    private String profArea;
+  @Column(name = "specialization")
+  private BigDecimal specialization;
 
-    public Report() {
-    }
+  public Report() {
+  }
 
-    public Report(Long id, Integer serviceId, Integer serviceQuantity, String serviceName,
-                  LocalDate serviceOrderDate, Integer responseQuantity, Integer employerId, String profArea) {
-        this.id = id;
-        this.serviceId = serviceId;
-        this.serviceQuantity = serviceQuantity;
-        this.serviceName = serviceName;
-        this.serviceOrderDate = serviceOrderDate;
-        this.responseQuantity = responseQuantity;
-        this.employerId = employerId;
-        this.profArea = profArea;
-    }
+  public Report(Long id, Integer serviceId, Integer serviceCount,
+                String serviceName, LocalDate serviceOrderDate, Integer responseQuantity,
+                Integer employerId, BigDecimal specialization) {
+    this.id = id;
+    this.serviceId = serviceId;
+    this.serviceCount = serviceCount;
+    this.serviceName = serviceName;
+    this.serviceOrderDate = serviceOrderDate;
+    this.responseQuantity = responseQuantity;
+    this.employerId = employerId;
+    this.specialization = specialization;
+  }
 
-    public String getProfArea() {
-        return profArea;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public void setProfArea(String profArea) {
-        this.profArea = profArea;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public Long getId() {
-        return id;
-    }
+  public Integer getServiceId() {
+    return serviceId;
+  }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  public void setServiceId(Integer serviceId) {
+    this.serviceId = serviceId;
+  }
 
-    public Integer getServiceId() {
-        return serviceId;
-    }
+  public Integer getServiceCount() {
+    return serviceCount;
+  }
 
-    public void setServiceId(Integer serviceId) {
-        this.serviceId = serviceId;
-    }
+  public void setServiceCount(Integer serviceCount) {
+    this.serviceCount = serviceCount;
+  }
 
-    public Integer getServiceQuantity() {
-        return serviceQuantity;
-    }
+  public String getServiceName() {
+    return serviceName;
+  }
 
-    public void setServiceQuantity(Integer serviceQuantity) {
-        this.serviceQuantity = serviceQuantity;
-    }
+  public void setServiceName(String serviceName) {
+    this.serviceName = serviceName;
+  }
 
-    public String getServiceName() {
-        return serviceName;
-    }
+  public LocalDate getServiceOrderDate() {
+    return serviceOrderDate;
+  }
 
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
-    }
+  public void setServiceOrderDate(LocalDate serviceOrderDate) {
+    this.serviceOrderDate = serviceOrderDate;
+  }
 
-    public LocalDate getServiceOrderDate() {
-        return serviceOrderDate;
-    }
+  public Integer getResponseQuantity() {
+    return responseQuantity;
+  }
 
-    public void setServiceOrderDate(LocalDate serviceOrderDate) {
-        this.serviceOrderDate = serviceOrderDate;
-    }
+  public void setResponseQuantity(Integer responseQuantity) {
+    this.responseQuantity = responseQuantity;
+  }
 
-    public Integer getResponseQuantity() {
-        return responseQuantity;
-    }
+  public Integer getEmployerId() {
+    return employerId;
+  }
 
-    public void setResponseQuantity(Integer responseQuantity) {
-        this.responseQuantity = responseQuantity;
-    }
+  public void setEmployerId(Integer employerId) {
+    this.employerId = employerId;
+  }
 
-    public Integer getEmployerId() {
-        return employerId;
-    }
+  public BigDecimal getSpecialization() {
+    return specialization;
+  }
 
-    public void setEmployerId(Integer employerId) {
-        this.employerId = employerId;
-    }
+  public void setSpecialization(BigDecimal specialization) {
+    this.specialization = specialization;
+  }
 }

@@ -21,27 +21,27 @@ import javax.sql.DataSource;
 
 @Configuration
 @Import({
-        NabCommonConfig.class,
-        NabHibernateCommonConfig.class,
-        CompetitorsDao.class,
-        CompetitorsService.class,
-        ReportDao.class,
-        ReportService.class
+    NabCommonConfig.class,
+    NabHibernateCommonConfig.class,
+    CompetitorsDao.class,
+    CompetitorsService.class,
+    ReportDao.class,
+    ReportService.class
 })
 public class CpHelperCommonConfig {
-    @Bean
-    public MappingConfig mappingConfig() {
-        return new MappingConfig(Competitor.class, Report.class);
-    }
+  @Bean
+  public MappingConfig mappingConfig() {
+    return new MappingConfig(Competitor.class, Report.class);
+  }
 
-    @Bean
-    public DataSource dataSource(DataSourceFactory dataSourceFactory, FileSettings settings) {
-        DataSource masterDataSource = dataSourceFactory.create(DataSourceType.MASTER, false, settings);
-        RoutingDataSource routingDataSource = new RoutingDataSource(masterDataSource);
+  @Bean
+  public DataSource dataSource(DataSourceFactory dataSourceFactory, FileSettings settings) {
+    DataSource masterDataSource = dataSourceFactory.create(DataSourceType.MASTER, false, settings);
+    RoutingDataSource routingDataSource = new RoutingDataSource(masterDataSource);
 
-        DataSource readonlyDataSource = dataSourceFactory.create(DataSourceType.READONLY, true, settings);
-        routingDataSource.addDataSource(DataSourceType.READONLY, readonlyDataSource);
+    DataSource readonlyDataSource = dataSourceFactory.create(DataSourceType.READONLY, true, settings);
+    routingDataSource.addDataSource(DataSourceType.READONLY, readonlyDataSource);
 
-        return routingDataSource;
-    }
+    return routingDataSource;
+  }
 }

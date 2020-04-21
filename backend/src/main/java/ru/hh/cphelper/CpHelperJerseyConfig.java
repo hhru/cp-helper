@@ -7,8 +7,8 @@ import ru.hh.cphelper.resource.ReportResource;
 
 @Configuration
 @Import({
-        CompetitorsResource.class,
-        ReportResource.class
+    CompetitorsResource.class,
+    ReportResource.class
 })
 public class CpHelperJerseyConfig {
 }

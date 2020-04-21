@@ -6,16 +6,17 @@
 
 ## Api
 GET /report/services
-По списку работадателей (employerId) возвращает список самых эффективных услуг. 
-Поля: Код работодателя, код услуги, имя услуги, количество заказанных услуг, количество откликов на вакансии по услуге, дата заказа услуги работодателем.
-employerId, serviceId, serviceName, serviceQuantity, responseQuantity, orderDate:
+По списку работадателей (employerId) и датам с () по () возвращает список услуг. 
+Поля: Код работодателя, код услуги, имя услуги, количество заказанных услуг, количество откликов на вакансии по услуге, дата заказа услуги работодателем, код специализации.
+employerId, serviceId, serviceName, serviceCount, responseQuantity, orderDate, specialization:
 
-GET /report/services?employerId=1&employerId=1455
+GET /report/services?employerId=1455&startDate=2020-01-31&endDate=2020-12-01
 
-Пример
-/report/services?employerId=1455
 Возвращает 
-[{"employerId":1455,"serviceId":3,"serviceName":"Access to the resume database","serviceQuantity":22,"responseQuantity":555,"orderDate":{"year":2020,"month":"APRIL","dayOfWeek":"SUNDAY","dayOfYear":110,"era":"CE","monthValue":4,"dayOfMonth":19,"chronology":{"calendarType":"iso8601","id":"ISO"},"leapYear":true}}]
+(```[{"employerId":1455,"serviceId":3,"serviceName":"Access to the resume database","serviceCount":22,"responseQuantity":555,"orderDate":"2020-04-21","specialization":1.3950}]```)
+
+Подробности: если не ввести начальную дату, то она по умолчанию 2000-01-01. Конечная по умолчанию 3000-01-01.
+Коды специализаций можно посмотреть тут: https://api.hh.ru/specializations 
 
 MS SQL database:
 При запуске основного docker-compose поднимает базу и исполняет скрипты из scripts/crm_analytics_db
