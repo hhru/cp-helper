@@ -3,20 +3,20 @@ package ru.hh.cphelper.dto;
 import java.util.Map;
 
 public class KafkaConsumerDto {
-  private Map<String, Object> receivedMessages;
+  private Map<String, String> receivedMessages;
 
   public KafkaConsumerDto() {
   }
 
-  public KafkaConsumerDto(Map<String, Object> receivedMessages) {
+  public KafkaConsumerDto(Map<String, String> receivedMessages) {
     this.receivedMessages = receivedMessages;
   }
 
-  public Map<String, Object> getReceivedMessages() {
+  public Map<String, String> getReceivedMessages() {
     return receivedMessages;
   }
 
-  public void setReceivedMessages(Map<String, Object> receivedMessages) {
+  public void setReceivedMessages(Map<String, String> receivedMessages) {
     this.receivedMessages = receivedMessages;
   }
 

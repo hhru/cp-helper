@@ -10,7 +10,7 @@ import ru.hh.nab.starter.NabProdConfig;
     NabProdConfig.class,
     NabHibernateProdConfig.class,
     CpHelperCommonConfig.class,
-    CpHelperKafkaConfig.class
+    CpHelperKafkaConfig.class,
 })
 public class CpHelperProdConfig {
 }
