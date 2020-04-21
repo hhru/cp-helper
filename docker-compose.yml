@@ -120,25 +120,12 @@ services:
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
-  schema-registry:
-    image: confluentinc/cp-schema-registry:5.4.1
-    container_name: schema-registry
-    ports:
-      - 8081:8081
-    depends_on:
-      - zoo
-      - kafka
-    environment:
-      SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zoo:2181
-
   kafka-connect:
     image: confluentinc/cp-kafka-connect:5.4.1
     container_name: kafka-connect
     depends_on:
       - zoo
       - kafka
-      - schema-registry
     ports:
       - 8083:8083
     environment:
@@ -152,16 +139,28 @@ services:
       CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
-      CONNECT_KEY_CONVERTER: io.confluent.connect.avro.AvroConverter
-      CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
-      CONNECT_VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
-      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      CONNECT_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
       CONNECT_INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
       CONNECT_INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
       CONNECT_LOG4J_ROOT_LOGLEVEL: DEBUG
       CONNECT_PLUGIN_PATH: /usr/share/java
     volumes:
-      - ./backend/jdbc-driver:/usr/share/java/kafka-connect-jdbc/jars
+      - ./backend/kafka-jdbc/driver:/usr/share/java/kafka-connect-jdbc/jars
+
+  create-jdbc-connector:
+    image: confluentinc/cp-kafka-connect:5.4.1
+    container_name: create-connector
+    depends_on:
+      - kafka-connect
+    volumes:
+    - ./backend/kafka-jdbc/connector:/tmp
+    command:
+      - /bin/bash
+      - -c
+      - curl -X POST -H "Content-Type:application/json"
+          http://kafka-connect:8083/connectors/
+          -d @./tmp/connector-config.json
 
   ksqldb-server:
     image: confluentinc/ksqldb-server:0.6.0
@@ -178,7 +177,6 @@ services:
       KSQL_KSQL_LOGGING_PROCESSING_STREAM_AUTO_CREATE: "true"
       KSQL_KSQL_LOGGING_PROCESSING_TOPIC_AUTO_CREATE: "true"
       KSQL_KSQL_CONNECT_URL: http://kafka-connect-01:8083
-      KSQL_KSQL_SCHEMA_REGISTRY_URL: http://schema-registry:8081
 
   ksqldb-cli:
     image: confluentinc/ksqldb-cli:0.6.0
