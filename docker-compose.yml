@@ -95,17 +95,16 @@ services:
         sleep infinity
 
   zoo:
-    image: confluentinc/cp-zookeeper:5.4.1
+    image: confluentinc/cp-zookeeper:${CONFLUENT_VERSION}
     container_name: zoo
     environment:
         ZOOKEEPER_CLIENT_PORT: 2181
         ZOOKEEPER_TICK_TIME: 2000
     depends_on:
-      - postgres
       - mssql
 
   kafka:
-    image: confluentinc/cp-kafka:5.4.1
+    image: confluentinc/cp-kafka:${CONFLUENT_VERSION}
     container_name: kafka
     depends_on:
       - zoo
@@ -121,10 +120,9 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
   kafka-connect:
-    image: confluentinc/cp-kafka-connect:5.4.1
+    image: confluentinc/cp-kafka-connect:${CONFLUENT_VERSION}
     container_name: kafka-connect
     depends_on:
-      - zoo
       - kafka
     ports:
       - 8083:8083
@@ -147,20 +145,24 @@ services:
       CONNECT_PLUGIN_PATH: /usr/share/java
     volumes:
       - ./backend/kafka-jdbc/driver:/usr/share/java/kafka-connect-jdbc/jars
-
-  create-jdbc-connector:
-    image: confluentinc/cp-kafka-connect:5.4.1
-    container_name: create-connector
-    depends_on:
-      - kafka-connect
-    volumes:
-    - ./backend/kafka-jdbc/connector:/tmp
+      - ./backend/kafka-jdbc/connectors:/tmp/connectors
     command:
-      - /bin/bash
+      - bash
       - -c
-      - curl -X POST -H "Content-Type:application/json"
-          http://kafka-connect:8083/connectors/
-          -d @./tmp/connector-config.json
+      - |
+        /etc/confluent/docker/run &
+        echo "Waiting for Kafka Connect to start listening on kafka-connect ⏳"
+        while : ; do
+          curl_status=$$(curl -s -o /dev/null -w %{http_code} http://kafka-connect:8083/connectors)
+          echo -e $$(date) " Kafka Connect listener HTTP state: " $$curl_status " (waiting for 200)"
+          if [ $$curl_status -eq 200 ] ; then
+            break
+          fi
+          sleep 5
+        done
+        echo -e "\n--\n+> Creating Kafka Connector(s)"
+        curl -X POST -H "Content-Type:application/json" http://kafka-connect:8083/connectors/ -d @./tmp/connectors/connector-jdbc-CompetitorReport.json
+        sleep infinity
 
   ksqldb-server:
     image: confluentinc/ksqldb-server:0.6.0
@@ -176,7 +178,7 @@ services:
       KSQL_BOOTSTRAP_SERVERS: kafka:29092
       KSQL_KSQL_LOGGING_PROCESSING_STREAM_AUTO_CREATE: "true"
       KSQL_KSQL_LOGGING_PROCESSING_TOPIC_AUTO_CREATE: "true"
-      KSQL_KSQL_CONNECT_URL: http://kafka-connect-01:8083
+      KSQL_KSQL_CONNECT_URL: http://kafka-connect:8083
 
   ksqldb-cli:
     image: confluentinc/ksqldb-cli:0.6.0
