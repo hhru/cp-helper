@@ -72,6 +72,7 @@ services:
     environment:
       SA_PASSWORD: cp_helper3A!
       ACCEPT_EULA: Y
+      MSSQL_AGENT_ENABLED: "true"
     ports:
       - "1433:1433"
     volumes:
@@ -97,13 +98,27 @@ services:
           is_up=$$?
           sleep 5
         done
-        for foo in 1
-          do
-           /opt/mssql-tools/bin/sqlcmd -U sa -P $$SA_PASSWORD -l 30 -e -i /scripts/CreateDatabases.sql
-           /opt/mssql-tools/bin/sqlcmd -U sa -P $$SA_PASSWORD -l 30 -e -i /scripts/CRMData750.sql
-           /opt/mssql-tools/bin/sqlcmd -U sa -P $$SA_PASSWORD -l 30 -e -i /scripts/ActivationAnalysisData.sql
-           /opt/mssql-tools/bin/sqlcmd -U sa -P $$SA_PASSWORD -l 30 -e -i /scripts/VacancyDataMart.sql
-           /opt/mssql-tools/bin/sqlcmd -U sa -P $$SA_PASSWORD -l 30 -e -i /scripts/InsertInTheTables.sql
-          done
+        # Wait for MS SQL Server Agent to be available
+        echo "Waiting for MS SQL Server Agent to be available ⏳"
+        /opt/mssql-tools/bin/sqlcmd -l 30 -S localhost -h-1 -V1 -U sa -P $$SA_PASSWORD -Q "SET NOCOUNT ON SELECT COUNT(*) FROM master.dbo.sysprocesses WHERE program_name = \"SQLAgent - Generic Refresher\""
+        is_agent_up=$$?
+        while [ $$is_agent_up -ne 0 ] ; do
+          echo -e $$(date)
+          /opt/mssql-tools/bin/sqlcmd -l 30 -S localhost -h-1 -V1 -U sa -P $$SA_PASSWORD -Q "SET NOCOUNT ON SELECT COUNT(*) FROM master.dbo.sysprocesses WHERE program_name = \"SQLAgent - Generic Refresher\""
+          is_agent_up=$$?
+          sleep 5
+        done
+        # Exec Scripts
+        scripts=(
+          CreateDatabases
+          CRMData750
+          ActivationAnalysisData
+          VacancyDataMart
+          InsertInTheTables
+          CreateCompetitorsReportJob
+        )
+        for script in "$${scripts[@]}"; do
+          /opt/mssql-tools/bin/sqlcmd -U sa -P $$SA_PASSWORD -l 30 -e -i /scripts/$$script.sql
+        done
         # So that the container doesn't shut down, sleep this thread
         sleep infinity
