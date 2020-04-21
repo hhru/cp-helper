@@ -13,6 +13,7 @@ const Search = ({
     choose,
     payload,
     placeholderText,
+    children,
 }) => {
 
     const [selectOpen, setSelectOpen] = useState(false);
@@ -27,14 +28,14 @@ const Search = ({
         fetch(input.current.value);
         setSelectOpen(true);
         if (payload) {
-            choose(undefined);
+            choose(undefined, undefined);
         }
     };
 
     const click = (id, name) => {
         setSelectOpen(false);
         setInputValue(name);
-        choose(id);
+        choose(id, name);
     };
 
     return (
@@ -63,6 +64,7 @@ const Search = ({
                     </SelectWrapper>
                 }
             </div>
+            {children}
         </div>
 
     );
@@ -78,6 +80,10 @@ Search.propTypes = {
     choose: PropTypes.func.isRequired,
     payload: PropTypes.string,
     placeholderText: PropTypes.string,
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node,
+    ]),
 };
 
 export default Search;

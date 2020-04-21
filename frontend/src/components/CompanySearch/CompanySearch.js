@@ -8,7 +8,7 @@ import Checkbox from 'components/Checkbox/Checkbox';
 import Input from 'components/Input/Input';
 import Button from 'components/Button/Button';
 
-import {chooseCompany, resetCompany, fetchCompany } from 'redux/companies/companiesActions';
+import {chooseCompany, resetCompany, fetchCompany, getCompanyNameById} from 'redux/companies/companiesActions';
 import {resetCompetitors} from 'redux/competitors/competitorsActions';
 import {filterArea, chooseArea, initAreas, resetArea} from 'redux/areas/areasAction';
 
@@ -29,6 +29,8 @@ const CompanySearch = ({
     filteredAreas,
     areaId,
     resetArea,
+    getCompanyNameById,
+    companyName,
 }) => {
 
     const [isSearchById, setIsSearchById] = useState(false);
@@ -52,6 +54,13 @@ const CompanySearch = ({
 
     const changeTypeSearch = () => {
         setIsSearchById(!isSearchById);
+    };
+
+    const openNextTab = () => {
+        if (!companyName) {
+            getCompanyNameById(companyId);
+        }
+        openCompetitorsList();
     };
 
     return (
@@ -81,7 +90,7 @@ const CompanySearch = ({
                     placeholderText={'Введите название региона'}
                 />
                 <div className="company-search-section__btn">
-                    <Button onClick={openCompetitorsList} disabled={!(companyId && areaId)}>Выбрать компанию</Button>
+                    <Button onClick={openNextTab} disabled={!(companyId && areaId)}>Выбрать компанию</Button>
                 </div>
             </div>
             <div className="company-search-section__checkboxId">
@@ -113,11 +122,14 @@ CompanySearch.propTypes = {
     filteredAreas: PropTypes.array,
     areaId: PropTypes.string,
     resetArea: PropTypes.func,
+    getCompanyNameById: PropTypes.func,
+    companyName: PropTypes.string,
 };
 
 export default connect(
     (state) => ({
         companyId: state.companies.companyId,
+        companyName: state.companies.companyName,
         companies: state.companies.companies,
         areaId: state.areas.areaId,
         plainAreas: state.areas.planeAreas,
@@ -132,5 +144,6 @@ export default connect(
         chooseArea,
         initAreas,
         resetArea,
+        getCompanyNameById,
     }
 )(CompanySearch);

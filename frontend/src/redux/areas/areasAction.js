@@ -12,10 +12,11 @@ export const filterAreaAction = (filteredAreas) => {
     };
 };
 
-export const chooseAreaAction = (areaId) => {
+export const chooseAreaAction = (areaId, areaName) => {
     return {
         type: CHOOSE_AREA,
         areaId,
+        areaName,
     };
 };
 
@@ -40,9 +41,9 @@ export function filterArea(areaName) {
     };
 }
 
-export function chooseArea(areaId) {
+export function chooseArea(areaId, areaName) {
     return (dispatch) => {
-        dispatch(chooseAreaAction(areaId));
+        dispatch(chooseAreaAction(areaId, areaName));
     };
 }
 
@@ -59,7 +60,7 @@ export function initAreas() {
 
 export function resetArea() {
     return (dispatch) => {
-        dispatch(chooseAreaAction(undefined));
+        dispatch(chooseAreaAction(undefined, undefined));
     };
 }
 

@@ -2,6 +2,9 @@
     font-family: ProximaNovaCond, Arial, sans-serif;
     color: #333;
     position: relative;
+    &__title {
+        text-align: center;
+    }
     &__competitors{
         margin-top: 20px;
         width: 400px;

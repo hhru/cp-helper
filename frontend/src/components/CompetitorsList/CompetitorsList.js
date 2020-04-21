@@ -9,6 +9,7 @@ import Competitor from 'components/CompetitorsList/Competitor/Competitor';
 import AddIcon from 'components/Icons/AddIcon';
 import Loader from 'components/Loader/Loader';
 import Search from 'components/Search/Search';
+import Heading from 'components/Heading/Heading';
 
 import { fetchCompetitors, deleteCompetitor, addCompetitor, chooseCompetitor } from 'redux/competitors/competitorsActions';
 import { fetchCompany } from 'redux/companies/companiesActions';
@@ -20,13 +21,16 @@ const CompetitorsList = ({
     competitors,
     companyId,
     fetchCompetitors,
-    openCorporateOffer,
+    openCommercialOffer,
     competitorId,
     deleteCompetitor,
     chooseCompetitor,
     addCompetitor,
     fetchCompany,
     companies,
+    areaId,
+    areaName,
+    companyName,
 }) => {
 
     const [searchIsOpen, setSearchIsOpen] = useState(false);
@@ -38,7 +42,7 @@ const CompetitorsList = ({
     }, []);
 
     const clickSearch = () => {
-        addCompetitor(competitorId, companyId);
+        addCompetitor(competitorId, companyId, areaId);
         setSearchIsOpen(false);
         chooseCompetitor(undefined);
     };
@@ -53,6 +57,9 @@ const CompetitorsList = ({
 
     return (
         <section className="competitors-list-section">
+            <div className="competitors-list-section__title">
+                {companyName && <Heading level={4}>{`Конкуренты компании ${companyName} по области: ${areaName}`}</Heading>}
+            </div>
             {!competitors &&
                 <div className="competitors-list-section__loader">
                     <Loader/>
@@ -67,7 +74,7 @@ const CompetitorsList = ({
                                 id={el.id}
                                 name={el.name}
                                 logo={el.logo}
-                                deleteCompetitor={() => deleteCompetitor(el.id, companyId)}
+                                deleteCompetitor={() => deleteCompetitor(el.id, companyId, areaId)}
                             />
                         )}
                     </div>
@@ -102,7 +109,7 @@ const CompetitorsList = ({
             }
             <div className="competitors-list-section__btn">
                 <Button onClick={openCompanySearch}>К предыдущему шагу</Button>
-                <Button onClick={openCorporateOffer}>К следующему шагу</Button>
+                <Button onClick={openCommercialOffer}>К следующему шагу</Button>
             </div>
         </section>
     );
@@ -113,13 +120,16 @@ CompetitorsList.propTypes = {
     competitors: PropTypes.object,
     companyId: PropTypes.string,
     fetchCompetitors: PropTypes.func,
-    openCorporateOffer: PropTypes.func.isRequired,
+    openCommercialOffer: PropTypes.func.isRequired,
     competitorId: PropTypes.string,
     deleteCompetitor: PropTypes.func,
     chooseCompetitor: PropTypes.func,
     addCompetitor: PropTypes.func,
     fetchCompany: PropTypes.func,
     companies: PropTypes.array,
+    areaId: PropTypes.string,
+    areaName: PropTypes.string,
+    companyName: PropTypes.string,
 };
 
 export default connect(
@@ -128,6 +138,9 @@ export default connect(
         competitorId: state.competitors.competitorId,
         competitors: state.competitors.competitors,
         companies: state.companies.companies,
+        areaId: state.areas.areaId,
+        areaName: state.areas.areaName,
+        companyName: state.companies.companyName,
     }),
     {
         fetchCompetitors,

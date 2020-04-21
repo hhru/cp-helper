@@ -1,9 +1,11 @@
 import React, {Fragment, useState} from 'react';
+import {NotificationContainer} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 import Header from './Header/Header';
 import CompanySearch from './CompanySearch/CompanySearch';
 import CompetitorsList from './CompetitorsList/CompetitorsList';
-import CorporateOffer from './CorporateOffer/CorporateOffer';
+import CommercialOffer from './CommercialOffer/CommercialOffer';
 import Footer from './Footer/Footer';
 import Tab from './Tab/Tab';
 
@@ -11,7 +13,7 @@ import './MainComponent.css';
 
 export const COMPANY_SEARCH = 'COMPANY_SEARCH';
 export const COMPETITORS_LIST = 'COMPETITORS_LIST';
-export const CORPORATE_OFFER = 'CORPORATE_OFFER';
+export const COMMERCIAL_OFFER = 'COMMERCIAL_OFFER';
 
 const MainComponent = () => {
 
@@ -25,8 +27,8 @@ const MainComponent = () => {
         setTab(COMPETITORS_LIST);
     };
 
-    const openCorporateOffer = () => {
-        setTab(CORPORATE_OFFER);
+    const openCommercialOffer = () => {
+        setTab(COMMERCIAL_OFFER);
     };
 
     return (
@@ -40,14 +42,15 @@ const MainComponent = () => {
                 {tab === COMPETITORS_LIST &&
                     <CompetitorsList
                         openCompanySearch={openCompanySearch}
-                        openCorporateOffer={openCorporateOffer}
+                        openCommercialOffer={openCommercialOffer}
                     />}
-                {tab === CORPORATE_OFFER &&
-                    <CorporateOffer
+                {tab === COMMERCIAL_OFFER &&
+                    <CommercialOffer
                         openCompetitorsList={openCompetitorsList}
                     />}
             </Tab>
             <Footer/>
+            <NotificationContainer/>
         </Fragment>
     );
 };
