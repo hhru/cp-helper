@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react';
-
+import PropTypes from 'prop-types';
 
 const DeleteIcon = ({ size }) => (
     <svg width={size} height={size} viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
@@ -11,6 +11,10 @@ const DeleteIcon = ({ size }) => (
 
 DeleteIcon.defaultProps = {
     size: 20,
+};
+
+DeleteIcon.propTypes = {
+    size: PropTypes.number,
 };
 
 export default DeleteIcon;

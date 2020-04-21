@@ -13,7 +13,6 @@ export const COMPANY_SEARCH = 'COMPANY_SEARCH';
 export const COMPETITORS_LIST = 'COMPETITORS_LIST';
 export const CORPORATE_OFFER = 'CORPORATE_OFFER';
 
-
 const MainComponent = () => {
 
     const [tab, setTab] = useState(COMPANY_SEARCH);
@@ -34,19 +33,19 @@ const MainComponent = () => {
         <Fragment>
             <Header/>
             <Tab currentTab={tab}>
-                <CompanySearch
-                    currentTab={tab}
-                    openCompetitorsList={openCompetitorsList}
-                />
-                <CompetitorsList
-                    currentTab={tab}
-                    openCompanySearch={openCompanySearch}
-                    openCorporateOffer={openCorporateOffer}
-                />
-                <CorporateOffer
-                    currentTab={tab}
-                    openCompetitorsList={openCompetitorsList}
-                />
+                {tab === COMPANY_SEARCH &&
+                    <CompanySearch
+                        openCompetitorsList={openCompetitorsList}
+                    />}
+                {tab === COMPETITORS_LIST &&
+                    <CompetitorsList
+                        openCompanySearch={openCompanySearch}
+                        openCorporateOffer={openCorporateOffer}
+                    />}
+                {tab === CORPORATE_OFFER &&
+                    <CorporateOffer
+                        openCompetitorsList={openCompetitorsList}
+                    />}
             </Tab>
             <Footer/>
         </Fragment>

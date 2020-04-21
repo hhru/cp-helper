@@ -20,7 +20,7 @@ export const chooseCompanyAction = (companyId) => {
 };
 
 export function fetchCompany(companyName) {
-    const url = EMPLOYERS_HH_API_URL + `?text=${encodeURIComponent(companyName)}`;
+    const url = `${EMPLOYERS_HH_API_URL}?text=${encodeURIComponent(companyName)}`;
     return (dispatch) => {
         axios.get(url)
             .then((res) => {

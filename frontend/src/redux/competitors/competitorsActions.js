@@ -46,48 +46,49 @@ export const chooseCompetitorAction = (competitorId) => {
 export function fetchCompetitors(companyId) {
 
     return (dispatch) => {
-        axios.get(CP_HELPER_BASE_URL + companyId + '/competitors').then(competitorsIds => 
+        axios.get(`${CP_HELPER_BASE_URL + companyId}/competitors`).then((competitorsIds) =>
             Promise.all(
                 competitorsIds.data.competitorsIds.map(
-                    companyId => axios.get(EMPLOYERS_HH_API_URL + '/' + companyId),
+                    (companyId) => axios.get(`${EMPLOYERS_HH_API_URL}/${companyId}`)
                 )).then(
                 (values) => {
-                    let competitors = {};
-                    values.forEach( (el) => {
-                        let logo = el.data.logo_urls ? el.data.logo_urls[LOGO_SIZE] : null;
-                        competitors[el.data.id] = {id: el.data.id, name: el.data.name, logo: logo}
-                    })
+                    const competitors = {};
+                    values.forEach((el) => {
+                        const logo = el.data.logo_urls ? el.data.logo_urls[LOGO_SIZE] : null;
+                        competitors[el.data.id] = {id: el.data.id, name: el.data.name, logo};
+                    });
                     dispatch(fetchCompetitorsAction(competitors));
                 })
-        )
+        );
     };
 }
 
 export function deleteCompetitor(id, companyId) {
 
-    axios.delete(CP_HELPER_BASE_URL + companyId + '/competitors', { 
+    axios.delete(`${CP_HELPER_BASE_URL + companyId}/competitors`, {
         data: {
             "competitorId": id,
-            "areaId": "113"
-        }
-    })
+            "areaId": "113",
+        },
+    });
     return (dispatch) => {
         dispatch(deleteCompetitorAction(id));
     };
 }
 
 export function addCompetitor(id, companyId) {
-    
-    axios.post(CP_HELPER_BASE_URL + companyId + '/competitors', {
+
+    axios.post(`${CP_HELPER_BASE_URL + companyId}/competitors`, {
         "competitorId": id,
-        "areaId": "113"
-    })
+        "areaId": "113",
+    });
     return (dispatch) => {
-        axios.get(EMPLOYERS_HH_API_URL + '/' + id).then( (el) => {
-            let logo = el.data.logo_urls ? el.data.logo_urls[LOGO_SIZE] : null;
-            dispatch(addCompetitorAction({id: el.data.id, name: el.data.name, logo: logo}));
+        axios.get(`${EMPLOYERS_HH_API_URL}/${id}`).then((el) => {
+            const logo = el.data.logo_urls ? el.data.logo_urls[LOGO_SIZE] : null;
+            dispatch(addCompetitorAction({id: el.data.id, name: el.data.name, logo}));
         }
-    )};
+    );
+};
 }
 
 export function resetCompetitors() {

@@ -8,7 +8,6 @@ import MainComponent from './components/MainComponent';
 
 import mainReducer from './redux/mainReducer';
 
-
 const store = createStore(mainReducer, applyMiddleware(thunk));
 
 ReactDOM.render(

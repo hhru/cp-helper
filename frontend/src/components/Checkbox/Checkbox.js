@@ -1,12 +1,12 @@
 import React, {forwardRef} from 'react';
+import PropTypes from 'prop-types';
 
 import './Checkbox.css';
-
 
 const Checkbox = forwardRef(({ onChange, id, labelText}, ref) => {
     return (
         <div className="checkbox">
-            <input 
+            <input
                 ref={ref}
                 onChange={onChange}
                 type='checkbox'
@@ -16,5 +16,11 @@ const Checkbox = forwardRef(({ onChange, id, labelText}, ref) => {
         </div>
     );
 });
+
+Checkbox.propTypes = {
+    labelText: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+};
 
 export default Checkbox;

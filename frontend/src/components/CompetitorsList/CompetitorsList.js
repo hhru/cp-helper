@@ -1,24 +1,21 @@
 import React, { useEffect, Fragment, useState } from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import Button from 'components/Button/Button';
 import ButtonIcon from 'components/ButtonIcon/ButtonIcon';
 import CloseIcon from 'components/Icons/CloseIcon';
-import Competitor from './Competitor/Competitor';
+import Competitor from 'components/CompetitorsList/Competitor/Competitor';
 import AddIcon from 'components/Icons/AddIcon';
 import Loader from 'components/Loader/Loader';
 import Search from 'components/Search/Search';
-
-import { COMPETITORS_LIST } from 'components/MainComponent';
 
 import { fetchCompetitors, deleteCompetitor, addCompetitor, chooseCompetitor } from 'redux/competitors/competitorsActions';
 import { fetchCompany } from 'redux/companies/companiesActions';
 
 import './CompetitorsList.css';
 
-
-const CompetitorsList = ({ 
-    currentTab,
+const CompetitorsList = ({
     openCompanySearch,
     competitors,
     companyId,
@@ -28,18 +25,13 @@ const CompetitorsList = ({
     deleteCompetitor,
     chooseCompetitor,
     addCompetitor,
-    areaId,
     fetchCompany,
-    companies
+    companies,
 }) => {
-
-    if (currentTab !== COMPETITORS_LIST) {
-        return null;
-    }
 
     const [searchIsOpen, setSearchIsOpen] = useState(false);
 
-    useEffect( () => {
+    useEffect(() => {
         if (!competitors) {
             fetchCompetitors(companyId);
         }
@@ -53,30 +45,30 @@ const CompetitorsList = ({
 
     const clickAdd = () => {
         setSearchIsOpen(true);
-    }
+    };
 
     const clickClose = () => {
         setSearchIsOpen(false);
-    }
+    };
 
     return (
         <section className="competitors-list-section">
-            {!competitors && 
+            {!competitors &&
                 <div className="competitors-list-section__loader">
                     <Loader/>
                 </div>
             }
-            {competitors && 
+            {competitors &&
                 <Fragment>
                     <div className="competitors-list-section__competitors">
-                        { Object.values(competitors).map(el =>
+                        { Object.values(competitors).map((el) =>
                             <Competitor
                                 key={el.id}
                                 id={el.id}
                                 name={el.name}
                                 logo={el.logo}
                                 deleteCompetitor={() => deleteCompetitor(el.id, companyId)}
-                            />,
+                            />
                         )}
                     </div>
                     <div className="competitors-list-section__add">
@@ -86,10 +78,10 @@ const CompetitorsList = ({
                     </div>
                 </Fragment>
             }
-            {searchIsOpen && 
+            {searchIsOpen &&
                 <div className="background-section">
                     <div className="competitors-list-section__search">
-                        <Search 
+                        <Search
                             fetch={fetchCompany}
                             items={companies}
                             choose={chooseCompetitor}
@@ -116,12 +108,25 @@ const CompetitorsList = ({
     );
 };
 
+CompetitorsList.propTypes = {
+    openCompanySearch: PropTypes.func.isRequired,
+    competitors: PropTypes.object,
+    companyId: PropTypes.string,
+    fetchCompetitors: PropTypes.func,
+    openCorporateOffer: PropTypes.func.isRequired,
+    competitorId: PropTypes.string,
+    deleteCompetitor: PropTypes.func,
+    chooseCompetitor: PropTypes.func,
+    addCompetitor: PropTypes.func,
+    fetchCompany: PropTypes.func,
+    companies: PropTypes.array,
+};
+
 export default connect(
-    state => ({
+    (state) => ({
         companyId: state.companies.companyId,
         competitorId: state.competitors.competitorId,
         competitors: state.competitors.competitors,
-        areaId: state.areas.areaId,
         companies: state.companies.companies,
     }),
     {
@@ -130,5 +135,5 @@ export default connect(
         deleteCompetitor,
         addCompetitor,
         fetchCompany,
-    },
+    }
 )(CompetitorsList);

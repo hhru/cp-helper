@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react';
-
+import PropTypes from 'prop-types';
 
 const CloseIcon = ({ size }) => (
     <svg width={size} height={size} viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
@@ -10,6 +10,10 @@ const CloseIcon = ({ size }) => (
 
 CloseIcon.defaultProps = {
     size: 30,
+};
+
+CloseIcon.propTypes = {
+    size: PropTypes.number,
 };
 
 export default CloseIcon;

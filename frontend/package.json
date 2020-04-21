@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "7.8.4",
+    "@hh.ru/eslint-config": "8.0.1",
     "@svgr/webpack": "4.3.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -22,15 +23,10 @@
     "css-loader": "3.4.2",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
-    "eslint": "^6.6.0",
-    "eslint-config-hh": "^2.0.0",
-    "eslint-config-react-app": "^5.2.0",
+    "eslint": "^6.8.0",
     "eslint-loader": "3.0.3",
-    "eslint-plugin-flowtype": "4.6.0",
-    "eslint-plugin-import": "2.20.0",
-    "eslint-plugin-jsx-a11y": "6.2.3",
-    "eslint-plugin-react": "7.18.0",
-    "eslint-plugin-react-hooks": "^1.6.1",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-webpack-plugin": "^0.1.0",
     "file-loader": "4.3.0",
     "fs-extra": "^8.1.0",
     "html-webpack-plugin": "4.0.0-beta.11",
@@ -48,6 +44,7 @@
     "postcss-normalize": "8.0.1",
     "postcss-preset-env": "6.7.0",
     "postcss-safe-parser": "4.0.1",
+    "prop-types": "^15.7.2",
     "react": "^16.13.0",
     "react-app-polyfill": "^1.0.6",
     "react-dev-utils": "^10.2.1",
@@ -73,13 +70,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "lint-fix": "eslint ./src --fix"
-  },
-  "eslintIgnore": [
-    "config/*"
-  ],
-  "eslintConfig": {
-    "extends": "react-app"
+    "lint": "eslint src"
   },
   "browserslist": {
     "production": [
