@@ -19,21 +19,19 @@ public class KafkaConsumerService {
 
   @Inject
   public KafkaConsumerService(KafkaConsumerFactory kafkaConsumerFactory) {
-    kafkaConsumerFactory.subscribe(TOPIC_NAME, OPERATION_NAME, KafkaConsumerDto.class,
-        this::processBatch
-    );
+    kafkaConsumerFactory.subscribe(TOPIC_NAME, OPERATION_NAME, KafkaConsumerDto.class, this::processBatch);
   }
 
   private void processBatch(List<ConsumerRecord<String, KafkaConsumerDto>> messages, Ack ack) {
-      List<KafkaConsumerDto> receivedMessages = messages.stream()
-          .map(ConsumerRecord::value)
-          .collect(Collectors.toList());
+    List<KafkaConsumerDto> receivedMessages = messages.stream()
+        .map(ConsumerRecord::value)
+        .collect(Collectors.toList());
 
     for (KafkaConsumerDto receivedMessage: receivedMessages) {
       logger.debug(receivedMessage.toString());
     }
 
-      ack.acknowledge();
+    ack.acknowledge();
   }
 
 }
