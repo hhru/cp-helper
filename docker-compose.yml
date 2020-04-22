@@ -146,8 +146,8 @@ services:
       CONNECT_INTERNAL_VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
       CONNECT_PLUGIN_PATH: /usr/share/java
     volumes:
-      - ./backend/kafka-jdbc/kafka-connect-jdbc:/usr/share/java/kafka-connect-jdbc/jars
-      - ./backend/kafka-jdbc/connectors:/tmp/connectors
+      - ./backend/kafka-connect-jdbc/jars:/usr/share/java/kafka-connect-jdbc/jars
+      - ./backend/kafka-connect-jdbc/connectors:/tmp/connectors
     command:
       - bash
       - -c
