@@ -100,8 +100,6 @@ services:
     environment:
         ZOOKEEPER_CLIENT_PORT: 2181
         ZOOKEEPER_TICK_TIME: 2000
-    depends_on:
-      - mssql
 
   kafka:
     image: confluentinc/cp-kafka:${CONFLUENT_VERSION}
@@ -115,7 +113,7 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zoo:2181
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://${DOCKER_HOST_IP:-127.0.0.1}:9092
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
@@ -124,6 +122,7 @@ services:
     container_name: kafka-connect
     depends_on:
       - kafka
+      - mssql
     ports:
       - 8083:8083
     environment:
@@ -138,13 +137,16 @@ services:
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
       CONNECT_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_KEY_CONVERTER_SCHEMAS_ENABLE: "false"
       CONNECT_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
       CONNECT_INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_INTERNAL_KEY_CONVERTER_SCHEMAS_ENABLE: "false"
       CONNECT_INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
-      CONNECT_LOG4J_ROOT_LOGLEVEL: DEBUG
+      CONNECT_INTERNAL_VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
       CONNECT_PLUGIN_PATH: /usr/share/java
     volumes:
-      - ./backend/kafka-jdbc/driver:/usr/share/java/kafka-connect-jdbc/jars
+      - ./backend/kafka-jdbc/kafka-connect-jdbc:/usr/share/java/kafka-connect-jdbc/jars
       - ./backend/kafka-jdbc/connectors:/tmp/connectors
     command:
       - bash
@@ -161,29 +163,5 @@ services:
           sleep 5
         done
         echo -e "\n--\n+> Creating Kafka Connector(s)"
-        curl -X POST -H "Content-Type:application/json" http://kafka-connect:8083/connectors/ -d @./tmp/connectors/connector-jdbc-CompetitorReport.json
+        curl -X POST -H "Content-Type:application/json" http://kafka-connect:8083/connectors/ -d @./tmp/connectors/crm_competitor_report-source.json
         sleep infinity
-
-  ksqldb-server:
-    image: confluentinc/ksqldb-server:0.6.0
-    hostname: ksqldb-server
-    container_name: ksqldb-server
-    depends_on:
-      - kafka
-      - kafka-connect
-    ports:
-      - "8088:8088"
-    environment:
-      KSQL_LISTENERS: http://0.0.0.0:8088
-      KSQL_BOOTSTRAP_SERVERS: kafka:29092
-      KSQL_KSQL_LOGGING_PROCESSING_STREAM_AUTO_CREATE: "true"
-      KSQL_KSQL_LOGGING_PROCESSING_TOPIC_AUTO_CREATE: "true"
-      KSQL_KSQL_CONNECT_URL: http://kafka-connect:8083
-
-  ksqldb-cli:
-    image: confluentinc/ksqldb-cli:0.6.0
-    container_name: ksqldb-cli
-    depends_on:
-      - ksqldb-server
-    entrypoint: /bin/sh
-    tty: true
