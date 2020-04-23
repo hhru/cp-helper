@@ -12,6 +12,10 @@
             font-size: 16px;
             line-height: 18px;
         }
+        &_level4 {
+            font-size: 14px;
+            line-height: 16px;
+        }
 }
 
 @media (min-width: 768px) {
@@ -28,6 +32,10 @@
         &_level3 {
             font-size: 20px;
             line-height: 24px;
+        }
+        &_level4 {
+            font-size: 16px;
+            line-height: 18px;
         }
     }
 }
