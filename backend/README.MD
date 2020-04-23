@@ -28,20 +28,103 @@ VacancyDataMart.dbo.vw_VacancyResponses - тут лежат отклики
 то для того чтобы получить доступ к kafka снаружи, перед запуском выполните:  
 `export DOCKER_HOST_IP=192.168.99.100`  
 
-## Api
-GET /report/services
-По списку работадателей (employerId) и датам с (startDate) по (endDate) возвращает список услуг. Формат дат: yyyy-mm-dd
-Поля: Код работодателя, код услуги, имя услуги, количество заказанных услуг, количество откликов на вакансии по услуге, дата заказа услуги работодателем, код специализации, количество откликов на единицу услуги.
-employerId, serviceId, serviceName, serviceCount, responseQuantity, orderDate, specialization, responsePerService:
+## API
+1. Конкуренты
 
-GET /report/services?employerId=1455&employerId=1870&startDate=2020-01-31&endDate=2020-12-01
+    1.1 Получение списка конкурентов:
+    
+    GET `/employer/{companyId}/competitors?areaId={id}`
+        
+    По умолчанию используется регион Россия.
+    
+    ОТВЕТ:
+    
+    Список id конкурентов в JSON формате:
+    
+    { "competitorsIds": [id1,id2,id3,...] }
+    
+    1.2 Добавление конкурента в список
+    
+    POST `/employer/{companyId}/competitors`
+    
+    В теле запроса указываются id конкурента и id региона 
+    
+    `{
+    "competitorId" : 123,
+    "areaId" : 234
+    }`
+    
+    ОТВЕТ:
+    
+    Возвращает 200OK в случае успешного добавления
+    
+    1.3 Удаление конкурента из списка
+    
+    DELETE `/employer/{companyId}/competitors`
+    
+    В теле запроса указываются id конкурента и id региона 
+    
+    `{
+    "competitorId" : 123,
+    "areaId" : 234
+    }`
 
-Возвращает 
-```{"service":[{"employerId":1455,"serviceId":3,"serviceName":"Access to the resume database","serviceCount":22,"responseQuantity":555,"orderDate":"2020-04-24","specialization":"1.395","responsePerService":"25.227"},{"employerId":1870,"serviceId":6,"serviceName":"Highlight the resume","serviceCount":11,"responseQuantity":1000,"orderDate":"2020-04-24","specialization":"20","responsePerService":"90.909"}]}```
-
-Обратите внимание на верхнию ключ "service".
-
-Подробности: если не ввести начальную дату, то она по умолчанию 2000-01-01. Конечная по умолчанию 3000-01-01.
-Если количество заказанных услуг (serviceCount) по какой-то причине = 0, то responsePerService будет равно количеству откликов.
-Коды специализаций можно посмотреть тут: https://api.hh.ru/specializations
-
+2. Отчеты
+    
+    2.1 Получение списка услуг
+    
+    GET /report/services?employerId={id1}&employerId={id2}&...&startDate={startDate}&endDate={endDate}
+    
+    где employerId - список идентификаторов конкурентов,
+    
+    startDate - начальная дата для поиска (по умолчанию 2000-01-01),
+    
+    endDate - конечная дата для поиска (по умолчанию 3000-01-01).
+    
+    Формат даты - yyyy-mm-dd
+    
+    ОТВЕТ:
+    Список услуг в JSON формате:
+    
+        `{"service":[
+          {"employerId":1455,
+           "serviceId":3,         
+           "serviceName":"Access to the resume database",
+           "serviceCount":22,
+           "responseQuantity":555,
+           "orderDate":"2020-04-24",
+           "specialization":"1.395",
+           "responsePerService":"25.227"
+          },
+          {"employerId":1870,
+           "serviceId":6,
+           "serviceName":"Highlight the resume",
+           "serviceCount":11,
+           "responseQuantity":1000,
+           "orderDate":"2020-04-24",
+           "specialization":"20",
+           "responsePerService":"90.909"
+           }
+         ]}`
+     
+    где 
+    
+    employerId - код работодателя,
+    
+    serviceId - код услуги, 
+    
+    serviceName - имя услуги, 
+    
+    serviceCount - количество заказанных услуг, 
+    
+    responseQuantity - количество откликов на вакансии по услуге, 
+    
+    orderDate - дата заказа услуги работодателем,
+    
+    specialization - код специализации (https://api.hh.ru/specializations),
+    
+    responsePerService -  количество откликов на единицу услуги.
+    
+    Если количество заказанных услуг (serviceCount) по какой-то причине = 0, то responsePerService будет равно количеству откликов.
+    
+    

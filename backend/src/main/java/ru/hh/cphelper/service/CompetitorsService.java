@@ -20,8 +20,8 @@ public class CompetitorsService {
   }
 
   @Transactional(readOnly = true)
-  public List<Integer> getCompetitorsIds(Integer employerId) {
-    return competitorsDao.getCompetitors(employerId)
+  public List<Integer> getCompetitorsIds(Integer employerId, Integer areaId) {
+    return competitorsDao.getCompetitors(employerId, areaId)
         .map(Competitor::getCompetitorId)
         .distinct()
         .collect(Collectors.toList());

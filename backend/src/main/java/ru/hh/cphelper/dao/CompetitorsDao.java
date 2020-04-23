@@ -26,10 +26,11 @@ public class CompetitorsDao {
     return sessionFactory.getCurrentSession();
   }
 
-  public Stream<Competitor> getCompetitors(Integer employerId) {
+  public Stream<Competitor> getCompetitors(Integer employerId, Integer areaId) {
     return getCurrentSession()
-        .createQuery("from Competitor c where c.employerId=:id", Competitor.class)
+        .createQuery("from Competitor c where c.employerId=:id and c.areaId=:areaId", Competitor.class)
         .setParameter("id", employerId)
+        .setParameter("areaId", areaId)
         .stream();
   }
 

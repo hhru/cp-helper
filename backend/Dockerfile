@@ -1,7 +1,9 @@
 FROM maven:3.6.3-jdk-11-slim AS build
-COPY src /usr/src/app/src
-COPY pom.xml /usr/src/app
-RUN mvn -f /usr/src/app/pom.xml clean package -Dmaven.test.skip
+WORKDIR /usr/src/app
+COPY pom.xml .
+RUN mvn verify clean --fail-never
+COPY src ./src
+RUN mvn package -Dmaven.test.skip
 
 FROM openjdk:11-jdk-slim
 COPY --from=build /usr/src/app/target/cp-helper-1.41.jar /usr/local/bin/cp-helper.jar
