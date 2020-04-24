@@ -37,7 +37,7 @@ employerId, serviceId, serviceName, serviceCount, responseQuantity, orderDate, s
 GET /report/services?employerId=1455&employerId=1870&startDate=2020-01-31&endDate=2020-12-01
 
 Возвращает 
-```{"service":[{"employerId":1455,"serviceId":3,"serviceName":"Access to the resume database","serviceCount":22,"responseQuantity":555,"orderDate":"2020-04-24","specialization":1.3950,"responsePerService":25.227},{"employerId":1870,"serviceId":6,"serviceName":"Highlight the resume","serviceCount":11,"responseQuantity":1000,"orderDate":"2020-04-24","specialization":20.0000,"responsePerService":90.909}]}```
+```{"service":[{"employerId":1455,"serviceId":3,"serviceName":"Access to the resume database","serviceCount":22,"responseQuantity":555,"orderDate":"2020-04-24","specialization":"1.395","responsePerService":"25.227"},{"employerId":1870,"serviceId":6,"serviceName":"Highlight the resume","serviceCount":11,"responseQuantity":1000,"orderDate":"2020-04-24","specialization":"20","responsePerService":"90.909"}]}```
 
 Обратите внимание на верхнию ключ "service".
 
