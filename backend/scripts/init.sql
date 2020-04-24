@@ -39,6 +39,7 @@ comment on table day_report is 'Once per day updated table of Headhunter service
 comment on column day_report.service_count is 'Amount of the service ordered';
 
 insert  into day_report(service_id, service_count, service_name, service_order_date, response_quantity, employer_id, specialization) 
-values(3, 22, 'Access to the resume database', now()::date, 555, 1455, 1.395);
-
+values(3, 22, 'Access to the resume database', now()::date, 555, 1455, 1.395),
+      (6, 11, 'Highlight the resume', now()::date, 1000, 1870, 20),
+      (10, 11, 'Send advertising newsletter', now()::date, 1000, 3911579, 17.269);
 

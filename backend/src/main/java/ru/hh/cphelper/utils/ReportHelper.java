@@ -16,7 +16,7 @@ public final class ReportHelper {
         .map(r -> new ReportResponseDto(r.getEmployerId(), r.getServiceId(),
             r.getServiceName(), r.getServiceCount(),
             r.getResponseQuantity(), r.getServiceOrderDate(),
-            r.getSpecialization())
+            r.getSpecialization(), r.getResponsePerService())
             )
         .collect(Collectors.toList());
   }

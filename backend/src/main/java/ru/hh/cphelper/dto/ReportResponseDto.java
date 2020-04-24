@@ -14,12 +14,14 @@ public class ReportResponseDto {
   private Integer responseQuantity;
   private String orderDate;
   private BigDecimal specialization;
+  private BigDecimal responsePerService;
 
   public ReportResponseDto() {
   }
 
   public ReportResponseDto(Integer employerId, Integer serviceId, String serviceName, Integer serviceCount,
-                           Integer responseQuantity, LocalDate orderDate, BigDecimal specialization) {
+                           Integer responseQuantity, LocalDate orderDate, BigDecimal specialization,
+                           BigDecimal responsePerService) {
     this.employerId = employerId;
     this.serviceId = serviceId;
     this.serviceName = serviceName;
@@ -27,6 +29,7 @@ public class ReportResponseDto {
     this.responseQuantity = responseQuantity;
     this.orderDate = orderDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
     this.specialization = specialization;
+    this.responsePerService = responsePerService;
   }
 
   public Integer getEmployerId() {
@@ -83,5 +86,13 @@ public class ReportResponseDto {
 
   public void setSpecialization(BigDecimal specialization) {
     this.specialization = specialization;
+  }
+
+  public BigDecimal getResponsePerService() {
+    return responsePerService;
+  }
+
+  public void setResponsePerService(BigDecimal responsePerService) {
+    this.responsePerService = responsePerService;
   }
 }

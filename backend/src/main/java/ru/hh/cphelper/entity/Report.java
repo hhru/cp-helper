@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -41,6 +42,9 @@ public class Report implements Serializable {
   @Column(name = "specialization")
   private BigDecimal specialization;
 
+  @Transient
+  private BigDecimal responsePerService;
+
   public Report() {
   }
 
@@ -55,6 +59,7 @@ public class Report implements Serializable {
     this.responseQuantity = responseQuantity;
     this.employerId = employerId;
     this.specialization = specialization;
+    this.responsePerService = BigDecimal.ZERO;
   }
 
   public Long getId() {
@@ -119,5 +124,13 @@ public class Report implements Serializable {
 
   public void setSpecialization(BigDecimal specialization) {
     this.specialization = specialization;
+  }
+
+  public BigDecimal getResponsePerService() {
+    return responsePerService;
+  }
+
+  public void setResponsePerService(BigDecimal responsePerService) {
+    this.responsePerService = responsePerService;
   }
 }
