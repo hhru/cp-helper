@@ -17,7 +17,7 @@ public final class ReportHelper {
             r.getServiceName(), r.getServiceCount(),
             r.getResponseQuantity(), r.getServiceOrderDate(),
             r.getSpecialization(), r.getResponsePerService())
-            )
+        )
         .collect(Collectors.toList());
   }
 }

@@ -132,8 +132,4 @@ public class Report implements Serializable {
         BigDecimal.valueOf(getResponseQuantity())
             .divide(BigDecimal.valueOf(getServiceCount()), 3, RoundingMode.HALF_DOWN);
   }
-
-  public void setResponsePerService(BigDecimal responsePerService) {
-    this.responsePerService = responsePerService;
-  }
 }

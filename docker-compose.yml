@@ -165,4 +165,3 @@ services:
         echo -e "\n--\n+> Creating Kafka Connector(s)"
         curl -X POST -H "Content-Type:application/json" http://kafka-connect:8083/connectors/ -d @./tmp/connectors/crm_competitor_report-source.json
         sleep infinity
-
