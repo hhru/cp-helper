@@ -13,25 +13,25 @@ import javax.inject.Inject;
 @ContextConfiguration(classes = CpHelperTestConfig.class)
 public abstract class CpHelperTestBase extends NabTestBase {
 
-    @Inject
-    protected TransactionalScope transactionalScope;
+  @Inject
+  protected TransactionalScope transactionalScope;
 
-    @Inject
-    private SessionFactory sessionFactory;
+  @Inject
+  private SessionFactory sessionFactory;
 
-    protected Session currentSession() {
-        return sessionFactory.getCurrentSession();
-    }
+  protected Session currentSession() {
+    return sessionFactory.getCurrentSession();
+  }
 
-    @After
-    public void tearDown() {
-        transactionalScope.write(() -> {
-            currentSession().createQuery("DELETE FROM Competitor").executeUpdate();
-        });
-    }
+  @After
+  public void tearDown() {
+    transactionalScope.write(() -> {
+      currentSession().createQuery("DELETE FROM Competitor").executeUpdate();
+    });
+  }
 
-    @Override
-    protected NabApplication getApplication() {
-        return CpHelperMain.build();
-    }
+  @Override
+  protected NabApplication getApplication() {
+    return CpHelperMain.build();
+  }
 }

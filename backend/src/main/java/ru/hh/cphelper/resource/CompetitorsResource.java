@@ -19,32 +19,32 @@ import javax.ws.rs.core.Response;
 @Path("/employer")
 public class CompetitorsResource {
 
-    private final CompetitorsService competitorsService;
+  private final CompetitorsService competitorsService;
 
-    @Inject
-    public CompetitorsResource(CompetitorsService competitorsService) {
-        this.competitorsService = competitorsService;
-    }
+  @Inject
+  public CompetitorsResource(CompetitorsService competitorsService) {
+    this.competitorsService = competitorsService;
+  }
 
-    @GET
-    @Path("/{id}/competitors")
-    @Produces(MediaType.APPLICATION_JSON)
-    public CompetitorsIdsDto getCompetitors(@PathParam("id") Integer employerId) {
-        return CompetitorsHelper.map(competitorsService.getCompetitorsIds(employerId));
-    }
+  @GET
+  @Path("/{id}/competitors")
+  @Produces(MediaType.APPLICATION_JSON)
+  public CompetitorsIdsDto getCompetitors(@PathParam("id") Integer employerId) {
+    return CompetitorsHelper.map(competitorsService.getCompetitorsIds(employerId));
+  }
 
-    @POST
-    @Path("/{id}/competitors")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response add(@PathParam("id") Integer employerId, CompetitorDto competitorDto) {
-        competitorsService.add(CompetitorsHelper.map(employerId, competitorDto));
-        return Response.status(Response.Status.OK).build();
-    }
+  @POST
+  @Path("/{id}/competitors")
+  @Consumes(MediaType.APPLICATION_JSON)
+  public Response add(@PathParam("id") Integer employerId, CompetitorDto competitorDto) {
+    competitorsService.add(CompetitorsHelper.map(employerId, competitorDto));
+    return Response.status(Response.Status.OK).build();
+  }
 
-    @DELETE
-    @Path("/{id}/competitors")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void delete(@PathParam("id") Integer employerId, CompetitorDto competitorDto) {
-        competitorsService.delete(CompetitorsHelper.map(employerId, competitorDto));
-    }
+  @DELETE
+  @Path("/{id}/competitors")
+  @Consumes(MediaType.APPLICATION_JSON)
+  public void delete(@PathParam("id") Integer employerId, CompetitorDto competitorDto) {
+    competitorsService.delete(CompetitorsHelper.map(employerId, competitorDto));
+  }
 }

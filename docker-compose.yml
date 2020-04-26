@@ -23,7 +23,7 @@ services:
       dockerfile: Dockerfile
       context: ./backend
     depends_on:
-      - postgres
+      - kafka
     restart: always
     ports:
       - "9999:9999"

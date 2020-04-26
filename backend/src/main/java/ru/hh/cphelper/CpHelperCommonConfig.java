@@ -4,8 +4,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import ru.hh.cphelper.dao.CompetitorsDao;
+import ru.hh.cphelper.dao.ReportDao;
 import ru.hh.cphelper.entity.Competitor;
+import ru.hh.cphelper.entity.Report;
 import ru.hh.cphelper.service.CompetitorsService;
+import ru.hh.cphelper.service.ReportService;
 import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.nab.datasource.DataSourceFactory;
 import ru.hh.nab.datasource.DataSourceType;
@@ -21,22 +24,24 @@ import javax.sql.DataSource;
     NabCommonConfig.class,
     NabHibernateCommonConfig.class,
     CompetitorsDao.class,
-    CompetitorsService.class
+    CompetitorsService.class,
+    ReportDao.class,
+    ReportService.class
 })
 public class CpHelperCommonConfig {
-    @Bean
-    public MappingConfig mappingConfig() {
-        return new MappingConfig(Competitor.class);
-    }
+  @Bean
+  public MappingConfig mappingConfig() {
+    return new MappingConfig(Competitor.class, Report.class);
+  }
 
-    @Bean
-    public DataSource dataSource(DataSourceFactory dataSourceFactory, FileSettings settings) {
-        DataSource masterDataSource = dataSourceFactory.create(DataSourceType.MASTER, false, settings);
-        RoutingDataSource routingDataSource = new RoutingDataSource(masterDataSource);
+  @Bean
+  public DataSource dataSource(DataSourceFactory dataSourceFactory, FileSettings settings) {
+    DataSource masterDataSource = dataSourceFactory.create(DataSourceType.MASTER, false, settings);
+    RoutingDataSource routingDataSource = new RoutingDataSource(masterDataSource);
 
-        DataSource readonlyDataSource = dataSourceFactory.create(DataSourceType.READONLY, true, settings);
-        routingDataSource.addDataSource(DataSourceType.READONLY, readonlyDataSource);
+    DataSource readonlyDataSource = dataSourceFactory.create(DataSourceType.READONLY, true, settings);
+    routingDataSource.addDataSource(DataSourceType.READONLY, readonlyDataSource);
 
-        return routingDataSource;
-    }
+    return routingDataSource;
+  }
 }
