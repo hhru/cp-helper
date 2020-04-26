@@ -43,4 +43,5 @@ GET /report/services?employerId=1455&employerId=1870&startDate=2020-01-31&endDat
 
 Подробности: если не ввести начальную дату, то она по умолчанию 2000-01-01. Конечная по умолчанию 3000-01-01.
 Если количество заказанных услуг (serviceCount) по какой-то причине = 0, то responsePerService будет равно количеству откликов.
-Коды специализаций можно посмотреть тут: https://api.hh.ru/specializations 
+Коды специализаций можно посмотреть тут: https://api.hh.ru/specializations
+

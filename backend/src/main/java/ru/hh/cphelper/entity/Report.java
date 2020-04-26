@@ -9,6 +9,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 
 
@@ -127,7 +128,9 @@ public class Report implements Serializable {
   }
 
   public BigDecimal getResponsePerService() {
-    return responsePerService;
+    return getServiceCount() == 0 ? BigDecimal.valueOf(getResponseQuantity()) :
+        BigDecimal.valueOf(getResponseQuantity())
+            .divide(BigDecimal.valueOf(getServiceCount()), 3, RoundingMode.HALF_DOWN);
   }
 
   public void setResponsePerService(BigDecimal responsePerService) {

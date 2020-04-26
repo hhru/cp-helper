@@ -41,8 +41,7 @@ public class ReportResource {
       startDate = LocalDate.parse(startDateString);
       endDate = LocalDate.parse(endDateString);
     } catch (DateTimeParseException e) {
-      log.info("cp-helper GET Date param wrong input, should be yyyy-mm-dd startDateString = " +
-          startDateString + " endDateString = " + endDateString);
+      log.warn("cp-helper GET Date wrong input, should be yyyy-mm-dd: startDateString ={}, endDateString={}", startDateString, endDateString);
       return Response.status(Response.Status.NOT_FOUND).build();
     }
     return Response.ok(Map.of("service", ReportHelper.map(reportService.getReports(employerId, startDate, endDate)))).build();
