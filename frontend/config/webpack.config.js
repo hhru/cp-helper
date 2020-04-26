@@ -320,7 +320,6 @@ module.exports = function(webpackEnv) {
             rules: [
                 // Disable require.ensure as it's not a standard language feature.
                 {parser: {requireEnsure: false}},
-
                 // First, run the linter.
                 // It's important to do this before Babel processes the JS.
                 {
@@ -333,6 +332,7 @@ module.exports = function(webpackEnv) {
                                 formatter: require.resolve('react-dev-utils/eslintFormatter'),
                                 eslintPath: require.resolve('eslint'),
                                 resolvePluginsRelativeTo: __dirname,
+                                emitWarning: true,
 
                             },
                             loader: require.resolve('eslint-loader'),

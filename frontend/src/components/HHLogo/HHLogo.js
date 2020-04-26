@@ -1,12 +1,10 @@
 /* eslint-disable max-len */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './HHLogo.css';
 
-
-const HHLogo = ({
-    size,
-}) => (
+const HHLogo = ({ size }) => (
     <a href='http://hh.ru' className='hh-logo'>
         <svg width={size} height={size} viewBox="0 0 43 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0.0152588 21.7344V20.2656C0.402162 9.00783 9.65057 0 21.0027 0C32.6005 0 42.0027 9.40212 42.0027 21C42.0027 32.5979 32.6005 42 21.0027 42C9.65057 42 0.402162 32.9922 0.0152588 21.7344Z" fill="#C52929"/>
@@ -17,6 +15,10 @@ const HHLogo = ({
 
 HHLogo.defaultProps = {
     size: 40,
+};
+
+HHLogo.propTypes = {
+    size: PropTypes.number,
 };
 
 export default HHLogo;

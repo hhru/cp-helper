@@ -1,0 +1,19 @@
+{
+  "name": "crm_competitor_report-source",
+  "config":
+  {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+    "connection.url": "jdbc:sqlserver://mssql:1433;databaseName=CRMData750",
+    "dialect.name": "SqlServerDatabaseDialect",
+    "connection.user": "sa",
+    "connection.password": "cp_helper3A!",
+    "topic.prefix": "crm_",
+    "mode":"timestamp+incrementing",
+    "table.whitelist": "CompetitorReport",
+    "timestamp.column.name": "ModifiedOn",
+    "incrementing.column.name": "Id",
+    "validate.non.null" : false,
+    "poll.interval.ms": 10000,
+    "timestamp.interval.ms": 0
+  }
+}

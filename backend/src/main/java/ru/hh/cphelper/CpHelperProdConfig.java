@@ -9,7 +9,8 @@ import ru.hh.nab.starter.NabProdConfig;
 @Import({
     NabProdConfig.class,
     NabHibernateProdConfig.class,
-    CpHelperCommonConfig.class
+    CpHelperCommonConfig.class,
+    CpHelperKafkaConfig.class,
 })
 public class CpHelperProdConfig {
 }

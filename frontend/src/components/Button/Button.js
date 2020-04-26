@@ -1,16 +1,16 @@
 import React, {forwardRef} from 'react';
+import PropTypes from 'prop-types';
 
 import './Button.css';
 
-
-const Button = forwardRef(({ children, buttonType, disabled, ...rest }, ref) => {
-
+const Button = forwardRef(({ children, buttonType, disabled, onClick, ...rest }, ref) => {
     return (
         <button
             ref={ref}
             className="hh-button"
             type={buttonType}
             disabled={disabled}
+            onClick={onClick}
             {...rest}>
             {children}
         </button>
@@ -22,5 +22,11 @@ Button.defaultProps = {
     disabled: false,
 };
 
-export default Button;
+Button.propTypes = {
+    children: PropTypes.string.isRequired,
+    buttonType: PropTypes.string,
+    disabled: PropTypes.bool,
+    onClick: PropTypes.func.isRequired,
+};
 
+export default Button;

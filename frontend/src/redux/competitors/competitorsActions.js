@@ -1,6 +1,8 @@
 import axios from 'axios';
 import {EMPLOYERS_HH_API_URL, CP_HELPER_BASE_URL} from 'utils/constants';
 
+import createNotification from 'utils/notifications';
+
 export const FETCH_COMPETITORS = 'FETCH_COMPETITORS';
 export const ADD_COMPETITOR = 'ADD_COMPETITOR';
 export const DELETE_COMPETITOR = 'DELETE_COMPETITOR';
@@ -46,48 +48,70 @@ export const chooseCompetitorAction = (competitorId) => {
 export function fetchCompetitors(companyId) {
 
     return (dispatch) => {
-        axios.get(CP_HELPER_BASE_URL + companyId + '/competitors').then(competitorsIds => 
-            Promise.all(
-                competitorsIds.data.competitorsIds.map(
-                    companyId => axios.get(EMPLOYERS_HH_API_URL + '/' + companyId),
-                )).then(
-                (values) => {
-                    let competitors = {};
-                    values.forEach( (el) => {
-                        let logo = el.data.logo_urls ? el.data.logo_urls[LOGO_SIZE] : null;
-                        competitors[el.data.id] = {id: el.data.id, name: el.data.name, logo: logo}
-                    })
-                    dispatch(fetchCompetitorsAction(competitors));
-                })
+        axios.get(`${CP_HELPER_BASE_URL + companyId}/competitors`).then((competitorsIds) => {
+            if (competitorsIds.data.competitorsIds.length) {
+                Promise.all(
+                    competitorsIds.data.competitorsIds.map(
+                        (companyId) => axios.get(`${EMPLOYERS_HH_API_URL}/${companyId}`)
+                    ))
+                    .then(
+                    (values) => {
+                        const competitors = {};
+                        values.forEach((el) => {
+                            const logo = el.data.logo_urls ? el.data.logo_urls[LOGO_SIZE] : null;
+                            competitors[el.data.id] = {id: el.data.id, name: el.data.name, logo};
+                        });
+                        dispatch(fetchCompetitorsAction(competitors));
+                    });
+            } else {
+                createNotification('error', 'Данных в базе не обнаружено', 'Ошибка');
+                dispatch(fetchCompetitorsAction(undefined));
+            }
+        })
+        .catch(() => {
+            createNotification('error', 'Сервер недоступен', 'Ошибка');
+        });
+    };
+}
+
+export function deleteCompetitor(competitorId, companyId, areaId) {
+
+    return (dispatch) => {
+        axios.delete(`${CP_HELPER_BASE_URL + companyId}/competitors`, {
+            data: {
+                "competitorId": competitorId,
+                "areaId": areaId,
+            },
+        })
+        .then(() => {
+            createNotification('success', 'Конкурент удален');
+            dispatch(deleteCompetitorAction(competitorId));
+        })
+        .catch(() => {
+            createNotification('error', 'Сервер недоступен', 'Ошибка');
+        });
+    };
+}
+
+export function addCompetitor(competitorId, companyId, areaId) {
+
+    return (dispatch) => {
+        axios.post(`${CP_HELPER_BASE_URL + companyId}/competitors`, {
+            "competitorId": competitorId,
+            "areaId": areaId,
+        })
+        .then(() =>
+            axios.get(`${EMPLOYERS_HH_API_URL}/${competitorId}`).then((el) => {
+                const logo = el.data.logo_urls ? el.data.logo_urls[LOGO_SIZE] : null;
+                createNotification('success', 'Конкурент добавлен');
+                dispatch(addCompetitorAction({id: el.data.id, name: el.data.name, logo}));
+            }
         )
-    };
-}
-
-export function deleteCompetitor(id, companyId) {
-
-    axios.delete(CP_HELPER_BASE_URL + companyId + '/competitors', { 
-        data: {
-            "competitorId": id,
-            "areaId": "113"
-        }
-    })
-    return (dispatch) => {
-        dispatch(deleteCompetitorAction(id));
-    };
-}
-
-export function addCompetitor(id, companyId) {
-    
-    axios.post(CP_HELPER_BASE_URL + companyId + '/competitors', {
-        "competitorId": id,
-        "areaId": "113"
-    })
-    return (dispatch) => {
-        axios.get(EMPLOYERS_HH_API_URL + '/' + id).then( (el) => {
-            let logo = el.data.logo_urls ? el.data.logo_urls[LOGO_SIZE] : null;
-            dispatch(addCompetitorAction({id: el.data.id, name: el.data.name, logo: logo}));
-        }
-    )};
+        .catch(() => {
+            createNotification('error', 'Сервер недоступен', 'Ошибка');
+        })
+    );
+};
 }
 
 export function resetCompetitors() {

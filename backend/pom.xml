@@ -28,7 +28,7 @@
     </parent>
 
     <properties>
-        <nab.version>4.22.20</nab.version>
+        <nab.version>4.23.2</nab.version>
     </properties>
 
     <dependencies>
@@ -46,6 +46,11 @@
         <dependency>
             <groupId>ru.hh.nab</groupId>
             <artifactId>nab-hibernate</artifactId>
+            <version>${nab.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.hh.nab</groupId>
+            <artifactId>nab-kafka</artifactId>
             <version>${nab.version}</version>
         </dependency>
     </dependencies>

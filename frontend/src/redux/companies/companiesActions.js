@@ -12,15 +12,16 @@ export const fetchCompanyAction = (companies) => {
     };
 };
 
-export const chooseCompanyAction = (companyId) => {
+export const chooseCompanyAction = (companyId, companyName) => {
     return {
         type: CHOOSE_COMPANY,
         companyId,
+        companyName,
     };
 };
 
 export function fetchCompany(companyName) {
-    const url = EMPLOYERS_HH_API_URL + `?text=${encodeURIComponent(companyName)}`;
+    const url = `${EMPLOYERS_HH_API_URL}?text=${encodeURIComponent(companyName)}`;
     return (dispatch) => {
         axios.get(url)
             .then((res) => {
@@ -29,14 +30,26 @@ export function fetchCompany(companyName) {
     };
 }
 
-export function chooseCompany(company) {
+export function chooseCompany(companyId, companyName) {
     return (dispatch) => {
-        dispatch(chooseCompanyAction(company));
+        dispatch(chooseCompanyAction(companyId, companyName));
     };
 }
 
 export function resetCompany() {
     return (dispatch) => {
-        dispatch(chooseCompanyAction(undefined));
+        dispatch(chooseCompanyAction(undefined, undefined));
+    };
+}
+
+export function getCompanyNameById(companyId) {
+    const url = `${EMPLOYERS_HH_API_URL}/${companyId}`;
+    return (dispatch) => {
+        axios.get(url)
+            .then((res) => {
+                if (res.data.name) {
+                    dispatch(chooseCompanyAction(companyId, res.data.name));
+                }
+            });
     };
 }
