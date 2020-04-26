@@ -15,7 +15,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -46,8 +45,6 @@ public class ReportResource {
           startDateString + " endDateString = " + endDateString);
       return Response.status(Response.Status.NOT_FOUND).build();
     }
-    Map<String, Object> response = new HashMap<>();
-    response.put("service", ReportHelper.map(reportService.getReports(employerId, startDate, endDate)));
-    return Response.ok(response).build();
+    return Response.ok(Map.of("service", ReportHelper.map(reportService.getReports(employerId, startDate, endDate)))).build();
   }
 }
