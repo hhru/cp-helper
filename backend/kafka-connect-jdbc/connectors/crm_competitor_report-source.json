@@ -8,10 +8,9 @@
     "connection.user": "sa",
     "connection.password": "cp_helper3A!",
     "topic.prefix": "crm_",
-    "mode":"timestamp+incrementing",
+    "mode":"incrementing",
     "table.whitelist": "CompetitorReport",
-    "timestamp.column.name": "ModifiedOn",
-    "incrementing.column.name": "Id",
+    "incrementing.column.name": "id",
     "validate.non.null" : false,
     "poll.interval.ms": 10000,
     "timestamp.interval.ms": 0
