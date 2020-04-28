@@ -45,10 +45,10 @@ export const chooseCompetitorAction = (competitorId) => {
     };
 };
 
-export function fetchCompetitors(companyId) {
+export function fetchCompetitors(companyId, areaId) {
 
     return (dispatch) => {
-        axios.get(`${CP_HELPER_BASE_URL + companyId}/competitors`).then((competitorsIds) => {
+        axios.get(`${CP_HELPER_BASE_URL + companyId}/competitors?areaId=${areaId}`).then((competitorsIds) => {
             if (competitorsIds.data.competitorsIds.length) {
                 Promise.all(
                     competitorsIds.data.competitorsIds.map(

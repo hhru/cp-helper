@@ -37,7 +37,7 @@ const CompetitorsList = ({
 
     useEffect(() => {
         if (!competitors) {
-            fetchCompetitors(companyId);
+            fetchCompetitors(companyId, areaId);
         }
     }, []);
 

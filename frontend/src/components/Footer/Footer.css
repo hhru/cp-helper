@@ -1,7 +1,13 @@
 .footer {
     background-color: #212122;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 .footer-content {
-    padding: 32px 0;
+    display: flex;
+    align-items: center;
+    height: 80px;
+    box-sizing: border-box;
 }
