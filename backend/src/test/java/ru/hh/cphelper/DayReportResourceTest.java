@@ -6,7 +6,7 @@ import javax.ws.rs.core.Response;
 
 import static org.junit.Assert.assertEquals;
 
-public class ReportResourceTest extends CpHelperTestBase {
+public class DayReportResourceTest extends CpHelperTestBase {
 
   @Test
   public void shouldOkWithoutParameters() {

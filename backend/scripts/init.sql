@@ -23,23 +23,29 @@ VALUES (1455, 1870, 113, 0.9),
        (1455, 1269556, 113, 0.7);
 
 create TABLE day_report (
-    id bigserial PRIMARY KEY,
-    service_id integer NOT NULL,
-    service_count integer NOT NULL,
-    service_name varchar(220) DEFAULT ''::varchar NOT NULL,
-    service_order_date date NOT NULL,
-    response_quantity integer NOT NULL,
+    id bigint NOT NULL,
     employer_id integer NOT NULL,
-    specialization numeric(8,4) NOT NULL
+    service_code integer NOT NULL,
+    service_name varchar(220) DEFAULT ''::varchar NOT NULL,
+    service_area_id integer NOT NULL,
+    service_profarea_id integer NOT NULL,
+    spending_count integer NOT NULL,
+    responses_count integer NOT NULL,
+    report_creation_date date NOT NULL
 );
 
-create index idx_day_report_employer_id_date on day_report(employer_id, service_order_date);
+create index idx_day_report_employer_id_date on day_report(employer_id, report_creation_date);
 
 comment on table day_report is 'Once per day updated table of Headhunter services by employer';
-comment on column day_report.service_count is 'Amount of the service ordered';
+comment on column day_report.spending_count is 'Amount of the service ordered';
 
-insert  into day_report(service_id, service_count, service_name, service_order_date, response_quantity, employer_id, specialization) 
-values(3, 22, 'Access to the resume database', now()::date, 555, 1455, 1.395),
-      (6, 11, 'Highlight the resume', now()::date, 1000, 1870, 20),
-      (10, 11, 'Send advertising newsletter', now()::date, 1000, 3911579, 17.269);
-
+insert  into day_report(id, employer_id, service_code, service_name, service_area_id, service_profarea_id, spending_count, responses_count, report_creation_date) 
+values
+(1, 1455, 22, 'Access to the resume database', 70, 20, 1, 10, now()::date),
+(2, 1455, 22, 'Access to the resume database', 70, 20, 100, 30, now()::date - INTERVAL '1 day'),
+(3, 1870, 25, 'Footer advert', 70, 20, 17, 10, now()::date),
+(4, 1870, 27, 'Left block advert', 70, 1, 2, 10, now()::date - INTERVAL '10 day'),
+(5, 3911579, 30, 'Highlight the resume', 70, 17, 1, 10, now()::date),
+(6, 84585, 31, 'Combo promo pack', 50, 17, 2, 20, now()::date),
+(7, 2605703, 32, 'Scpecial reminder', 70, 17, 55, 144, now()::date),
+(8, 2605703, 33, 'Border the resume', 70, 17, 1, 100, now()::date - INTERVAL '40 day');

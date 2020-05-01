@@ -4,11 +4,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import ru.hh.cphelper.dao.CompetitorsDao;
-import ru.hh.cphelper.dao.ReportDao;
+import ru.hh.cphelper.dao.DayReportDao;
 import ru.hh.cphelper.entity.Competitor;
-import ru.hh.cphelper.entity.Report;
+import ru.hh.cphelper.entity.DayReport;
 import ru.hh.cphelper.service.CompetitorsService;
-import ru.hh.cphelper.service.ReportService;
+import ru.hh.cphelper.service.DayReportService;
 import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.nab.datasource.DataSourceFactory;
 import ru.hh.nab.datasource.DataSourceType;
@@ -25,13 +25,13 @@ import javax.sql.DataSource;
     NabHibernateCommonConfig.class,
     CompetitorsDao.class,
     CompetitorsService.class,
-    ReportDao.class,
-    ReportService.class
+    DayReportDao.class,
+    DayReportService.class
 })
 public class CpHelperCommonConfig {
   @Bean
   public MappingConfig mappingConfig() {
-    return new MappingConfig(Competitor.class, Report.class);
+    return new MappingConfig(Competitor.class, DayReport.class);
   }
 
   @Bean
