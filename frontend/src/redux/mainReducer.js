@@ -4,7 +4,6 @@ import {companiesReducer} from './companies/companiesReducer';
 import {competitorsReducer} from './competitors/competitorsReducer';
 import {areaSearchReducer} from './areas/areasReducer';
 
-
 export default combineReducers({
     companies: companiesReducer,
     competitors: competitorsReducer,

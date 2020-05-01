@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react';
-
+import PropTypes from 'prop-types';
 
 const AddIcon = ({ size }) => (
     <svg width={size} height={size} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -11,6 +11,10 @@ const AddIcon = ({ size }) => (
 
 AddIcon.defaultProps = {
     size: 30,
+};
+
+AddIcon.propTypes = {
+    size: PropTypes.number,
 };
 
 export default AddIcon;

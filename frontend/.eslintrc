@@ -1,14 +1,18 @@
 {
-  "extends": [
-    "react-app",
-    "@hh.ru/eslint-config"
-  ],
-  "import/resolver": {
-    "node": {
-        "moduleDirectory": [
-            "node_modules",
-            "src/"
-        ]
+    "extends": ["plugin:react/recommended", "@hh.ru/eslint-config"],
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "moduleDirectory": [
+                    "node_modules",
+                    "src/"
+                ]
+            }
+        }
+    },
+    "rules": {
+        "no-restricted-imports": "off",
+        "react/display-name": "off",
+        "react-hooks/exhaustive-deps": "off"
     }
-  }
 }

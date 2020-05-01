@@ -1,4 +1,5 @@
-import React, {useState, Fragment} from 'react';
+import React, {useState, useRef} from 'react';
+import PropTypes from 'prop-types';
 
 import Input from 'components/Input/Input';
 import SelectWrapper from 'components/Select/SelectWrapper/SelectWrapper';
@@ -6,36 +7,35 @@ import SelectItem from 'components/Select/SelectItem/SelectItem';
 
 import './Search.css';
 
-
-const Search = ({ 
-    children, 
-    fetch, 
+const Search = ({
+    fetch,
     items,
-    choose, 
-    payload, 
-    placeholderText
- }) => {
+    choose,
+    payload,
+    placeholderText,
+    children,
+}) => {
 
     const [selectOpen, setSelectOpen] = useState(false);
     const [inputValue, setInputValue] = useState('');
 
     const SELECT_ITEMS_LENGTH = 7;
 
-    const input = React.useRef(null);
+    const input = useRef(null);
 
     const handleInputChange = () => {
         setInputValue(input.current.value);
         fetch(input.current.value);
         setSelectOpen(true);
         if (payload) {
-            choose(undefined);
+            choose(undefined, undefined);
         }
     };
 
     const click = (id, name) => {
         setSelectOpen(false);
         setInputValue(name);
-        choose(id);
+        choose(id, name);
     };
 
     return (
@@ -53,21 +53,37 @@ const Search = ({
                             items.length > SELECT_ITEMS_LENGTH - 1 ? SELECT_ITEMS_LENGTH : items.length
                         }>
                         {
-                            items.map(el =>
+                            items.map((el) =>
                                 <SelectItem
                                     key={el.id}
                                     id={el.id}
                                     name={el.name}
                                     onClick={() => click(el.id, el.name)}
-                                />,
+                                />
                             )}
                     </SelectWrapper>
                 }
             </div>
             {children}
         </div>
-            
+
     );
+};
+
+Search.defaultProps = {
+    placeholderText: 'Введите текст',
+};
+
+Search.propTypes = {
+    fetch: PropTypes.func.isRequired,
+    items: PropTypes.array,
+    choose: PropTypes.func.isRequired,
+    payload: PropTypes.string,
+    placeholderText: PropTypes.string,
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node,
+    ]),
 };
 
 export default Search;

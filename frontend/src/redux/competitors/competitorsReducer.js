@@ -16,7 +16,7 @@ export const competitorsReducer = createReducer(initialState, {
     },
 
     [ADD_COMPETITOR](state, action) {
-        let competitor = action.competitor;
+        const competitor = action.competitor;
         return {
             ...state,
             competitors: {...state.competitors, [competitor.id]: competitor},
@@ -24,7 +24,7 @@ export const competitorsReducer = createReducer(initialState, {
     },
 
     [DELETE_COMPETITOR](state, action) {
-        let competitorsNew = {...state.competitors};
+        const competitorsNew = {...state.competitors};
         delete competitorsNew[action.competitorId];
         return {
             ...state,

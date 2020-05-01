@@ -12,33 +12,33 @@ import java.util.stream.Collectors;
 @Service
 public class CompetitorsService {
 
-    private CompetitorsDao competitorsDao;
+  private CompetitorsDao competitorsDao;
 
-    @Inject
-    public CompetitorsService(CompetitorsDao competitorsDao) {
-        this.competitorsDao = competitorsDao;
-    }
+  @Inject
+  public CompetitorsService(CompetitorsDao competitorsDao) {
+    this.competitorsDao = competitorsDao;
+  }
 
-    @Transactional(readOnly = true)
-    public List<Integer> getCompetitorsIds(Integer employerId) {
-        return competitorsDao.getCompetitors(employerId)
-                .map(Competitor::getCompetitorId)
-                .distinct()
-                .collect(Collectors.toList());
-    }
+  @Transactional(readOnly = true)
+  public List<Integer> getCompetitorsIds(Integer employerId, Integer areaId) {
+    return competitorsDao.getCompetitors(employerId, areaId)
+        .map(Competitor::getCompetitorId)
+        .distinct()
+        .collect(Collectors.toList());
+  }
 
-    @Transactional
-    public void delete(Competitor competitor) {
-        Competitor competitorToDelete;
-        if ((competitorToDelete = competitorsDao.find(competitor)) != null) {
-            competitorsDao.delete(competitorToDelete);
-        }
+  @Transactional
+  public void delete(Competitor competitor) {
+    Competitor competitorToDelete;
+    if ((competitorToDelete = competitorsDao.find(competitor)) != null) {
+      competitorsDao.delete(competitorToDelete);
     }
+  }
 
-    @Transactional
-    public void add(Competitor competitor) {
-        if (competitorsDao.find(competitor) == null) {
-            competitorsDao.save(competitor);
-        }
+  @Transactional
+  public void add(Competitor competitor) {
+    if (competitorsDao.find(competitor) == null) {
+      competitorsDao.save(competitor);
     }
+  }
 }

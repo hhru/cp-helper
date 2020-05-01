@@ -23,7 +23,7 @@ services:
       dockerfile: Dockerfile
       context: ./backend
     depends_on:
-      - postgres
+      - kafka
     restart: always
     ports:
       - "9999:9999"
@@ -38,40 +38,12 @@ services:
     links:
       - cp-helper-backend
 
-  zoo:
-    image: zookeeper:3.4.9
-    hostname: zoo
-    container_name: zoo
-    ports:
-      - "2181:2181"
-    environment:
-        ZOO_MY_ID: 1
-        ZOO_PORT: 2181
-        ZOO_SERVERS: server.1=zoo:2888:3888
-    depends_on:
-      - postgres
-
-  kafka:
-    image: confluentinc/cp-kafka:5.4.1
-    hostname: kafka
-    container_name: kafka
-    ports:
-      - "9092:9092"
-    environment:
-      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://kafka:19092,LISTENER_DOCKER_EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
-      KAFKA_ZOOKEEPER_CONNECT: "zoo:2181"
-      KAFKA_BROKER_ID: 1
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    depends_on:
-      - zoo
-
   mssql:
     image: mcr.microsoft.com/mssql/server:2019-latest
     environment:
       SA_PASSWORD: cp_helper3A!
       ACCEPT_EULA: Y
+      MSSQL_AGENT_ENABLED: "true"
     ports:
       - "1433:1433"
     volumes:
@@ -97,13 +69,99 @@ services:
           is_up=$$?
           sleep 5
         done
-        for foo in 1
-          do
-           /opt/mssql-tools/bin/sqlcmd -U sa -P $$SA_PASSWORD -l 30 -e -i /scripts/CreateDatabases.sql
-           /opt/mssql-tools/bin/sqlcmd -U sa -P $$SA_PASSWORD -l 30 -e -i /scripts/CRMData750.sql
-           /opt/mssql-tools/bin/sqlcmd -U sa -P $$SA_PASSWORD -l 30 -e -i /scripts/ActivationAnalysisData.sql
-           /opt/mssql-tools/bin/sqlcmd -U sa -P $$SA_PASSWORD -l 30 -e -i /scripts/VacancyDataMart.sql
-           /opt/mssql-tools/bin/sqlcmd -U sa -P $$SA_PASSWORD -l 30 -e -i /scripts/InsertInTheTables.sql
-          done
+        # Wait for MS SQL Server Agent to be available
+        echo "Waiting for MS SQL Server Agent to be available ⏳"
+        /opt/mssql-tools/bin/sqlcmd -l 30 -S localhost -h-1 -V1 -U sa -P $$SA_PASSWORD -Q "SET NOCOUNT ON SELECT COUNT(*) FROM master.dbo.sysprocesses WHERE program_name = \"SQLAgent - Generic Refresher\""
+        is_agent_up=$$?
+        while [ $$is_agent_up -ne 0 ] ; do
+          echo -e $$(date)
+          /opt/mssql-tools/bin/sqlcmd -l 30 -S localhost -h-1 -V1 -U sa -P $$SA_PASSWORD -Q "SET NOCOUNT ON SELECT COUNT(*) FROM master.dbo.sysprocesses WHERE program_name = \"SQLAgent - Generic Refresher\""
+          is_agent_up=$$?
+          sleep 5
+        done
+        # Exec Scripts
+        scripts=(
+          CreateDatabases
+          CRMData750
+          ActivationAnalysisData
+          VacancyDataMart
+          InsertInTheTables
+          CreateCompetitorsReportJob
+        )
+        for script in "$${scripts[@]}"; do
+          /opt/mssql-tools/bin/sqlcmd -U sa -P $$SA_PASSWORD -l 30 -e -i /scripts/$$script.sql
+        done
         # So that the container doesn't shut down, sleep this thread
+        sleep infinity
+
+  zoo:
+    image: confluentinc/cp-zookeeper:${CONFLUENT_VERSION}
+    container_name: zoo
+    environment:
+        ZOOKEEPER_CLIENT_PORT: 2181
+        ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:${CONFLUENT_VERSION}
+    container_name: kafka
+    depends_on:
+      - zoo
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zoo:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://${DOCKER_HOST_IP:-127.0.0.1}:9092
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  kafka-connect:
+    image: confluentinc/cp-kafka-connect:${CONFLUENT_VERSION}
+    container_name: kafka-connect
+    depends_on:
+      - kafka
+      - mssql
+    ports:
+      - 8083:8083
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: kafka:29092
+      CONNECT_REST_PORT: 8083
+      CONNECT_REST_ADVERTISED_HOST_NAME: kafka-connect
+      CONNECT_GROUP_ID: connect-group
+      CONNECT_CONFIG_STORAGE_TOPIC: connect-configs
+      CONNECT_OFFSET_STORAGE_TOPIC: connect-offsets
+      CONNECT_STATUS_STORAGE_TOPIC: connect-status
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_KEY_CONVERTER_SCHEMAS_ENABLE: "false"
+      CONNECT_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
+      CONNECT_INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_INTERNAL_KEY_CONVERTER_SCHEMAS_ENABLE: "false"
+      CONNECT_INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_INTERNAL_VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
+      CONNECT_PLUGIN_PATH: /usr/share/java
+    volumes:
+      - ./backend/kafka-connect-jdbc/jars:/usr/share/java/kafka-connect-jdbc/jars
+      - ./backend/kafka-connect-jdbc/connectors:/tmp/connectors
+    command:
+      - bash
+      - -c
+      - |
+        /etc/confluent/docker/run &
+        echo "Waiting for Kafka Connect to start listening on kafka-connect ⏳"
+        while : ; do
+          curl_status=$$(curl -s -o /dev/null -w %{http_code} http://kafka-connect:8083/connectors)
+          echo -e $$(date) " Kafka Connect listener HTTP state: " $$curl_status " (waiting for 200)"
+          if [ $$curl_status -eq 200 ] ; then
+            break
+          fi
+          sleep 5
+        done
+        echo -e "\n--\n+> Creating Kafka Connector(s)"
+        curl -X POST -H "Content-Type:application/json" http://kafka-connect:8083/connectors/ -d @./tmp/connectors/crm_competitor_report-source.json
         sleep infinity
