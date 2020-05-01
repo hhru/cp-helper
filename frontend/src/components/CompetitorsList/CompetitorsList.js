@@ -13,6 +13,7 @@ import Heading from 'components/Heading/Heading';
 
 import { fetchCompetitors, deleteCompetitor, addCompetitor, chooseCompetitor } from 'redux/competitors/competitorsActions';
 import { fetchCompany } from 'redux/companies/companiesActions';
+import CompetitorsForm from 'components/forms/CompetitorsForm/CompetitorsForm';
 
 import './CompetitorsList.css';
 
@@ -60,6 +61,7 @@ const CompetitorsList = ({
             <div className="competitors-list-section__title">
                 {companyName && <Heading level={4}>{`Конкуренты компании ${companyName} по области: ${areaName}`}</Heading>}
             </div>
+            <CompetitorsForm competitors={competitors} />
             {!competitors &&
                 <div className="competitors-list-section__loader">
                     <Loader/>
@@ -78,13 +80,13 @@ const CompetitorsList = ({
                             />
                         )}
                     </div>
-                    <div className="competitors-list-section__add">
+                </Fragment>
+            }
+            <div className="competitors-list-section__add">
                         <ButtonIcon onClick={clickAdd}>
                             <AddIcon size={30}/>
                         </ButtonIcon>
                     </div>
-                </Fragment>
-            }
             {searchIsOpen &&
                 <div className="background-section">
                     <div className="competitors-list-section__search">
@@ -136,7 +138,7 @@ export default connect(
     (state) => ({
         companyId: state.companies.companyId,
         competitorId: state.competitors.competitorId,
-        competitors: state.competitors.competitors,
+        competitors: state.competitors.competitors || [],
         companies: state.companies.companies,
         areaId: state.areas.areaId,
         areaName: state.areas.areaName,
