@@ -1,6 +1,6 @@
 import {createReducer} from 'redux-create-reducer';
 
-import {FETCH_COMPANY, CHOOSE_COMPANY} from './companiesActions';
+import {FETCH_COMPANY, CHOOSE_COMPANY, RESET_COMPANY} from './companiesActions';
 
 export const initialState = {
     companyId: undefined,
@@ -21,6 +21,13 @@ export const companiesReducer = createReducer(initialState, {
             ...state,
             companyId: action.companyId,
             companyName: action.companyName,
+        };
+    },
+    [RESET_COMPANY](state) {
+        return {
+            ...state,
+            companyId: initialState.companyId,
+            companyName: initialState.companyName,
         };
     },
 });

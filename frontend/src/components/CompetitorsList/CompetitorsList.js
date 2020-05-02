@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
@@ -10,10 +10,11 @@ import AddIcon from 'components/Icons/AddIcon';
 import Loader from 'components/Loader/Loader';
 import Search from 'components/Search/Search';
 import Heading from 'components/Heading/Heading';
+import CompetitorsForm from 'components/forms/CompetitorsForm/CompetitorsForm';
 
 import { fetchCompetitors, deleteCompetitor, addCompetitor, chooseCompetitor } from 'redux/competitors/competitorsActions';
 import { fetchCompany } from 'redux/companies/companiesActions';
-import CompetitorsForm from 'components/forms/CompetitorsForm/CompetitorsForm';
+import { resetServices } from 'redux/services/servicesActions';
 
 import './CompetitorsList.css';
 
@@ -32,6 +33,8 @@ const CompetitorsList = ({
     areaId,
     areaName,
     companyName,
+    resetServices,
+    services,
 }) => {
 
     const [searchIsOpen, setSearchIsOpen] = useState(false);
@@ -39,6 +42,9 @@ const CompetitorsList = ({
     useEffect(() => {
         if (!competitors) {
             fetchCompetitors(companyId, areaId);
+        }
+        if (services) {
+            resetServices();
         }
     }, []);
 
@@ -61,32 +67,35 @@ const CompetitorsList = ({
             <div className="competitors-list-section__title">
                 {companyName && <Heading level={4}>{`Конкуренты компании ${companyName} по области: ${areaName}`}</Heading>}
             </div>
-            <CompetitorsForm competitors={competitors} />
+            <div className="competitors-list-section__date">
+                <CompetitorsForm
+                    competitors={competitors}
+                    openCommercialOffer={openCommercialOffer}
+                    companyId={companyId}/>
+            </div>
             {!competitors &&
                 <div className="competitors-list-section__loader">
                     <Loader/>
                 </div>
             }
             {competitors &&
-                <Fragment>
-                    <div className="competitors-list-section__competitors">
-                        { Object.values(competitors).map((el) =>
-                            <Competitor
-                                key={el.id}
-                                id={el.id}
-                                name={el.name}
-                                logo={el.logo}
-                                deleteCompetitor={() => deleteCompetitor(el.id, companyId, areaId)}
-                            />
-                        )}
-                    </div>
-                </Fragment>
+                <div className="competitors-list-section__competitors">
+                    { Object.values(competitors).map((el) =>
+                        <Competitor
+                            key={el.id}
+                            id={el.id}
+                            name={el.name}
+                            logo={el.logo}
+                            deleteCompetitor={() => deleteCompetitor(el.id, companyId, areaId)}
+                        />
+                    )}
+                </div>
             }
             <div className="competitors-list-section__add">
-                        <ButtonIcon onClick={clickAdd}>
-                            <AddIcon size={30}/>
-                        </ButtonIcon>
-                    </div>
+                <ButtonIcon onClick={clickAdd}>
+                    <AddIcon size={30}/>
+                </ButtonIcon>
+            </div>
             {searchIsOpen &&
                 <div className="background-section">
                     <div className="competitors-list-section__search">
@@ -111,7 +120,6 @@ const CompetitorsList = ({
             }
             <div className="competitors-list-section__btn">
                 <Button onClick={openCompanySearch}>К предыдущему шагу</Button>
-                <Button onClick={openCommercialOffer}>К следующему шагу</Button>
             </div>
         </section>
     );
@@ -132,17 +140,20 @@ CompetitorsList.propTypes = {
     areaId: PropTypes.string,
     areaName: PropTypes.string,
     companyName: PropTypes.string,
+    resetServices: PropTypes.func,
+    services: PropTypes.object,
 };
 
 export default connect(
     (state) => ({
         companyId: state.companies.companyId,
         competitorId: state.competitors.competitorId,
-        competitors: state.competitors.competitors || [],
+        competitors: state.competitors.competitors,
         companies: state.companies.companies,
         areaId: state.areas.areaId,
         areaName: state.areas.areaName,
         companyName: state.companies.companyName,
+        services: state.services.services,
     }),
     {
         fetchCompetitors,
@@ -150,5 +161,6 @@ export default connect(
         deleteCompetitor,
         addCompetitor,
         fetchCompany,
+        resetServices,
     }
 )(CompetitorsList);

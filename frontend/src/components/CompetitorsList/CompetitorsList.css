@@ -4,6 +4,11 @@
     position: relative;
     &__title {
         text-align: center;
+        margin-bottom: 20px;
+    }
+    &__date {
+        display: flex;
+        justify-content: center;
     }
     &__competitors{
         margin-top: 20px;
