@@ -2,6 +2,7 @@ package ru.hh.cphelper.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.transaction.annotation.Transactional;
 import ru.hh.cphelper.entity.DayReport;
 
 import javax.inject.Inject;
@@ -39,5 +40,10 @@ public class DayReportDao {
             ))
     )
         .stream();
+  }
+
+  @Transactional
+  public void save(DayReport dayReport) {
+    getCurrentSession().save(dayReport);
   }
 }

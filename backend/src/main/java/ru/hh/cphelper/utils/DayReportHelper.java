@@ -1,6 +1,7 @@
 package ru.hh.cphelper.utils;
 
 import ru.hh.cphelper.dto.DayReportResponseDto;
+import ru.hh.cphelper.dto.DayReportConsumerDto;
 import ru.hh.cphelper.entity.DayReport;
 
 import java.util.Comparator;
@@ -28,5 +29,19 @@ public final class DayReportHelper {
                     l -> l.stream().sorted(Comparator
                         .comparing(DayReportResponseDto::getResponsePerService).reversed())
                         .collect(toList()))));
+  }
+
+  public static DayReport map(DayReportConsumerDto dayReportConsumerDto) {
+    return new DayReport(
+        Long.valueOf(dayReportConsumerDto.getId()),
+        dayReportConsumerDto.getEmployerId(),
+        dayReportConsumerDto.getServiceCode(),
+        dayReportConsumerDto.getServiceName(),
+        dayReportConsumerDto.getServiceProfareaId(),
+        dayReportConsumerDto.getServiceAreaId(),
+        Long.valueOf(dayReportConsumerDto.getSpendingCount()),
+        Long.valueOf(dayReportConsumerDto.getResponsesCount()),
+        dayReportConsumerDto.getReportCreationDate()
+    );
   }
 }
