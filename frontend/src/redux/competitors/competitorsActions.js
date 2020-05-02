@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {EMPLOYERS_HH_API_URL, CP_HELPER_BASE_URL} from 'utils/constants';
+import {EMPLOYERS_HH_API_URL, CP_HELPER_EMPLOYER_URL} from 'utils/constants';
 
 import createNotification from 'utils/notifications';
 
@@ -48,7 +48,7 @@ export const chooseCompetitorAction = (competitorId) => {
 export function fetchCompetitors(companyId, areaId) {
 
     return (dispatch) => {
-        axios.get(`${CP_HELPER_BASE_URL + companyId}/competitors?areaId=${areaId}`).then((competitorsIds) => {
+        axios.get(`${CP_HELPER_EMPLOYER_URL + companyId}/competitors?areaId=${areaId}`).then((competitorsIds) => {
             if (competitorsIds.data.competitorsIds.length) {
                 Promise.all(
                     competitorsIds.data.competitorsIds.map(
@@ -77,7 +77,7 @@ export function fetchCompetitors(companyId, areaId) {
 export function deleteCompetitor(competitorId, companyId, areaId) {
 
     return (dispatch) => {
-        axios.delete(`${CP_HELPER_BASE_URL + companyId}/competitors`, {
+        axios.delete(`${CP_HELPER_EMPLOYER_URL + companyId}/competitors`, {
             data: {
                 "competitorId": competitorId,
                 "areaId": areaId,
@@ -96,7 +96,7 @@ export function deleteCompetitor(competitorId, companyId, areaId) {
 export function addCompetitor(competitorId, companyId, areaId) {
 
     return (dispatch) => {
-        axios.post(`${CP_HELPER_BASE_URL + companyId}/competitors`, {
+        axios.post(`${CP_HELPER_EMPLOYER_URL + companyId}/competitors`, {
             "competitorId": competitorId,
             "areaId": areaId,
         })
