@@ -2,7 +2,7 @@ package ru.hh.cphelper.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import ru.hh.cphelper.entity.Report;
+import ru.hh.cphelper.entity.DayReport;
 
 import javax.inject.Inject;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -12,12 +12,12 @@ import java.time.LocalDate;
 import java.util.Set;
 import java.util.stream.Stream;
 
-public class ReportDao {
+public class DayReportDao {
 
   private final SessionFactory sessionFactory;
 
   @Inject
-  public ReportDao(SessionFactory sessionFactory) {
+  public DayReportDao(SessionFactory sessionFactory) {
     this.sessionFactory = sessionFactory;
   }
 
@@ -25,19 +25,19 @@ public class ReportDao {
     return sessionFactory.getCurrentSession();
   }
 
-  public Stream<Report> getReports(Set<Integer> employerId, LocalDate startDate, LocalDate endDate) {
+  public Stream<DayReport> getDayReports(Set<Integer> employerIds, LocalDate startDate, LocalDate endDate) {
     Session session = getCurrentSession();
     CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-    CriteriaQuery<Report> criteriaQuery = criteriaBuilder.createQuery(Report.class);
-    Root<Report> root = criteriaQuery.from(Report.class);
+    CriteriaQuery<DayReport> criteriaQuery = criteriaBuilder.createQuery(DayReport.class);
+    Root<DayReport> root = criteriaQuery.from(DayReport.class);
     return session.createQuery(criteriaQuery
         .select(root)
         .where(
             criteriaBuilder.and(
-              root.get("employerId").in(employerId),
-              criteriaBuilder.between(root.get("serviceOrderDate"), startDate, endDate)
+                root.get("employerId").in(employerIds),
+                criteriaBuilder.between(root.get("reportCreationDate"), startDate, endDate)
             ))
-        )
+    )
         .stream();
   }
 }
