@@ -1,17 +1,33 @@
 import {createReducer} from 'redux-create-reducer';
-import {FETCH_COMPETITORS, ADD_COMPETITOR, DELETE_COMPETITOR, RESET_COMPETITORS, CHOOSE_COMPETITOR} from './competitorsActions';
+import {FETCH_COMPETITORS_BEGIN, FETCH_COMPETITORS_SUCCESS, FETCH_COMPETITORS_FAILURE, ADD_COMPETITOR, DELETE_COMPETITOR, RESET_COMPETITORS, CHOOSE_COMPETITOR} from './competitorsActions';
 
 export const initialState = {
     competitors: undefined,
+    isLoading: false,
     competitorId: undefined,
 };
 
 export const competitorsReducer = createReducer(initialState, {
 
-    [FETCH_COMPETITORS](state, action) {
+    [FETCH_COMPETITORS_BEGIN](state) {
+        return {
+            ...state,
+            isLoading: true,
+        };
+    },
+
+    [FETCH_COMPETITORS_SUCCESS](state, action) {
         return {
             ...state,
             competitors: action.competitors,
+            isLoading: false,
+        };
+    },
+
+    [FETCH_COMPETITORS_FAILURE](state) {
+        return {
+            ...state,
+            isLoading: false,
         };
     },
 

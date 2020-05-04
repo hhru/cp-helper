@@ -21,6 +21,7 @@ import './CompetitorsList.css';
 const CompetitorsList = ({
     openCompanySearch,
     competitors,
+    isLoading,
     companyId,
     fetchCompetitors,
     openCommercialOffer,
@@ -36,6 +37,8 @@ const CompetitorsList = ({
     resetServices,
     services,
 }) => {
+
+    console.log('isLoading', isLoading)
 
     const [searchIsOpen, setSearchIsOpen] = useState(false);
 
@@ -73,7 +76,7 @@ const CompetitorsList = ({
                     openCommercialOffer={openCommercialOffer}
                     companyId={companyId}/>
             </div>
-            {!competitors &&
+            {isLoading &&
                 <div className="competitors-list-section__loader">
                     <Loader/>
                 </div>
@@ -128,6 +131,7 @@ const CompetitorsList = ({
 CompetitorsList.propTypes = {
     openCompanySearch: PropTypes.func.isRequired,
     competitors: PropTypes.object,
+    isLoading: PropTypes.boolean,
     companyId: PropTypes.string,
     fetchCompetitors: PropTypes.func,
     openCommercialOffer: PropTypes.func.isRequired,
@@ -149,6 +153,7 @@ export default connect(
         companyId: state.companies.companyId,
         competitorId: state.competitors.competitorId,
         competitors: state.competitors.competitors,
+        isLoading: state.competitors.isLoading,
         companies: state.companies.companies,
         areaId: state.areas.areaId,
         areaName: state.areas.areaName,

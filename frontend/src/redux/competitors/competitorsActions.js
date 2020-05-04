@@ -3,7 +3,9 @@ import {EMPLOYERS_HH_API_URL, CP_HELPER_EMPLOYER_URL} from 'utils/constants';
 
 import createNotification from 'utils/notifications';
 
-export const FETCH_COMPETITORS = 'FETCH_COMPETITORS';
+export const FETCH_COMPETITORS_BEGIN = 'FETCH_COMPETITORS_BEGIN';
+export const FETCH_COMPETITORS_SUCCESS = 'FETCH_COMPETITORS_SUCCESS';
+export const FETCH_COMPETITORS_FAILURE = 'FETCH_COMPETITORS_FAILURE';
 export const ADD_COMPETITOR = 'ADD_COMPETITOR';
 export const DELETE_COMPETITOR = 'DELETE_COMPETITOR';
 export const RESET_COMPETITORS = 'RESET_COMPETITORS';
@@ -11,10 +13,21 @@ export const CHOOSE_COMPETITOR = 'CHOOSE_COMPETITOR';
 
 const LOGO_SIZE = 90;
 
-export const fetchCompetitorsAction = (competitors) => {
+export const fetchCompetitorsBeginAction = () => {
     return {
-        type: FETCH_COMPETITORS,
+        type: FETCH_COMPETITORS_BEGIN,
+    };
+};
+
+export const fetchCompetitorsSuccessAction = (competitors) => {
+    return {
+        type: FETCH_COMPETITORS_SUCCESS,
         competitors,
+    };
+};
+export const fetchCompetitorsFailureAction = () => {
+    return {
+        type: FETCH_COMPETITORS_FAILURE,
     };
 };
 
@@ -48,6 +61,8 @@ export const chooseCompetitorAction = (competitorId) => {
 export function fetchCompetitors(companyId, areaId) {
 
     return (dispatch) => {
+        dispatch(fetchCompetitorsBeginAction());
+        setTimeout(() => {  console.log("sleep!"); }, 5000);
         axios.get(`${CP_HELPER_EMPLOYER_URL + companyId}/competitors?areaId=${areaId}`).then((competitorsIds) => {
             if (competitorsIds.data.competitorsIds.length) {
                 Promise.all(
@@ -61,15 +76,16 @@ export function fetchCompetitors(companyId, areaId) {
                             const logo = el.data.logo_urls ? el.data.logo_urls[LOGO_SIZE] : null;
                             competitors[el.data.id] = {id: el.data.id, name: el.data.name, logo};
                         });
-                        dispatch(fetchCompetitorsAction(competitors));
+                        dispatch(fetchCompetitorsSuccessAction(competitors));
                     });
             } else {
                 createNotification('error', 'Данных в базе не обнаружено', 'Ошибка');
-                dispatch(fetchCompetitorsAction(undefined));
+                dispatch(fetchCompetitorsSuccessAction(undefined));
             }
         })
         .catch(() => {
             createNotification('error', 'Сервер недоступен', 'Ошибка');
+            dispatch(fetchCompetitorsFailureAction());
         });
     };
 }

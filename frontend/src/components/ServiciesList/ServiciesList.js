@@ -72,7 +72,7 @@ const ServiciesList = ({ services }) => {
             </tr>
             </thead>
             <tbody className="hh-table__body">
-                {Object.entries(services).map((employer) => (
+                {services && Object.entries(services).map((employer) => (
                     employer[1].map((service, index) => (
                         <Service
                             key={service.serviceName + service.employerId}
@@ -85,44 +85,6 @@ const ServiciesList = ({ services }) => {
         </table>
     );
 };
-
-ServiciesList.defaultProps = {
-    services: {
-    "1870": [
-        {
-        "employerId": 1870,
-        "serviceCode": 27,
-        "serviceName": "Left block advert",
-        "serviceAreaId": 70,
-        "serviceProfArea": 1,
-        "spendingCount": 2,
-        "responseCount": 10,
-        "responsePerService": 5,
-        },
-        {
-        "employerId": 1870,
-        "serviceCode": 25,
-        "serviceName": "Footer advert",
-        "serviceAreaId": 70,
-        "serviceProfArea": 20,
-        "spendingCount": 17,
-        "responseCount": 10,
-        "responsePerService": 0.588,
-        },
-    ],
-    "1455": [
-        {
-        "employerId": 1455,
-        "serviceCode": 22,
-        "serviceName": "Access to the resume database",
-        "serviceAreaId": 70,
-        "serviceProfArea": 20,
-        "spendingCount": 101,
-        "responseCount": 40,
-        "responsePerService": 0.396,
-        },
-    ],
-}};
 
 ServiciesList.propTypes = {
     services: PropTypes.object,
