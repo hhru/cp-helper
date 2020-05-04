@@ -4,6 +4,7 @@ import {AREAS_HH_API_URL} from 'utils/constants';
 export const FILTER_AREA = 'FILTER_AREA';
 export const CHOOSE_AREA = 'CHOOSE_AREA';
 export const INIT_AREAS = 'INIT_AREAS';
+export const RESET_AREA = 'RESET_AREA';
 
 export const filterAreaAction = (filteredAreas) => {
     return {
@@ -24,6 +25,12 @@ export const initAreaAction = (plainAreas) => {
     return {
         type: INIT_AREAS,
         plainAreas,
+    };
+};
+
+export const resetAreaAction = () => {
+    return {
+        type: RESET_AREA,
     };
 };
 
@@ -60,7 +67,7 @@ export function initAreas() {
 
 export function resetArea() {
     return (dispatch) => {
-        dispatch(chooseAreaAction(undefined, undefined));
+        dispatch(resetAreaAction());
     };
 }
 

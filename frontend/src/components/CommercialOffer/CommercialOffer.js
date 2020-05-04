@@ -7,14 +7,25 @@ import Heading from 'components/Heading/Heading';
 
 import './CommercialOffer.css';
 
-const CommercialOffer = ({ openCompetitorsList, competitors}) => {
+const CommercialOffer = ({ openCompetitorsList, services}) => {
 
     return (
         <section className="commercial-offer-section">
             <div className="commercial-offer-section__offer">
                 <Heading level={3}>Коммерческое предложение</Heading>
             </div>
-            { competitors && Object.values(competitors).map((el) => <div key={el.id}>{el.name}</div>) }
+            {services && Object.keys(services).map((el) =>
+                services[el].map((elem) =>
+                    <div key={elem.employerId}>
+                        {'|'}{elem.employerId}
+                        {'|'}{elem.serviceCode}
+                        {'|'}{elem.serviceName}
+                        {'|'}{elem.serviceAreaId}
+                        {'|'}{elem.serviceProfArea}
+                        {'|'}{elem.responseCount}
+                        {'|'}{elem.responsePerService}{'|'}
+                    </div>
+            ))}
             <div className="commercial-offer-section__btn">
                 <Button onClick={openCompetitorsList}>К предыдущему шагу</Button>
             </div>
@@ -24,11 +35,11 @@ const CommercialOffer = ({ openCompetitorsList, competitors}) => {
 
 CommercialOffer.propTypes = {
     openCompetitorsList: PropTypes.func.isRequired,
-    competitors: PropTypes.object,
+    services: PropTypes.object,
 };
 
 export default connect(
     (state) => ({
-        competitors: state.competitors.competitors,
+        services: state.services.services,
     })
 )(CommercialOffer);

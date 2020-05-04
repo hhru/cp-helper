@@ -3,7 +3,7 @@ import {EMPLOYERS_HH_API_URL} from 'utils/constants';
 
 export const FETCH_COMPANY = 'FETCH_COMPANY';
 export const CHOOSE_COMPANY = 'CHOOSE_COMPANY';
-export const CHOOSE_COMPETITOR = 'CHOOSE_COMPETITOR';
+export const RESET_COMPANY = 'RESET_COMPANY';
 
 export const fetchCompanyAction = (companies) => {
     return {
@@ -17,6 +17,12 @@ export const chooseCompanyAction = (companyId, companyName) => {
         type: CHOOSE_COMPANY,
         companyId,
         companyName,
+    };
+};
+
+export const resetCompanyAction = () => {
+    return {
+        type: RESET_COMPANY,
     };
 };
 
@@ -38,7 +44,7 @@ export function chooseCompany(companyId, companyName) {
 
 export function resetCompany() {
     return (dispatch) => {
-        dispatch(chooseCompanyAction(undefined, undefined));
+        dispatch(resetCompanyAction());
     };
 }
 

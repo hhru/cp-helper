@@ -3,10 +3,3 @@
         display: flex;
     }
 }
-
-.hh-form-error {
-    width: 200px;
-    margin-left: 30px;
-    color: red;
-    font-size: 12px;
-}

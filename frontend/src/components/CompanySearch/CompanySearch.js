@@ -11,6 +11,7 @@ import Button from 'components/Button/Button';
 import {chooseCompany, resetCompany, fetchCompany, getCompanyNameById} from 'redux/companies/companiesActions';
 import {resetCompetitors} from 'redux/competitors/competitorsActions';
 import {filterArea, chooseArea, initAreas, resetArea} from 'redux/areas/areasAction';
+import {resetServices} from 'redux/services/servicesActions';
 
 import './CompanySearch.css';
 
@@ -31,6 +32,7 @@ const CompanySearch = ({
     resetArea,
     getCompanyNameById,
     companyName,
+    resetServices,
 }) => {
 
     const [isSearchById, setIsSearchById] = useState(false);
@@ -42,6 +44,7 @@ const CompanySearch = ({
             resetCompany();
             resetCompetitors();
             resetArea();
+            resetServices();
         }
         if (!plainAreas) {
             initAreas();
@@ -124,6 +127,7 @@ CompanySearch.propTypes = {
     resetArea: PropTypes.func,
     getCompanyNameById: PropTypes.func,
     companyName: PropTypes.string,
+    resetServices: PropTypes.func,
 };
 
 export default connect(
@@ -145,5 +149,6 @@ export default connect(
         initAreas,
         resetArea,
         getCompanyNameById,
+        resetServices,
     }
 )(CompanySearch);
