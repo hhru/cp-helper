@@ -23,18 +23,24 @@ VALUES (1455, 1870, 113, 0.9),
        (1455, 1269556, 113, 0.7);
 
 create TABLE day_report (
-    id bigint NOT NULL,
+    day_report_id bigint NOT NULL,
+    report_date date NOT NULL,
     employer_id integer NOT NULL,
     service_code varchar(50) DEFAULT ''::varchar NOT NULL,
-    service_name varchar(220) DEFAULT ''::varchar NOT NULL,
-    service_area_id integer NOT NULL,
-    service_profarea_id integer NOT NULL,
-    spending_count integer NOT NULL,
     responses_count integer NOT NULL,
-    report_creation_date date NOT NULL
+    spending_id integer NOT NULL,
+    spending_date timestamp NOT null,
+    report_spending_same_day boolean NOT null,
+    vacancy_id bigint NOT NULL,
+    vacancy_area_id integer NOT NULL,
+    cost numeric(8,2)
 );
 
-create index idx_day_report_employer_id_date on day_report(employer_id, report_creation_date);
+create index idx_day_report_employer_id_report_date on day_report(employer_id, report_date, report_spending_same_day);
 
-comment on table day_report is 'Once per day updated table of Headhunter services by employer';
-comment on column day_report.spending_count is 'Amount of the service ordered';
+create TABLE vacancy_profarea (
+    vacancy_id bigint NOT NULL,
+    profarea_id integer NOT NULL
+);
+
+create index idx_vacancy_profarea_vacancy_id on day_report(vacancy_id);
