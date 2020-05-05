@@ -4,17 +4,25 @@ import {connect} from 'react-redux';
 
 import Button from 'components/Button/Button';
 import Heading from 'components/Heading/Heading';
+import Loader from 'components/Loader/Loader';
 import ServiciesList from 'components/ServiciesList/ServiciesList';
 
 import './CommercialOffer.css';
 
-const CommercialOffer = ({ openCompetitorsList, services, competitors}) => {
+const CommercialOffer = ({ openCompetitorsList, services, isLoading}) => {
 
     return (
         <section className="commercial-offer-section">
             <div className="commercial-offer-section__offer">
                 <Heading level={3}>Коммерческое предложение</Heading>
             </div>
+            {isLoading ? (
+                <div className="competitors-list-section__loader">
+                    <Loader/>
+                </div>) : (
+                <ServiciesList services={services} />
+                )
+            }
             {/* {services && Object.keys(services).map((el) =>
                 services[el].map((elem) =>
                     <div key={elem.employerId}>
@@ -27,8 +35,7 @@ const CommercialOffer = ({ openCompetitorsList, services, competitors}) => {
                         {'|'}{elem.responsePerService}{'|'}
                     </div>
             ))} */}
-            { competitors && Object.values(competitors).map((el) => <div key={el.id}>{el.name}</div>) }
-            <ServiciesList services={services} />
+            {/* { competitors && Object.values(competitors).map((el) => <div key={el.id}>{el.name}</div>) } */}
             <div className="commercial-offer-section__btn">
                 <Button onClick={openCompetitorsList}>К предыдущему шагу</Button>
             </div>
@@ -39,12 +46,12 @@ const CommercialOffer = ({ openCompetitorsList, services, competitors}) => {
 CommercialOffer.propTypes = {
     openCompetitorsList: PropTypes.func.isRequired,
     services: PropTypes.object,
-    competitors: PropTypes.object,
+    isLoading: PropTypes.bool,
 };
 
 export default connect(
     (state) => ({
         services: state.services.services,
-        competitors: state.competitors.competitors,
+        isLoading: state.services.isLoading,
     })
 )(CommercialOffer);

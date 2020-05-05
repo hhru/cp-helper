@@ -20,6 +20,12 @@
     &__body {
         & td {
             padding: 4px;
+            white-space: pre-line
         }
     }
+}
+
+.hh-services__header {
+    margin-top: 16px;
+    font-weight: bold;
 }

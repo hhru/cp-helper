@@ -62,7 +62,6 @@ export function fetchCompetitors(companyId, areaId) {
 
     return (dispatch) => {
         dispatch(fetchCompetitorsBeginAction());
-        setTimeout(() => {  console.log("sleep!"); }, 5000);
         axios.get(`${CP_HELPER_EMPLOYER_URL + companyId}/competitors?areaId=${areaId}`).then((competitorsIds) => {
             if (competitorsIds.data.competitorsIds.length) {
                 Promise.all(

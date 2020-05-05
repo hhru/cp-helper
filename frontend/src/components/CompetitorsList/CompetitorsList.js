@@ -38,8 +38,6 @@ const CompetitorsList = ({
     services,
 }) => {
 
-    console.log('isLoading', isLoading)
-
     const [searchIsOpen, setSearchIsOpen] = useState(false);
 
     useEffect(() => {
