@@ -1,0 +1,31 @@
+.hh-table {
+    border-spacing: 0;
+    border: 1px solid black;
+
+    & td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+    }
+
+    &__head {
+        font-weight: bold;
+        white-space: nowrap;
+
+        & td {
+            padding: 8px 4px;
+        }
+    }
+    
+    &__body {
+        & td {
+            padding: 4px;
+            white-space: pre-line
+        }
+    }
+}
+
+.hh-services__header {
+    margin-top: 16px;
+    font-weight: bold;
+}

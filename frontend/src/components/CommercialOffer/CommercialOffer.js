@@ -4,12 +4,14 @@ import {connect} from 'react-redux';
 
 import Button from 'components/Button/Button';
 import Heading from 'components/Heading/Heading';
+import Loader from 'components/Loader/Loader';
+import ServiciesList from 'components/ServiciesList/ServiciesList';
 
 import {initProfAreas} from 'redux/profAreas/profAreasActions';
 
 import './CommercialOffer.css';
 
-const CommercialOffer = ({ openCompetitorsList, competitors, profAreas, initProfAreas, services}) => {
+const CommercialOffer = ({ openCompetitorsList, isLoading, profAreas, initProfAreas, services}) => {
 
     useEffect(() => {
         if (!profAreas) {
@@ -22,8 +24,14 @@ const CommercialOffer = ({ openCompetitorsList, competitors, profAreas, initProf
             <div className="commercial-offer-section__offer">
                 <Heading level={3}>Коммерческое предложение</Heading>
             </div>
-            { competitors && Object.values(competitors).map((el) => <div key={el.id}>{el.name}</div>) }
-            {services && Object.keys(services).map((el) =>
+            {isLoading ? (
+                <div className="competitors-list-section__loader">
+                    <Loader/>
+                </div>) : (
+                <ServiciesList services={services} />
+                )
+            }
+            {/* {services && Object.keys(services).map((el) =>
                 services[el].map((elem) =>
                     <div key={elem.employerId}>
                         {'|'}{elem.employerId}
@@ -34,8 +42,8 @@ const CommercialOffer = ({ openCompetitorsList, competitors, profAreas, initProf
                         {'|'}{elem.responseCount}
                         {'|'}{elem.responsePerService}{'|'}
                     </div>
-            ))}
-            { profAreas && Object.keys(profAreas).map((el) => <div key={el}>{profAreas[el]}</div>) }
+            ))} */}
+            {/* { competitors && Object.values(competitors).map((el) => <div key={el.id}>{el.name}</div>) } */}
             <div className="commercial-offer-section__btn">
                 <Button onClick={openCompetitorsList}>К предыдущему шагу</Button>
             </div>
@@ -45,7 +53,7 @@ const CommercialOffer = ({ openCompetitorsList, competitors, profAreas, initProf
 
 CommercialOffer.propTypes = {
     openCompetitorsList: PropTypes.func.isRequired,
-    competitors: PropTypes.object,
+    isLoading: PropTypes.bool,
     profAreas: PropTypes.object,
     initProfAreas: PropTypes.func,
     services: PropTypes.object,
@@ -53,9 +61,9 @@ CommercialOffer.propTypes = {
 
 export default connect(
     (state) => ({
-        competitors: state.competitors.competitors,
-        profAreas: state.profAreas.profAreas,
         services: state.services.services,
+        isLoading: state.services.isLoading,
+        profAreas: state.profAreas.profAreas,
     }),
     {
         initProfAreas,
