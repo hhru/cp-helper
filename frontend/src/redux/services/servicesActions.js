@@ -2,26 +2,13 @@ import axios from 'axios';
 import {CP_HELPER_REPORT_URL} from 'utils/constants';
 import createNotification from 'utils/notifications';
 
-export const FFETCH_SERVICES_BEGIN = 'FFETCH_SERVICES_BEGIN';
-export const FFETCH_SERVICES_SUCCESS = 'FFETCH_SERVICES_SUCCESS';
-export const FFETCH_SERVICES_FAILURE = 'FFETCH_SERVICES_FAILURE';
+export const FETCH_SERVICES = 'FETCH_SERVICES';
 export const RESET_SERVICES = 'RESET_SERVICES';
 
-export const fetchServicesBeginAction = () => {
+export const fetchServicesAction = (services) => {
     return {
-        type: FFETCH_SERVICES_BEGIN,
-    };
-};
-
-export const fetchServicesSuccessAction = (services) => {
-    return {
-        type: FFETCH_SERVICES_SUCCESS,
+        type: FETCH_SERVICES,
         services,
-    };
-};
-export const fetchServicesFailureAction = () => {
-    return {
-        type: FFETCH_SERVICES_FAILURE,
     };
 };
 
@@ -39,26 +26,19 @@ export function fetchServices(companyId, competitors, startDate, endDate) {
     }
     url += `&startDate=${startDate}&endDate=${endDate}`;
     return (dispatch) => {
-        dispatch(fetchServicesBeginAction());
         axios.get(url)
             .then((res) => {
-                // eslint-disable-next-line no-console
-                console.log('200', res.data);
-                dispatch(fetchServicesSuccessAction(res.data.services_by_employer));
+                dispatch(fetchServicesAction(res.data.services_by_employer));
             })
             .catch(() => {
-                // eslint-disable-next-line no-console
-                console.log('error');
                 createNotification('error', 'Введены некорректные даты', 'Ошибка');
-                dispatch(fetchServicesFailureAction(undefined));
-
             });
     };
 }
 
 export function resetServices() {
     return (dispatch) => {
-        dispatch(fetchServicesSuccessAction(undefined));
+        dispatch(resetServicesAction());
     };
 }
 

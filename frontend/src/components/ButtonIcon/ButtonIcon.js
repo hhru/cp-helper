@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 
 import './ButtonIcon.css';
 
-const ButtonIcon = ({ children, onClick, disabled}) => (
+const ButtonIcon = ({ children, onClick}) => (
     <button
         className="hh-button-icon"
-        onClick={onClick}
-        disabled={disabled}>
+        onClick={onClick}>
         {children}
     </button>
 );
@@ -18,7 +17,6 @@ ButtonIcon.propTypes = {
         PropTypes.node,
     ]).isRequired,
     onClick: PropTypes.func.isRequired,
-    disabled: PropTypes.bool,
 };
 
 export default ButtonIcon;
