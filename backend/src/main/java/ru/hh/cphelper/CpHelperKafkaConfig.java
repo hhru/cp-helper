@@ -3,7 +3,7 @@ package ru.hh.cphelper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import ru.hh.cphelper.integration.KafkaConsumerService;
+import ru.hh.cphelper.integration.DayReportListener;
 import static ru.hh.cphelper.utils.KafkaObjectMapperFactory.createObjectMapper;
 import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.nab.kafka.consumer.DefaultConsumerFactory;
@@ -13,7 +13,9 @@ import ru.hh.nab.kafka.util.ConfigProvider;
 import ru.hh.nab.metrics.StatsDSender;
 
 @Configuration
-@Import({KafkaConsumerService.class})
+@Import({
+    DayReportListener.class,
+})
 public class CpHelperKafkaConfig {
   @Bean
   public ConfigProvider configProvider(String serviceName, FileSettings fileSettings) {
@@ -24,4 +26,5 @@ public class CpHelperKafkaConfig {
   public KafkaConsumerFactory kafkaConsumerFactory(ConfigProvider configProvider, StatsDSender statsDSender) {
     return new DefaultConsumerFactory(configProvider, new JacksonDeserializerSupplier(createObjectMapper()), statsDSender);
   }
+
 }

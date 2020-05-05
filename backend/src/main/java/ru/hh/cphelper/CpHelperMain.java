@@ -9,7 +9,8 @@ public class CpHelperMain {
   }
 
   public static NabApplication build() {
-    return NabApplication.builder()
+    return NabApplication
+        .builder()
         .configureJersey(CpHelperJerseyConfig.class).bindToRoot()
         .build();
   }
