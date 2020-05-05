@@ -11,12 +11,12 @@ GO
 CREATE TABLE dbo.CompetitorReport(
     [id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     [employer_id] [int] NULL,
-	[service_code] [varchar](50) NULL,
-	[service_name] [nvarchar](220) NULL,
+	[service_code] [nvarchar](50) NULL,
+	[service_name] [nvarchar](3000) NULL,
     [service_area_id] [int] NULL,
 	[service_profarea_id] [int] NULL,
-	spending_count [int] NULL,
-	responses_count [int] NULL,
+	[spending_count] [int] NULL,
+	[responses_count] [int] NULL,
 	[report_creation_date] [date] NULL
     ) ON [PRIMARY]
 GO
