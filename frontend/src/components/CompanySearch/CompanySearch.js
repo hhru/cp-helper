@@ -138,6 +138,7 @@ export default connect(
         areaId: state.areas.areaId,
         plainAreas: state.areas.planeAreas,
         filteredAreas: state.areas.filteredAreas,
+        profAreas: state.profAreas.profAreas,
     }),
     {
         chooseCompany,
