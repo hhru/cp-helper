@@ -78,7 +78,7 @@ CompetitorsForm.propTypes = {
 };
 
 export default connect(
-    () => {},
+    null,
     {
         fetchServices,
     }

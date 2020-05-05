@@ -1,6 +1,6 @@
 import {createReducer} from 'redux-create-reducer';
 
-import {FILTER_AREA, CHOOSE_AREA, INIT_AREAS} from './areasAction';
+import {FILTER_AREA, CHOOSE_AREA, INIT_AREAS, RESET_AREA} from './areasAction';
 
 export const initialState = {
     areaId: undefined,
@@ -9,7 +9,7 @@ export const initialState = {
     plainAreas: undefined,
 };
 
-export const areaSearchReducer = createReducer(initialState, {
+export const areasReducer = createReducer(initialState, {
 
     [FILTER_AREA](state, action) {
         return {
@@ -28,6 +28,13 @@ export const areaSearchReducer = createReducer(initialState, {
         return {
             ...state,
             plainAreas: action.plainAreas,
+        };
+    },
+    [RESET_AREA](state) {
+        return {
+            ...state,
+            areaId: initialState.areaId,
+            areaName: initialState.areaName,
         };
     },
 });

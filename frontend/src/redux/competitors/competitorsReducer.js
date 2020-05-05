@@ -51,7 +51,7 @@ export const competitorsReducer = createReducer(initialState, {
     [RESET_COMPETITORS](state) {
         return {
             ...state,
-            competitors: undefined,
+            competitors: initialState.competitors,
         };
     },
     [CHOOSE_COMPETITOR](state, action) {

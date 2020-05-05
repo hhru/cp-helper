@@ -22,7 +22,7 @@ public class DayReport implements Serializable {
   private Integer employerId;
 
   @Column(name = "service_code")
-  private Integer serviceCode;
+  private String serviceCode;
 
   @Column(name = "service_name")
   private String serviceName;
@@ -45,7 +45,7 @@ public class DayReport implements Serializable {
   public DayReport() {
   }
 
-  public DayReport(Long id, Integer employerId, Integer serviceCode, String serviceName,
+  public DayReport(Long id, Integer employerId, String serviceCode, String serviceName,
                    Integer serviceProfareaId, Integer serviceAreaId, Long spendingCount,
                    Long responsesCount, LocalDate reportCreationDate) {
     this.id = id;
@@ -67,11 +67,11 @@ public class DayReport implements Serializable {
     this.id = id;
   }
 
-  public Integer getServiceCode() {
+  public String getServiceCode() {
     return serviceCode;
   }
 
-  public void setServiceCode(Integer serviceCode) {
+  public void setServiceCode(String serviceCode) {
     this.serviceCode = serviceCode;
   }
 

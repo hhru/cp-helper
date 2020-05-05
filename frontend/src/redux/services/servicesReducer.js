@@ -1,6 +1,6 @@
 import {createReducer} from 'redux-create-reducer';
 
-import {FFETCH_SERVICES_BEGIN, FFETCH_SERVICES_SUCCESS, FFETCH_SERVICES_FAILURE} from './servicesActions';
+import {FFETCH_SERVICES_BEGIN, FFETCH_SERVICES_SUCCESS, FFETCH_SERVICES_FAILURE, RESET_SERVICES} from './servicesActions';
 
 export const initialState = {
     services: undefined,
@@ -28,6 +28,13 @@ export const servicesReducer = createReducer(initialState, {
         return {
             ...state,
             isLoading: false,
+
+    [RESET_SERVICES](state) {
+        return {
+            ...state,
+            services: initialState.services,
         };
+        },
+    };
     },
 });

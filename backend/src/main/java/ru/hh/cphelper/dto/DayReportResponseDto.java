@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class DayReportResponseDto {
 
   private Integer employerId;
-  private Integer serviceCode;
+  private String serviceCode;
   private String serviceName;
   private Integer serviceAreaId;
   private Integer serviceProfArea;
@@ -16,7 +16,7 @@ public class DayReportResponseDto {
   public DayReportResponseDto() {
   }
 
-  public DayReportResponseDto(Integer employerId, Integer serviceCode, String serviceName, Integer serviceAreaId,
+  public DayReportResponseDto(Integer employerId, String serviceCode, String serviceName, Integer serviceAreaId,
                               Integer serviceProfArea, Long spendingCount, Long responseCount,
                               BigDecimal responsePerService) {
     this.employerId = employerId;
@@ -45,11 +45,11 @@ public class DayReportResponseDto {
     this.serviceAreaId = serviceAreaId;
   }
 
-  public Integer getServiceCode() {
+  public String getServiceCode() {
     return serviceCode;
   }
 
-  public void setServiceCode(Integer serviceCode) {
+  public void setServiceCode(String serviceCode) {
     this.serviceCode = serviceCode;
   }
 

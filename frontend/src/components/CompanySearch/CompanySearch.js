@@ -12,7 +12,6 @@ import {chooseCompany, resetCompany, fetchCompany, getCompanyNameById} from 'red
 import {resetCompetitors} from 'redux/competitors/competitorsActions';
 import {filterArea, chooseArea, initAreas, resetArea} from 'redux/areas/areasAction';
 import {resetServices} from 'redux/services/servicesActions';
-import {initProfAreas} from '../../redux/profAreas/profAreasActions';
 
 import './CompanySearch.css';
 
@@ -34,8 +33,6 @@ const CompanySearch = ({
     getCompanyNameById,
     companyName,
     resetServices,
-    initProfAreas,
-    profAreas,
 }) => {
 
     const [isSearchById, setIsSearchById] = useState(false);
@@ -51,9 +48,6 @@ const CompanySearch = ({
         }
         if (!plainAreas) {
             initAreas();
-        }
-        if (!profAreas) {
-            initProfAreas();
         }
     }, []);
 
@@ -134,8 +128,6 @@ CompanySearch.propTypes = {
     getCompanyNameById: PropTypes.func,
     companyName: PropTypes.string,
     resetServices: PropTypes.func,
-    initProfAreas: PropTypes.func,
-    profAreas: PropTypes.object,
 };
 
 export default connect(
@@ -159,6 +151,5 @@ export default connect(
         resetArea,
         getCompanyNameById,
         resetServices,
-        initProfAreas,
     }
 )(CompanySearch);

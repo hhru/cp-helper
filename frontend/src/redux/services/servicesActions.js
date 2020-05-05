@@ -5,6 +5,7 @@ import createNotification from 'utils/notifications';
 export const FFETCH_SERVICES_BEGIN = 'FFETCH_SERVICES_BEGIN';
 export const FFETCH_SERVICES_SUCCESS = 'FFETCH_SERVICES_SUCCESS';
 export const FFETCH_SERVICES_FAILURE = 'FFETCH_SERVICES_FAILURE';
+export const RESET_SERVICES = 'RESET_SERVICES';
 
 export const fetchServicesBeginAction = () => {
     return {
@@ -24,6 +25,12 @@ export const fetchServicesFailureAction = () => {
     };
 };
 
+export const resetServicesAction = () => {
+    return {
+        type: RESET_SERVICES,
+    };
+};
+
 export function fetchServices(companyId, competitors, startDate, endDate) {
 
     let url = `${CP_HELPER_REPORT_URL}?employerId=${companyId}`;
@@ -35,9 +42,13 @@ export function fetchServices(companyId, competitors, startDate, endDate) {
         dispatch(fetchServicesBeginAction());
         axios.get(url)
             .then((res) => {
+                // eslint-disable-next-line no-console
+                console.log('200', res.data);
                 dispatch(fetchServicesSuccessAction(res.data.services_by_employer));
             })
             .catch(() => {
+                // eslint-disable-next-line no-console
+                console.log('error');
                 createNotification('error', 'Введены некорректные даты', 'Ошибка');
                 dispatch(fetchServicesFailureAction(undefined));
 

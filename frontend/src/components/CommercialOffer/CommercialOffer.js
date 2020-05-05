@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
@@ -7,9 +7,17 @@ import Heading from 'components/Heading/Heading';
 import Loader from 'components/Loader/Loader';
 import ServiciesList from 'components/ServiciesList/ServiciesList';
 
+import {initProfAreas} from 'redux/profAreas/profAreasActions';
+
 import './CommercialOffer.css';
 
-const CommercialOffer = ({ openCompetitorsList, services, isLoading}) => {
+const CommercialOffer = ({ openCompetitorsList, isLoading, profAreas, initProfAreas, services}) => {
+
+    useEffect(() => {
+        if (!profAreas) {
+            initProfAreas();
+        }
+    }, []);
 
     return (
         <section className="commercial-offer-section">
@@ -45,13 +53,19 @@ const CommercialOffer = ({ openCompetitorsList, services, isLoading}) => {
 
 CommercialOffer.propTypes = {
     openCompetitorsList: PropTypes.func.isRequired,
-    services: PropTypes.object,
     isLoading: PropTypes.bool,
+    profAreas: PropTypes.object,
+    initProfAreas: PropTypes.func,
+    services: PropTypes.object,
 };
 
 export default connect(
     (state) => ({
         services: state.services.services,
         isLoading: state.services.isLoading,
-    })
+        profAreas: state.profAreas.profAreas,
+    }),
+    {
+        initProfAreas,
+    }
 )(CommercialOffer);
