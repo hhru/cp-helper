@@ -8,6 +8,7 @@
     width: 100%;
     font: normal 14px/16px Arial;
     line-height: 30px;
+    z-index: 100;
     color: #333;
         &:hover, &:focus {
           background: #0F8FEE;
