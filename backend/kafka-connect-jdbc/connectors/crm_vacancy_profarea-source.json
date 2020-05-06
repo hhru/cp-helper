@@ -1,5 +1,5 @@
 {
-  "name": "crm_competitor_report-source",
+  "name": "crm_vacancy_profarea-source",
   "config":
   {
     "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
@@ -9,8 +9,8 @@
     "connection.password": "cp_helper3A!",
     "topic.prefix": "crm_",
     "mode":"incrementing",
-    "table.whitelist": "CompetitorReport",
-    "incrementing.column.name": "report_id",
+    "table.whitelist": "CompetitorProfArea",
+    "incrementing.column.name": "competitor_profarea_id",
     "validate.non.null" : false,
     "poll.interval.ms": 10000,
     "timestamp.interval.ms": 0
