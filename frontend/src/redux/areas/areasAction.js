@@ -37,7 +37,7 @@ export const resetAreaAction = () => {
 export function filterArea(areaName) {
     return (dispatch, getState) => {
         const plainAreas = getState().areas.plainAreas;
-        let filteredAreas = plainAreas.filter(
+        let filteredAreas = Object.values(plainAreas).filter(
             (area) =>
                 area.name.toUpperCase().indexOf(areaName.toUpperCase()) === 0
             );
@@ -59,7 +59,6 @@ export function initAreas() {
         axios.get(AREAS_HH_API_URL)
             .then((res) => {
                 const plainAreas = getPlainAreas(res.data);
-                plainAreas.sort((a, b) => (a.name > b.name));
                 dispatch(initAreaAction(plainAreas));
             });
     };
@@ -72,20 +71,20 @@ export function resetArea() {
 }
 
 function getPlainAreas(hierachyAreas) {
-    let plainAreas = [];
+    let plainAreas = {};
     hierachyAreas.forEach((area) => {
-        plainAreas = plainAreas.concat(recurseAreaProcessing(area));
+        plainAreas = {...plainAreas, ...recurseAreaProcessing(area)};
     });
     return plainAreas;
 }
 
 function recurseAreaProcessing(area) {
     if (!area.areas.length) {
-        return [{"id": area.id, "name": area.name}];
+        return {[area.id]: {"id": area.id, "name": area.name}};
     }
-    let result = [{"id": area.id, "name": area.name}];
+    let result = {[area.id]: {"id": area.id, "name": area.name}};
     area.areas.forEach((ar) => {
-        result = result.concat(recurseAreaProcessing(ar));
+        result = {...result, ...recurseAreaProcessing(ar)};
     });
     return result;
 }

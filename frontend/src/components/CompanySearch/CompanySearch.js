@@ -90,7 +90,7 @@ const CompanySearch = ({
                     items={filteredAreas}
                     choose={chooseArea}
                     payload={areaId}
-                    placeholderText={'Введите название региона'}
+                    placeholderText={'Введите регион'}
                 />
                 <div className="company-search-section__btn">
                     <Button onClick={openNextTab} disabled={!(companyId && areaId)}>Выбрать компанию</Button>
@@ -119,7 +119,7 @@ CompanySearch.propTypes = {
     fetchCompany: PropTypes.func,
     companies: PropTypes.array,
     initAreas: PropTypes.func,
-    plainAreas: PropTypes.array,
+    plainAreas: PropTypes.object,
     filterArea: PropTypes.func,
     chooseArea: PropTypes.func,
     filteredAreas: PropTypes.array,
@@ -136,7 +136,7 @@ export default connect(
         companyName: state.companies.companyName,
         companies: state.companies.companies,
         areaId: state.areas.areaId,
-        plainAreas: state.areas.planeAreas,
+        plainAreas: state.areas.plainAreas,
         filteredAreas: state.areas.filteredAreas,
     }),
     {

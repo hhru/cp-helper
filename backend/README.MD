@@ -74,13 +74,17 @@ VacancyDataMart.dbo.vw_VacancyResponses - тут лежат отклики
     
     2.1 Получение списка услуг
     
-    GET /report/services?employerId={id1}&employerId={id2}&...&startDate={startDate}&endDate={endDate}
+    GET /report/services?employerId={id1}&employerId={id2}&...&startDate={startDate}&endDate={endDate}&areaId={id}&profAreaId={id})
     
     где employerId - список идентификаторов конкурентов,
     
-    endDate - конечная дата для поиска (по умолчанию текущая дата).
+    endDate - конечная дата для поиска (по умолчанию текущая дата),
     
     startDate - начальная дата для поиска (по умолчанию endDate минус 7 дней),
+
+    areaId - идентификатор региона для фильтра услуг,
+
+    profAreaId - идентификатор специализации для фильтра услуг.
     
     Формат даты - yyyy-mm-dd
     
