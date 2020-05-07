@@ -3,5 +3,10 @@
 
     &__label {
         margin-right: 8px;
+        font-size: 14px
     }
+}
+
+.react-datepicker__input-container {
+    z-index: 1;
 }

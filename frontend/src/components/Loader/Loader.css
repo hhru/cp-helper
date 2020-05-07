@@ -6,6 +6,7 @@
     height: 20px;
     animation: load 2s linear infinite;
     margin-top: 20px;
+    z-index: -1;
 }
 
 @keyframes load {

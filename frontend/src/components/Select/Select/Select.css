@@ -1,0 +1,35 @@
+.select {
+    position: relative;
+    display: flex;
+    width: 110px;
+    z-index: 10;
+    &__input {
+        border: 1px solid #dfdedd;
+        box-sizing: border-box;
+        padding: 9px 10px;
+        height: 38px;
+        width: 100%;
+        margin: 5px 0;
+        outline: none;
+        border-radius: 2px;
+    }
+    &__arrow {
+        content: ''; 
+        display: inline-block;
+        width: 28px;
+        height: 38px;
+        position: absolute;
+        right: 0;
+        border: 1px solid #dfdedd;
+        border-radius: 0px 2px 2px 0px;
+        box-sizing: border-box;
+        pointer-events: none; 
+        margin-top: 5px;
+        &_open {
+            background: url('arrow-open.svg') no-repeat center #fff;
+        }
+        &_close {
+            background: url('arrow-close.svg') no-repeat center #fff;
+        }
+    }
+}
