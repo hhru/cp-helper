@@ -1,9 +1,11 @@
-.hh-button-icon{
+.hh-button-icon {
     background: transparent;
     border: none;
     cursor: pointer;
 
-    &:hover, &:focus, &:active {
+    &:hover,
+    &:focus,
+    &:active {
         outline: none;
     }
 }

@@ -1,17 +1,19 @@
 .option {
     border: none;
     outline: none;
-    background: #FFF;
+    background: #fff;
     padding: 11px 12px;
     height: 38px;
     box-sizing: border-box;
     width: 100%;
-    font: normal 14px/16px Arial;
+    font: 14px/16px ProximaNovaCond, Arial, sans-serif;
     line-height: 30px;
     z-index: 100;
     color: #333;
-        &:hover, &:focus {
-          background: #0F8FEE;
-          color: #FFF;
-        }
-  }
+
+    &:hover,
+    &:focus {
+        background: #0f8fee;
+        color: #fff;
+    }
+}

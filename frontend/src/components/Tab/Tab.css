@@ -1,13 +1,15 @@
 .tab {
     margin-top: 20px;
+
     &__element {
         font-family: ProximaNovaCond, Arial, sans-serif;
         padding: 10px;
         display: flex;
         justify-content: center;
-            &_active {
-                background-color: #eee;
-            }
+
+        &_active {
+            background-color: #eee;
+        }
     }
 }
 

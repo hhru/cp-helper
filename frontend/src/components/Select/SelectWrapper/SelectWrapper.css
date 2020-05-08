@@ -2,7 +2,7 @@
     position: absolute;
     width: 100%;
     top: 43px;
-    box-shadow: 0 30px 30px rgba(0, 0, 0, 0.15), 0 20px 20px rgba(0, 0, 0, 0.10);
+    box-shadow: 0 30px 30px rgba(0, 0, 0, 0.15), 0 20px 20px rgba(0, 0, 0, 0.1);
     overflow-x: hidden;
     overflow-y: scroll;
 }

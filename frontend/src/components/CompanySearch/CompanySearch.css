@@ -1,8 +1,9 @@
 
-.company-search-section{
+.company-search-section {
     &__search {
         display: flex;
     }
+
     &__btn {
         width: 50%;
     }

@@ -64,6 +64,8 @@
     "sass-loader": "8.0.2",
     "semver": "6.3.0",
     "style-loader": "0.23.1",
+    "stylelint": "^13.3.3",
+    "stylelint-config-standard": "^20.0.0",
     "terser-webpack-plugin": "2.3.4",
     "ts-pnp": "1.1.5",
     "url-loader": "2.3.0",
@@ -76,7 +78,8 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "lint": "eslint src"
+    "lint-js": "eslint src",
+    "lint-css": "stylelint src"
   },
   "browserslist": {
     "production": [

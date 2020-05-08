@@ -1,6 +1,7 @@
 .search {
     display: flex;
     width: 100%;
+
     &__select {
         margin-right: 10px;
         width: 100%;

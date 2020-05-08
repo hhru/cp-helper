@@ -9,13 +9,14 @@ input[type=checkbox] + label::before {
     box-sizing: border-box;
     height: 16px;
     width: 16px;
-    background: #FFFFFF;
-    border: 1px solid #C5C9CA;
+    background: #fff;
+    border: 1px solid #c5c9ca;
     border-radius: 2px;
     content: '';
     margin-right: 8px;
     vertical-align: top;
 }
+
 input[type=checkbox]:checked + label::before {
     content: '';
     background-image: url(checkedImage.svg);
@@ -25,8 +26,9 @@ input[type=checkbox]:checked + label::before {
 
 .checkbox {
     margin: 5px 0;
+
     &__label {
-        color: #333333;
+        color: #333;
         font: 14px/16px ProximaNovaCond, Arial, sans-serif;
     }
 }

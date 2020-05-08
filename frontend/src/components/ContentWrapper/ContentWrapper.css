@@ -7,13 +7,14 @@
 }
 
 @media (min-width: 768px) {
-  .hh-content-wrapper {
-    max-width: none;
-    width: 720px;
-  }
+    .hh-content-wrapper {
+        max-width: none;
+        width: 720px;
+    }
 }
+
 @media (min-width: 1000px) {
-  .hh-content-wrapper {
-    width: 960px;
-  }
+    .hh-content-wrapper {
+        width: 960px;
+    }
 }
