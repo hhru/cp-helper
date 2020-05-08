@@ -4,6 +4,7 @@ import {FETCH_SERVICES, RESET_SERVICES} from './servicesActions';
 
 export const initialState = {
     services: undefined,
+    date: undefined,
 };
 
 export const servicesReducer = createReducer(initialState, {
@@ -12,6 +13,7 @@ export const servicesReducer = createReducer(initialState, {
         return {
             ...state,
             services: initialState.services,
+            date: initialState.date,
         };
     },
 
@@ -19,6 +21,7 @@ export const servicesReducer = createReducer(initialState, {
         return {
             ...state,
             services: action.services,
+            date: action.date,
         };
     },
 });

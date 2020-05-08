@@ -53,7 +53,7 @@ const CompetitorsForm = ({ competitors, openCommercialOffer, companyId, fetchSer
             date = getFormattedDate(addDays(new Date(), -period), new Date());
         }
         if (date.startDate && date.endDate) {
-            fetchServices(companyId, competitors, date.startDate, date.endDate);
+            fetchServices(companyId, competitors, date);
             openCommercialOffer();
         }
     };

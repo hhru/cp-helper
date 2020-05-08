@@ -16,7 +16,7 @@ export function initProfAreas() {
         axios.get(PROFAREAS_HH_API_URL)
             .then((res) => {
                 res.data.forEach((el) => {
-                    profAreas[el.id] = el.name;
+                    profAreas[el.id] = {id: el.id, name: el.name};
                 });
                 dispatch(initProfAreasAction(profAreas));
             });
