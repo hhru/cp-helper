@@ -4,92 +4,47 @@ import java.math.BigDecimal;
 
 public class DayReportResponseDto {
 
-  private Integer employerId;
   private String serviceCode;
-  private String serviceName;
-  private Integer serviceAreaId;
-  private Integer serviceProfArea;
+  private Long responsesCount;
   private Long spendingCount;
-  private Long responseCount;
-  private BigDecimal responsePerService;
+  private BigDecimal responsesPerSpending;
+  private BigDecimal responsesPerDay;
+  private BigDecimal costPerResponse;
 
   public DayReportResponseDto() {
   }
 
-  public DayReportResponseDto(Integer employerId, String serviceCode, String serviceName, Integer serviceAreaId,
-                              Integer serviceProfArea, Long spendingCount, Long responseCount,
-                              BigDecimal responsePerService) {
-    this.employerId = employerId;
+  public DayReportResponseDto(String serviceCode, Long responsesCount, Long spendingCount,
+                              BigDecimal responsesPerSpending, BigDecimal responsesPerDay, BigDecimal costPerResponse) {
     this.serviceCode = serviceCode;
-    this.serviceName = serviceName;
-    this.serviceAreaId = serviceAreaId;
-    this.serviceProfArea = serviceProfArea;
+    this.responsesCount = responsesCount;
     this.spendingCount = spendingCount;
-    this.responseCount = responseCount;
-    this.responsePerService = new BigDecimal(responsePerService.stripTrailingZeros().toPlainString());
-  }
-
-  public Integer getEmployerId() {
-    return employerId;
-  }
-
-  public void setEmployerId(Integer employerId) {
-    this.employerId = employerId;
-  }
-
-  public Integer getServiceAreaId() {
-    return serviceAreaId;
-  }
-
-  public void setServiceAreaId(Integer serviceAreaId) {
-    this.serviceAreaId = serviceAreaId;
+    this.responsesPerSpending = new BigDecimal(responsesPerSpending.stripTrailingZeros().toPlainString());
+    this.responsesPerDay = new BigDecimal(responsesPerDay.stripTrailingZeros().toPlainString());
+    this.costPerResponse = new BigDecimal(costPerResponse.stripTrailingZeros().toPlainString());
   }
 
   public String getServiceCode() {
     return serviceCode;
   }
 
-  public void setServiceCode(String serviceCode) {
-    this.serviceCode = serviceCode;
-  }
-
-  public String getServiceName() {
-    return serviceName;
-  }
-
-  public void setServiceName(String serviceName) {
-    this.serviceName = serviceName;
+  public Long getResponsesCount() {
+    return responsesCount;
   }
 
   public Long getSpendingCount() {
     return spendingCount;
   }
 
-  public void setSpendingCount(Long spendingCount) {
-    this.spendingCount = spendingCount;
+  public BigDecimal getResponsesPerSpending() {
+    return responsesPerSpending;
   }
 
-  public Long getResponseCount() {
-    return responseCount;
+  public BigDecimal getResponsesPerDay() {
+    return responsesPerDay;
   }
 
-  public void setResponseCount(Long responseCount) {
-    this.responseCount = responseCount;
-  }
-
-  public Integer getServiceProfArea() {
-    return serviceProfArea;
-  }
-
-  public void setServiceProfArea(Integer serviceProfArea) {
-    this.serviceProfArea = serviceProfArea;
-  }
-
-  public BigDecimal getResponsePerService() {
-    return responsePerService;
-  }
-
-  public void setResponsePerService(BigDecimal responsePerService) {
-    this.responsePerService = new BigDecimal(responsePerService.stripTrailingZeros().toPlainString());
+  public BigDecimal getCostPerResponse() {
+    return costPerResponse;
   }
 }

@@ -36,7 +36,24 @@ create TABLE day_report (
     cost numeric(8,2)
 );
 
-create index idx_day_report_employer_id_report_date on day_report(employer_id, report_date, report_spending_same_day);
+create index idx_day_report_employer_id_report_date on day_report(employer_id, report_date);
+
+insert into 
+day_report(day_report_id, report_date, employer_id, service_code, responses_count, spending_id, spending_date, report_spending_same_day, vacancy_id, vacancy_area_id, cost)
+values
+(1, now()::date - interval '3 day', 1455, 'VP', 20, 100, now() - INTERVAL '7 day', false, 111, 1, 1000),
+(2, now()::date - interval '3 day', 1455, 'VP', 15, 200, now() - INTERVAL '3 day', true, 222, 2, 1000),
+(3, now()::date - interval '3 day', 1455, 'VPPREM', 40, 300, now() - INTERVAL '5 day', false, 333, 3, 2000),
+
+(4, now()::date - interval '2 day', 1455, 'VPPREM', 50, 400, now() - INTERVAL '2 day', true, 111, 1, 2000),
+(5, now()::date - interval '2 day', 1455, 'VP', 10, 200, now() - INTERVAL '3 day', false, 222, 2, 1000),
+(6, now()::date - interval '2 day', 1455, 'VPPREM', 20, 500, now() - INTERVAL '5 day', false, 333, 3, 2000),
+
+(7, now()::date - interval '1 day', 1455, 'VPPREM', 44, 400, now() - INTERVAL '2 day', false, 111, 1, 2000),
+(8, now()::date - interval '1 day', 1455, 'VP', 12, 200, now() - INTERVAL '3 day', false, 222, 2, 1000),
+(9, now()::date - interval '1 day', 1455, 'VP', 15, 500, now() - INTERVAL '5 day', false, 333, 3, 2000),
+
+(10, now()::date, 1870, 'VP', 100, 600, now(), true, 333, 3, 3000);
 
 create TABLE vacancy_profarea (
     vacancy_id bigint NOT NULL,
@@ -44,3 +61,11 @@ create TABLE vacancy_profarea (
 );
 
 create index idx_vacancy_profarea_vacancy_id on day_report(vacancy_id);
+
+insert into 
+vacancy_profarea(vacancy_id, profarea_id)
+values
+(111, 1),
+(222, 1),
+(333, 2),
+(333, 1);

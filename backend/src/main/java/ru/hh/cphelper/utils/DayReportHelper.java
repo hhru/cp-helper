@@ -1,7 +1,7 @@
 package ru.hh.cphelper.utils;
 
-import ru.hh.cphelper.dto.DayReportResponseDto;
 import ru.hh.cphelper.dto.DayReportConsumerDto;
+import ru.hh.cphelper.dto.DayReportResponseDto;
 import ru.hh.cphelper.entity.DayReport;
 
 import java.util.Comparator;
@@ -17,31 +17,17 @@ public final class DayReportHelper {
   }
 
   public static Map<Integer, Object> map(List<DayReport> dayReports) {
-    return dayReports.stream()
-        .map(r -> new DayReportResponseDto(r.getEmployerId(), r.getServiceCode(),
-            r.getServiceName(), r.getServiceAreaId(), r.getServiceProfareaId(),  r.getSpendingCount(),
-            r.getResponsesCount(),
-            r.countResponsePerService())
-        )
-        .collect(
-            Collectors.groupingBy(DayReportResponseDto::getEmployerId,
-                Collectors.collectingAndThen(toList(),
-                    l -> l.stream().sorted(Comparator
-                        .comparing(DayReportResponseDto::getResponsePerService).reversed())
-                        .collect(toList()))));
+    return dayReports.stream().collect(
+        Collectors.groupingBy(DayReport::getEmployerId,
+            Collectors.collectingAndThen(toList(),
+                l -> l.stream().map(r -> new DayReportResponseDto(r.getServiceCode(), r.getResponsesCount(),
+                    r.getSpendingCount(), r.responsesPerSpending(), r.responsesPerDay(), r.costPerResponse()))
+                    .sorted(Comparator
+                        .comparing(DayReportResponseDto::getResponsesPerSpending).reversed())
+                    .collect(toList()))));
   }
 
   public static DayReport map(DayReportConsumerDto dayReportConsumerDto) {
-    return new DayReport(
-        Long.valueOf(dayReportConsumerDto.getId()),
-        dayReportConsumerDto.getEmployerId(),
-        dayReportConsumerDto.getServiceCode(),
-        dayReportConsumerDto.getServiceName(),
-        dayReportConsumerDto.getServiceProfareaId(),
-        dayReportConsumerDto.getServiceAreaId(),
-        Long.valueOf(dayReportConsumerDto.getSpendingCount()),
-        Long.valueOf(dayReportConsumerDto.getResponsesCount()),
-        dayReportConsumerDto.getReportCreationDate()
-    );
+    return new DayReport();
   }
 }
