@@ -15,3 +15,10 @@ CREATE TABLE [dbo].[VacancySnapshotLast](
     [EmploymentTypeID] [int] NULL
 ) ON [PRIMARY]
 GO
+
+CREATE TABLE [dbo].[VacancySnapshotProfAreaLast](
+    [ProfAreaID] [int] NOT NULL,
+    [VacancyID] [int] NOT NULL,
+    [SnapshotDate] [datetime] NOT NULL
+) ON [PRIMARY]
+GO
