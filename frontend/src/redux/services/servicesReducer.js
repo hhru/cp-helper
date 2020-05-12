@@ -4,6 +4,7 @@ import {FFETCH_SERVICES_BEGIN, FFETCH_SERVICES_SUCCESS, FFETCH_SERVICES_FAILURE,
 
 export const initialState = {
     services: undefined,
+    date: undefined,
     isLoading: false,
 };
 
@@ -13,6 +14,7 @@ export const servicesReducer = createReducer(initialState, {
         return {
             ...state,
             services: undefined,
+            date: undefined,
             isLoading: true,
         };
     },
@@ -21,6 +23,7 @@ export const servicesReducer = createReducer(initialState, {
         return {
             ...state,
             services: action.services,
+            date: action.date,
             isLoading: false,
         };
     },
@@ -34,6 +37,7 @@ export const servicesReducer = createReducer(initialState, {
         return {
             ...state,
             services: initialState.services,
+            date: initialState.date,
         };
         },
     };
