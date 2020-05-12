@@ -1,27 +1,28 @@
 .hh-input {
-  background: #ffffff;
-  border: 1px solid #dfdedd;
-  box-sizing: border-box;
-  padding: 9px 10px;
-  height: 38px;
-  width: 100%;
-  margin: 5px 10px 5px 0;
+    background: #fff;
+    border: 1px solid #dfdedd;
+    box-sizing: border-box;
+    padding: 9px 10px;
+    height: 38px;
+    width: 100%;
+    margin: 5px 10px 5px 0;
 
-  &:focus, &:active {
-    border-color: #0f8fee;
-    outline: none;
-    position: relative;
-    z-index: 1;
-  }
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 
-  &::placeholder {
-    color: #aeb5b9;
-    font: normal 14px/143% Arial;
-  }
+    &:focus,
+    &:active {
+        border-color: #0f8fee;
+        outline: none;
+        position: relative;
+        z-index: 1;
+    }
 
-  &::-webkit-outer-spin-button,
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
+    &::placeholder {
+        color: #aeb5b9;
+        font: 14px/143% ProximaNovaCond, Arial, sans-serif;
+    }
 }
