@@ -5,6 +5,8 @@ import {connect} from 'react-redux';
 import Button from 'components/Button/Button';
 import Heading from 'components/Heading/Heading';
 import Search from 'components/Search/Search';
+import Loader from 'components/Loader/Loader';
+import ServiciesList from 'components/ServiciesList/ServiciesList';
 
 import {initProfAreas} from 'redux/profAreas/profAreasActions';
 import {filterArea} from 'redux/areas/areasAction';
@@ -23,6 +25,9 @@ const CommercialOffer = ({
     companyId,
     competitors,
     date,
+    isLoading,
+    companyName,
+    plainAreas,
 }) => {
 
     const [choosenAreaId, setChoosenAreaId] = useState(null);
@@ -70,18 +75,18 @@ const CommercialOffer = ({
                     <Button onClick={filterServices}>Отфильтровать услуги</Button>
                 </div>
             </div>
-            {services && Object.keys(services).map((el) =>
-                services[el].map((elem) =>
-                    <div key={elem.employerId}>
-                        {'|'}{elem.employerId}
-                        {'|'}{elem.serviceCode}
-                        {'|'}{elem.serviceName}
-                        {'|'}{elem.serviceAreaId}
-                        {'|'}{elem.serviceProfArea}
-                        {'|'}{elem.responseCount}
-                        {'|'}{elem.responsePerService}{'|'}
-                    </div>
-            ))}
+            {isLoading ? (
+                <div className="competitors-list-section__loader">
+                    <Loader/>
+                </div>) : (
+                <ServiciesList
+                    services={services}
+                    competitors={competitors}
+                    companyName={companyName}
+                    companyId={companyId}
+                    plainAreas={plainAreas} />
+                )
+            }
             <div className="commercial-offer-section__btn">
                 <Button onClick={openCompetitorsList}>К предыдущему шагу</Button>
             </div>
@@ -100,6 +105,9 @@ CommercialOffer.propTypes = {
     companyId: PropTypes.string,
     competitors: PropTypes.object,
     date: PropTypes.object,
+    isLoading: PropTypes.bool,
+    companyName: PropTypes.string,
+    plainAreas: PropTypes.object,
 };
 
 export default connect(
@@ -110,6 +118,9 @@ export default connect(
         companyId: state.companies.companyId,
         competitors: state.competitors.competitors,
         date: state.services.date,
+        isLoading: state.services.isLoading,
+        companyName: state.companies.companyName,
+        plainAreas: state.areas.plainAreas,
     }),
     {
         initProfAreas,
