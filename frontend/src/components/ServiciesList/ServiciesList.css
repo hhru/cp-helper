@@ -16,11 +16,11 @@
             padding: 8px 4px;
         }
     }
-    
+
     &__body {
         & td {
             padding: 4px;
-            white-space: pre-line
+            white-space: pre-line;
         }
     }
 }
