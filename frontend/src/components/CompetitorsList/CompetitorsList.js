@@ -35,6 +35,7 @@ const CompetitorsList = ({
     companyName,
     resetServices,
     services,
+    isLoading,
 }) => {
 
     const [searchIsOpen, setSearchIsOpen] = useState(false);
@@ -73,7 +74,7 @@ const CompetitorsList = ({
                     openCommercialOffer={openCommercialOffer}
                     companyId={companyId}/>
             </div>
-            {!competitors &&
+            {isLoading &&
                 <div className="competitors-list-section__loader">
                     <Loader/>
                 </div>
@@ -142,6 +143,7 @@ CompetitorsList.propTypes = {
     companyName: PropTypes.string,
     resetServices: PropTypes.func,
     services: PropTypes.object,
+    isLoading: PropTypes.boolean,
 };
 
 export default connect(
@@ -154,6 +156,7 @@ export default connect(
         areaName: state.areas.areaName,
         companyName: state.companies.companyName,
         services: state.services.services,
+        isLoading: state.competitors.isLoading,
     }),
     {
         fetchCompetitors,
