@@ -2,27 +2,27 @@ import axios from 'axios';
 import {CP_HELPER_REPORT_URL} from 'utils/constants';
 import createNotification from 'utils/notifications';
 
-export const FFETCH_SERVICES_BEGIN = 'FFETCH_SERVICES_BEGIN';
-export const FFETCH_SERVICES_SUCCESS = 'FFETCH_SERVICES_SUCCESS';
-export const FFETCH_SERVICES_FAILURE = 'FFETCH_SERVICES_FAILURE';
+export const FETCH_SERVICES_BEGIN = 'FETCH_SERVICES_BEGIN';
+export const FETCH_SERVICES_SUCCESS = 'FETCH_SERVICES_SUCCESS';
+export const FETCH_SERVICES_FAILURE = 'FETCH_SERVICES_FAILURE';
 export const RESET_SERVICES = 'RESET_SERVICES';
 
 export const fetchServicesBeginAction = () => {
     return {
-        type: FFETCH_SERVICES_BEGIN,
+        type: FETCH_SERVICES_BEGIN,
     };
 };
 
-export const fetchServicesSuccessAction = (services, date) => {
+export const fetchServicesSuccessAction = ({services, date}) => {
     return {
-        type: FFETCH_SERVICES_SUCCESS,
+        type: FETCH_SERVICES_SUCCESS,
         services,
         date,
     };
 };
 export const fetchServicesFailureAction = () => {
     return {
-        type: FFETCH_SERVICES_FAILURE,
+        type: FETCH_SERVICES_FAILURE,
     };
 };
 
@@ -38,7 +38,9 @@ export function fetchServices(companyId, competitors, date, areaId, profAreaId) 
     if (competitors) {
         url += `&employerId=${Object.keys(competitors).join('&employerId=')}`;
     }
-    url += `&startDate=${date.startDate}&endDate=${date.endDate}`;
+    if (date) {
+        url += `&startDate=${date.startDate}&endDate=${date.endDate}`;
+    }
     if (areaId) {
         url += `&areaId=${areaId}`;
     }
@@ -49,13 +51,9 @@ export function fetchServices(companyId, competitors, date, areaId, profAreaId) 
         dispatch(fetchServicesBeginAction());
         axios.get(url)
             .then((res) => {
-                // eslint-disable-next-line no-console
-                console.log('200', res.data);
-                dispatch(fetchServicesSuccessAction(res.data.services_by_employer, date));
+                dispatch(fetchServicesSuccessAction({services: res.data.services_by_employer, date}));
             })
             .catch(() => {
-                // eslint-disable-next-line no-console
-                console.log('error');
                 createNotification('error', 'Введены некорректные даты', 'Ошибка');
                 dispatch(fetchServicesFailureAction());
 

@@ -12,7 +12,7 @@ export const competitorsReducer = createReducer(initialState, {
     [FETCH_COMPETITORS_BEGIN](state) {
         return {
             ...state,
-            competitors: undefined,
+            competitors: initialState.competitors,
             isLoading: true,
         };
     },

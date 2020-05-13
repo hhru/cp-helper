@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 
-import './ServiciesList.css';
 import Service from './Service';
+
+import './ServiciesList.css';
 
 const ServiciesList = ({ services, competitors, companyName, companyId, plainAreas }) => {
 
@@ -36,15 +37,15 @@ const ServiciesList = ({ services, competitors, companyName, companyId, plainAre
             </tr>
             </thead>
             <tbody className="hh-table__body">
-                {services ? Object.entries(services).map((employer) => (
-                    employer[1].map((service, index) => (
+                {services ? Object.values(services).map((employer) => (
+                    employer.map((service, index) => (
                         <Service
                             employerName={getEmployerName(service.employerId)}
                             areaName={plainAreas && plainAreas[service.serviceAreaId].name}
                             profareaName={profAreas && profAreas[service.serviceProfArea].name}
                             key={service.serviceName + service.employerId}
                             service={service}
-                            rowspan={employer[1].length}
+                            rowspan={employer.length}
                             firstRow={index === 0}
                             addService={addService}
                             disabledAddService={selectedServices.includes(service.serviceName)} />
