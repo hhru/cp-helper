@@ -1,38 +1,46 @@
 .hh-heading {
     font-family: ProximaNovaCond, Arial, sans-serif;
-        &_level1 {
-            font-size: 26px;
-            line-height: 36px;
-        }
-        &_level2 {
-            font-size: 20px;
-            line-height: 24px;
-        }
-        &_level3 {
-            font-size: 16px;
-            line-height: 18px;
-        }
-        &_level4 {
-            font-size: 14px;
-            line-height: 16px;
-        }
+
+    &_level1 {
+        font-size: 26px;
+        line-height: 36px;
+    }
+
+    &_level2 {
+        font-size: 20px;
+        line-height: 24px;
+    }
+
+    &_level3 {
+        font-size: 16px;
+        line-height: 18px;
+    }
+
+    &_level4 {
+        font-size: 14px;
+        line-height: 16px;
+    }
 }
 
 @media (min-width: 768px) {
     .hh-heading {
         font-family: ProximaNovaCond, Arial, sans-serif;
+
         &_level1 {
             font-size: 36px;
             line-height: 44px;
         }
+
         &_level2 {
             font-size: 30px;
             line-height: 37px;
         }
+
         &_level3 {
             font-size: 20px;
             line-height: 24px;
         }
+
         &_level4 {
             font-size: 16px;
             line-height: 18px;

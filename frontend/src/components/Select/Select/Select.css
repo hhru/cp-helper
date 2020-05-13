@@ -3,6 +3,7 @@
     display: flex;
     width: 110px;
     z-index: 10;
+
     &__input {
         border: 1px solid #dfdedd;
         box-sizing: border-box;
@@ -13,21 +14,24 @@
         outline: none;
         border-radius: 2px;
     }
+
     &__arrow {
-        content: ''; 
+        content: '';
         display: inline-block;
         width: 28px;
         height: 38px;
         position: absolute;
         right: 0;
         border: 1px solid #dfdedd;
-        border-radius: 0px 2px 2px 0px;
+        border-radius: 0 2px 2px 0;
         box-sizing: border-box;
-        pointer-events: none; 
+        pointer-events: none;
         margin-top: 5px;
+
         &_open {
             background: url('arrow-open.svg') no-repeat center #fff;
         }
+
         &_close {
             background: url('arrow-close.svg') no-repeat center #fff;
         }
