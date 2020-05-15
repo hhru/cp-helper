@@ -11,7 +11,7 @@ services:
     environment:
       POSTGRES_PASSWORD: cp_helper
       POSTGRES_DB: cp_helper
-      POSTGRES_USER: cp_helper       
+      POSTGRES_USER: cp_helper
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U cp_helper"]
       interval: 10s
@@ -37,7 +37,6 @@ services:
       - "3000:3000"
     links:
       - cp-helper-backend
-
   mssql:
     image: mcr.microsoft.com/mssql/server:2019-latest
     environment:
@@ -85,7 +84,10 @@ services:
           CRMData750
           ActivationAnalysisData
           VacancyDataMart
-          InsertInTheTables
+          VacancyShapshot
+          TestSnapshotData
+          InsertInTheTestTables
+          CreateInsertingDataJob
           CreateCompetitorsReportJob
         )
         for script in "$${scripts[@]}"; do
@@ -164,4 +166,5 @@ services:
         done
         echo -e "\n--\n+> Creating Kafka Connector(s)"
         curl -X POST -H "Content-Type:application/json" http://kafka-connect:8083/connectors/ -d @./tmp/connectors/crm_competitor_report-source.json
+        curl -X POST -H "Content-Type:application/json" http://kafka-connect:8083/connectors/ -d @./tmp/connectors/crm_vacancy_profarea-source.json
         sleep infinity
