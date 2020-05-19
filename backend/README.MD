@@ -87,67 +87,63 @@ VacancyDataMart.dbo.vw_VacancyResponses - тут лежат отклики
     profAreaId - идентификатор специализации для фильтра услуг.
     
     Формат даты - yyyy-mm-dd
+
+    areaId - фильтр по ID географической области вакансии (по умолчанию поиск по всем областям),
     
+    profAreaId - фильтр по ID специализации вакансии (по умолчанию поиск по всем специализациям).
+
+    Коды специализации (https://api.hh.ru/specializations).
+
     ОТВЕТ:
-    Список услуг в JSON формате сгруппирован по employerId. Внутри суммированы отклики(responseCount) и траты(spendingCount) по услугам за выбранный период и отсортирован по responsePerService начиная с наибольшего:
+    Список услуг в JSON формате сгруппирован по employerId. Внутри суммированы отклики(responseCount) и траты(spendingCount) по услугам за выбранный период и отсортирован по responsesPerSpending начиная с наибольшего:
 
         `{
            "services_by_employer": {
               "1870":[
                  {
-                  "employerId":1870,
-                  "serviceCode":27,
-                  "serviceName":"Left block advert",
-                  "serviceAreaId":70,
-                  "serviceProfArea":1,
-                  "spendingCount":2,
-                  "responseCount":10,
-                  "responsePerService":5
-                 },
-                 {
-                  "employerId":1870,
-                  "serviceCode":25,
-                  "serviceName":"Footer advert",
-                  "serviceAreaId":70,
-                  "serviceProfArea":20,
-                  "spendingCount":17,
-                  "responseCount":10,
-                  "responsePerService":0.588
-                  }
+                  "serviceCode":"VP",
+                  "responsesCount":100
+                  "spendingCount":1
+                  "responsesPerSpending":100
+                  "responsesPerDay":100
+                  "costPerResponse":30
+                 }
                ],
               "1455":[
                  {
-                  "employerId":1455,
-                  "serviceCode":22,
-                  "serviceName":"Access to the resume database",
-                  "serviceAreaId":70,
-                  "serviceProfArea":20,
-                  "spendingCount":101,
-                  "responseCount":40,
-                  "responsePerService":0.396
-                 }
+                  "serviceCode":"VPPREM",
+                  "responsesCount":94,
+                  "spendingCount":1,
+                  "responsesPerSpending":94,
+                  "responsesPerDay":47,
+                  "costPerResponse":21.277
+                 },
+                 {
+                  "serviceCode":"VP",
+                  "responsesCount":37,
+                  "spendingCount":1,
+                  "responsesPerSpending":37,
+                  "responsesPerDay":12.333,
+                  "costPerResponse":27.027
+                 },
                ]
             }
          }`
    
     где 
     
-    employerId - код работодателя, 
-    
     serviceCode - код услуги, 
     
-    serviceName - имя услуги, 
-    
-    serviceAreaId - код региона,
-    
-    serviceProfArea - код специализации (https://api.hh.ru/specializations),
+    responseCount - количество откликов на вакансии по услуге,
     
     spendingCount - количество потраченных услуг, 
     
-    responseCount - количество откликов на вакансии по услуге, 
+    responsePerSpending -  количество откликов на единицу траты, 
     
-    responsePerService -  количество откликов на единицу услуги.
+    responsePerDay -  количество откликов в день, 
     
-    Если количество заказанных услуг (serviceCount) по какой-то причине = 0, то responsePerService будет равно количеству откликов.
+    costPerResponse -  средняя цена отклика.
+    
+    Если делитель по какой-то причине = 0, то при продсчёте метрик будет = 1.
     
     Если startDate больше endDate, то возвращается ошибка 400.  

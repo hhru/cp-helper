@@ -1,22 +1,31 @@
 package ru.hh.cphelper.entity;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "day_report")
 public class DayReport implements Serializable {
 
   @Id
-  @Column(name = "id")
-  private Long id;
+  @Column(name = "day_report_id")
+  private Long dayReportId;
+
+  @Column(name = "report_date")
+  private LocalDate reportDate;
 
   @Column(name = "employer_id")
   private Integer employerId;
@@ -24,116 +33,289 @@ public class DayReport implements Serializable {
   @Column(name = "service_code")
   private String serviceCode;
 
-  @Column(name = "service_name")
-  private String serviceName;
-
-  @Column(name = "service_area_id")
-  private Integer serviceAreaId;
-
-  @Column(name = "service_profarea_id")
-  private Integer serviceProfareaId;
-
-  @Column(name = "spending_count")
-  private Long spendingCount;
-
   @Column(name = "responses_count")
   private Long responsesCount;
 
-  @Column(name = "report_creation_date")
-  private LocalDate reportCreationDate;
+  @Column(name = "spending_id")
+  private Long spendingId;
+
+  @Column(name = "spending_date")
+  private LocalDateTime spendingDate;
+
+  @Column(name = "report_spending_same_day")
+  Boolean reportSpendingSameDay;
+
+  @Column(name = "vacancy_id")
+  private Long vacancyId;
+
+  @Column(name = "vacancy_area_id")
+  private Integer vacancyAreaId;
+
+  @Column(name = "cost")
+  private BigDecimal cost;
+
+  @ElementCollection
+  @CollectionTable(name = "vacancy_profarea",
+      joinColumns = @JoinColumn(name = "vacancy_id", referencedColumnName = "vacancy_id"))
+  @Column(name = "profarea_id")
+  private Set<Integer> profAreaId = new HashSet<>();
+
+  @Transient
+  private Long spendingCount = 1L;
+
+  @Transient
+  private Long dayCount = 1L;
 
   public DayReport() {
   }
 
-  public DayReport(Long id, Integer employerId, String serviceCode, String serviceName,
-                   Integer serviceProfareaId, Integer serviceAreaId, Long spendingCount,
-                   Long responsesCount, LocalDate reportCreationDate) {
-    this.id = id;
-    this.employerId = employerId;
-    this.serviceCode = serviceCode;
-    this.serviceName = serviceName;
-    this.serviceAreaId = serviceAreaId;
-    this.serviceProfareaId = serviceProfareaId;
-    this.spendingCount = spendingCount;
-    this.responsesCount = responsesCount;
-    this.reportCreationDate = reportCreationDate;
+  public static class DayReportBuilder {
+    private Long dayReportId;
+    private LocalDate reportDate;
+    private Integer employerId;
+    private String serviceCode;
+    private Long responsesCount;
+    private Long spendingId;
+    private LocalDateTime spendingDate;
+    private Boolean reportSpendingSameDay;
+    private Long vacancyId;
+    private Integer vacancyAreaId;
+    private BigDecimal cost;
+    private Set<Integer> profAreaId;
+    private Long spendingCount = 1L;
+    private Long dayCount = 1L;
+
+    public DayReportBuilder setDayReportId(Long dayReportId) {
+      this.dayReportId = dayReportId;
+      return this;
+    }
+
+    public DayReportBuilder setReportDate(LocalDate reportDate) {
+      this.reportDate = reportDate;
+      return this;
+    }
+
+    public DayReportBuilder setEmployerId(Integer employerId) {
+      this.employerId = employerId;
+      return this;
+    }
+
+    public DayReportBuilder setServiceCode(String serviceCode) {
+      this.serviceCode = serviceCode;
+      return this;
+    }
+
+    public DayReportBuilder setResponsesCount(Long responsesCount) {
+      this.responsesCount = responsesCount;
+      return this;
+    }
+
+    public DayReportBuilder setSpendingId(Long spendingId) {
+      this.spendingId = spendingId;
+      return this;
+    }
+
+    public DayReportBuilder setSpendingDate(LocalDateTime spendingDate) {
+      this.spendingDate = spendingDate;
+      return this;
+    }
+
+    public DayReportBuilder setReportSpendingSameDay(Boolean reportSpendingSameDay) {
+      this.reportSpendingSameDay = reportSpendingSameDay;
+      return this;
+    }
+
+    public DayReportBuilder setVacancyId(Long vacancyId) {
+      this.vacancyId = vacancyId;
+      return this;
+    }
+
+    public DayReportBuilder setVacancyAreaId(Integer vacancyAreaId) {
+      this.vacancyAreaId = vacancyAreaId;
+      return this;
+    }
+
+    public DayReportBuilder setCost(BigDecimal cost) {
+      this.cost = cost;
+      return this;
+    }
+
+    public DayReportBuilder setProfAreaId(Set<Integer> profAreaId) {
+      this.profAreaId = profAreaId;
+      return this;
+    }
+
+    public DayReportBuilder setSpendingCount(Long spendingCount) {
+      this.spendingCount = spendingCount;
+      return this;
+    }
+
+    public DayReportBuilder setDayCount(Long dayCount) {
+      this.dayCount = dayCount;
+      return this;
+    }
+
+    public DayReport createDayReport() {
+      DayReport dayReport = new DayReport();
+      dayReport.setDayReportId(this.dayReportId);
+      dayReport.setReportDate(this.reportDate);
+      dayReport.setEmployerId(this.employerId);
+      dayReport.setServiceCode(this.serviceCode);
+      dayReport.setResponsesCount(this.responsesCount);
+      dayReport.setSpendingId(this.spendingId);
+      dayReport.setSpendingDate(this.spendingDate);
+      dayReport.setReportSpendingSameDay(this.reportSpendingSameDay);
+      dayReport.setVacancyId(this.vacancyId);
+      dayReport.setVacancyAreaId(this.vacancyAreaId);
+      dayReport.setCost(this.cost);
+      dayReport.setProfAreaId(this.profAreaId);
+      dayReport.setSpendingCount(this.spendingCount);
+      dayReport.setDayCount(this.dayCount);
+      return dayReport;
+    }
   }
 
-  public Long getId() {
-    return id;
+  public static DayReport aggregateReports(DayReport dr1, DayReport dr2) {
+    return new DayReportBuilder().setDayReportId(dr1.getDayReportId()).setReportDate(dr1.getReportDate())
+        .setEmployerId(dr1.getEmployerId()).setServiceCode(dr1.getServiceCode())
+        .setResponsesCount(dr1.getResponsesCount() + dr2.getResponsesCount()).setSpendingId(dr1.getSpendingId())
+        .setSpendingDate(dr1.getSpendingDate())
+        .setReportSpendingSameDay(dr1.getReportSpendingSameDay() || dr2.getReportSpendingSameDay())
+        .setVacancyId(dr1.getVacancyId()).setVacancyAreaId(dr1.getVacancyAreaId())
+        .setCost(dr1.getReportSpendingSameDay() && dr2.getReportSpendingSameDay() ? dr1.getCost().add(dr2.getCost()) :
+            dr1.getCost())
+        .setProfAreaId(dr1.getProfAreaId())
+        .setSpendingCount(dr1.getReportSpendingSameDay() && dr2.getReportSpendingSameDay() ?
+            dr1.getSpendingCount() + dr2.getSpendingCount() : dr1.getSpendingCount())
+        .setDayCount(dr1.getDayCount() + dr2.getDayCount()).createDayReport();
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public BigDecimal responsesPerSpending() {
+    return getSpendingCount() == 0 ? BigDecimal.valueOf(getResponsesCount()) :
+        BigDecimal.valueOf(getResponsesCount())
+            .divide(BigDecimal.valueOf(getSpendingCount()), 3, RoundingMode.HALF_DOWN);
   }
 
-  public String getServiceCode() {
-    return serviceCode;
+  public BigDecimal responsesPerDay() {
+    return getDayCount() == 0 ? BigDecimal.valueOf(getResponsesCount()) :
+        BigDecimal.valueOf(getResponsesCount())
+            .divide(BigDecimal.valueOf(getDayCount()), 3, RoundingMode.HALF_DOWN);
   }
 
-  public void setServiceCode(String serviceCode) {
-    this.serviceCode = serviceCode;
+  public BigDecimal costPerResponse() {
+    return getResponsesCount() == 0 ? getCost() :
+        getCost().divide(BigDecimal.valueOf(getResponsesCount()), 3, RoundingMode.HALF_DOWN);
   }
 
-  public Long getSpendingCount() {
-    return spendingCount;
+  public Long getDayReportId() {
+    return dayReportId;
   }
 
-  public void setSpendingCount(Long spendingCount) {
-    this.spendingCount = spendingCount;
-  }
-
-  public String getServiceName() {
-    return serviceName;
-  }
-
-  public void setServiceName(String serviceName) {
-    this.serviceName = serviceName;
-  }
-
-  public LocalDate getReportCreationDate() {
-    return reportCreationDate;
-  }
-
-  public void setReportCreationDate(LocalDate reportCreationDate) {
-    this.reportCreationDate = reportCreationDate;
-  }
-
-  public Long getResponsesCount() {
-    return responsesCount;
-  }
-
-  public void setResponsesCount(Long responsesCount) {
-    this.responsesCount = responsesCount;
+  public LocalDate getReportDate() {
+    return reportDate;
   }
 
   public Integer getEmployerId() {
     return employerId;
   }
 
+  public String getServiceCode() {
+    return serviceCode;
+  }
+
+  public Long getResponsesCount() {
+    return responsesCount;
+  }
+
+  public Long getSpendingId() {
+    return spendingId;
+  }
+
+  public LocalDateTime getSpendingDate() {
+    return spendingDate;
+  }
+
+  public Boolean getReportSpendingSameDay() {
+    return reportSpendingSameDay;
+  }
+
+  public Long getVacancyId() {
+    return vacancyId;
+  }
+
+  public Integer getVacancyAreaId() {
+    return vacancyAreaId;
+  }
+
+  public BigDecimal getCost() {
+    return cost;
+  }
+
+  public Set<Integer> getProfAreaId() {
+    return profAreaId;
+  }
+
+  public Long getSpendingCount() {
+    return spendingCount;
+  }
+
+  public Long getDayCount() {
+    return dayCount;
+  }
+
+  public void setDayReportId(Long dayReportId) {
+    this.dayReportId = dayReportId;
+  }
+
+  public void setReportDate(LocalDate reportDate) {
+    this.reportDate = reportDate;
+  }
+
   public void setEmployerId(Integer employerId) {
     this.employerId = employerId;
   }
 
-  public Integer getServiceAreaId() {
-    return serviceAreaId;
+  public void setServiceCode(String serviceCode) {
+    this.serviceCode = serviceCode;
   }
 
-  public void setServiceAreaId(Integer serviceAreaId) {
-    this.serviceAreaId = serviceAreaId;
+  public void setResponsesCount(Long responsesCount) {
+    this.responsesCount = responsesCount;
   }
 
-  public Integer getServiceProfareaId() {
-    return serviceProfareaId;
+  public void setSpendingId(Long spendingId) {
+    this.spendingId = spendingId;
   }
 
-  public void setServiceProfareaId(Integer serviceProfareaId) {
-    this.serviceProfareaId = serviceProfareaId;
+  public void setSpendingDate(LocalDateTime spendingDate) {
+    this.spendingDate = spendingDate;
   }
 
-  public BigDecimal countResponsePerService() {
-    return getSpendingCount() == 0 ? BigDecimal.valueOf(getResponsesCount()) :
-        BigDecimal.valueOf(getResponsesCount())
-            .divide(BigDecimal.valueOf(getSpendingCount()), 3, RoundingMode.HALF_DOWN);
+  public void setReportSpendingSameDay(Boolean reportSpendingSameDay) {
+    this.reportSpendingSameDay = reportSpendingSameDay;
+  }
+
+  public void setVacancyId(Long vacancyId) {
+    this.vacancyId = vacancyId;
+  }
+
+  public void setVacancyAreaId(Integer vacancyAreaId) {
+    this.vacancyAreaId = vacancyAreaId;
+  }
+
+  public void setCost(BigDecimal cost) {
+    this.cost = cost;
+  }
+
+  public void setProfAreaId(Set<Integer> profAreaId) {
+    this.profAreaId = profAreaId;
+  }
+
+  public void setSpendingCount(Long spendingCount) {
+    this.spendingCount = spendingCount;
+  }
+
+  public void setDayCount(Long dayCount) {
+    this.dayCount = dayCount;
   }
 }
