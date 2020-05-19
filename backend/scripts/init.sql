@@ -46,3 +46,21 @@ create TABLE vacancy_profarea (
 );
 
 create index idx_vacancy_profarea_vacancy_id on day_report(vacancy_id);
+
+CREATE TABLE tracked_employers (
+    employer_id integer PRIMARY KEY,
+    employer_name VARCHAR(200) NOT NULL
+);
+
+CREATE INDEX idx_tracked_employers_employer_id on tracked_employers(employer_id);
+
+insert into
+tracked_employers (employer_id, employer_name)
+values
+(1455, 'HeadHunter'),
+(1870, 'Работа.ру'),
+(84585, 'Авито'),
+(2096237,'Из рук в руки. Ярославль'),
+(2605703, 'Зарплата.ру'),
+(2624107, 'MOS.RU'),
+(1269556,'Jooble');

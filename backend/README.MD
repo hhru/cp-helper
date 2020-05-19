@@ -74,7 +74,7 @@ VacancyDataMart.dbo.vw_VacancyResponses - тут лежат отклики
     
     2.1 Получение списка услуг
     
-    GET /report/services?employerId={id1}&employerId={id2}&...&startDate={startDate}&endDate={endDate}&areaId={id}&profAreaId={id})
+    `GET /report/services?employerId={id1}&employerId={id2}&...&startDate={startDate}&endDate={endDate}&areaId={id}&profAreaId={id})`
     
     где employerId - список идентификаторов конкурентов,
     
@@ -146,4 +146,40 @@ VacancyDataMart.dbo.vw_VacancyResponses - тут лежат отклики
     
     Если делитель по какой-то причине = 0, то при продсчёте метрик будет = 1.
     
-    Если startDate больше endDate, то возвращается ошибка 400.  
+    Если startDate больше endDate, то возвращается ошибка 400.
+    
+    2.2 Получение отчетов в формате PDF и Microsoft Excel
+    
+    Отчет в формате PDF 
+    
+    `GET /report/services/pdf?employerId={id1}&employerId={id2}&...&startDate={startDate}&endDate={endDate}&areaId={id}&profAreaId={id})`
+    
+    Отчет в формате Microsoft Excel
+    
+    `GET /report/services/xlsx?employerId={id1}&employerId={id2}&...&startDate={startDate}&endDate={endDate}&areaId={id}&profAreaId={id})`
+      
+    где employerId - список идентификаторов конкурентов,
+    
+    endDate - конечная дата для поиска (по умолчанию текущая дата),
+    
+    startDate - начальная дата для поиска (по умолчанию endDate минус 7 дней),
+
+    areaId - идентификатор региона для фильтра услуг,
+
+    profAreaId - идентификатор специализации для фильтра услуг.
+    
+    Формат даты - yyyy-mm-dd
+
+    areaId - фильтр по ID географической области вакансии (по умолчанию поиск по всем областям),
+    
+    profAreaId - фильтр по ID специализации вакансии (по умолчанию поиск по всем специализациям).
+
+    Коды специализации (https://api.hh.ru/specializations).
+    
+    ОТВЕТ:
+    
+    массив байт, с указанием типа файла в заголовке ответа
+    
+    `application/pdf` - для формата PDF
+    
+    `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet` - для формата Microsoft Excel
