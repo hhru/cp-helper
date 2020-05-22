@@ -28,9 +28,10 @@ const CommercialOffer = ({
     isLoading,
     companyName,
     plainAreas,
+    areaId,
 }) => {
 
-    const [choosenAreaId, setChoosenAreaId] = useState(null);
+    const [choosenAreaId, setChoosenAreaId] = useState(areaId);
     const [choosenProfAreaId, setChoosenProfAreaId] = useState(null);
 
     const [filteredProfAreas, setFilteredProfAreas] = useState([]);
@@ -55,6 +56,11 @@ const CommercialOffer = ({
         <section className="commercial-offer-section">
             <div className="commercial-offer-section__offer">
                 <Heading level={3}>Коммерческое предложение</Heading>
+            </div>
+            <div>
+                {`Конкуренты компании ${companyName}`}<br />
+                {`- по области: ${plainAreas && choosenAreaId && plainAreas[choosenAreaId].name || 'не определена'}`}<br />
+                {`- по проф. области: ${profAreas && choosenProfAreaId && profAreas[choosenProfAreaId].name || 'не определена'}`}
             </div>
             <div className="commercial-offer-section__filter">
                 <Search
@@ -84,7 +90,7 @@ const CommercialOffer = ({
                     competitors={competitors}
                     companyName={companyName}
                     companyId={companyId}
-                    plainAreas={plainAreas} />
+                />
                 )
             }
             <div className="commercial-offer-section__btn">
@@ -108,6 +114,7 @@ CommercialOffer.propTypes = {
     isLoading: PropTypes.bool,
     companyName: PropTypes.string,
     plainAreas: PropTypes.object,
+    areaId: PropTypes.number,
 };
 
 export default connect(
@@ -121,6 +128,7 @@ export default connect(
         isLoading: state.services.isLoading,
         companyName: state.companies.companyName,
         plainAreas: state.areas.plainAreas,
+        areaId: state.areas.areaId,
     }),
     {
         initProfAreas,
