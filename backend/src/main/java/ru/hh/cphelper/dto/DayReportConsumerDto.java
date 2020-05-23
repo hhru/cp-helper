@@ -1,41 +1,56 @@
 package ru.hh.cphelper.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class DayReportConsumerDto {
-  private Integer id = 0;
-  private Integer employerId = 0;
-  private String serviceCode = "";
-  private String serviceName = "";
-  private Integer serviceAreaId = 0;
-  private Integer serviceProfareaId = 0;
-  private Integer spendingCount = 0;
-  private Integer responsesCount = 0;
-  private Integer reportCreationDate = 0;
+  private Long reportId;
+  private String reportDate;
+  private Integer employerId;
+  private String serviceCode;
+  private Long responsesCount;
+  private Long spendingId;
+  private String spendingDate;
+  private Boolean reportSpendingSameDay;
+  private Long vacancyId;
+  private Integer vacancyAreaId;
+  private BigDecimal cost;
 
   public DayReportConsumerDto() {
   }
 
-  public DayReportConsumerDto(Integer id, Integer employerId, String serviceCode, String serviceName,
-                              Integer serviceAreaId, Integer serviceProfareaId, Integer spendingCount,
-                              Integer responsesCount, Integer reportCreationDate) {
-    this.id = id;
+  public DayReportConsumerDto(Long reportId, String reportDate, Integer employerId,
+                              String serviceCode, Long responsesCount, Long spendingId,
+                              String spendingDate, Boolean reportSpendingSameDay,
+                              Long vacancyId, Integer vacancyAreaId, BigDecimal cost) {
+    this.reportId = reportId;
+    this.reportDate = reportDate;
     this.employerId = employerId;
     this.serviceCode = serviceCode;
-    this.serviceName = serviceName;
-    this.serviceAreaId = serviceAreaId;
-    this.serviceProfareaId = serviceProfareaId;
-    this.spendingCount = spendingCount;
     this.responsesCount = responsesCount;
-    this.reportCreationDate = reportCreationDate;
+    this.spendingId = spendingId;
+    this.spendingDate = spendingDate;
+    this.reportSpendingSameDay = reportSpendingSameDay;
+    this.vacancyId = vacancyId;
+    this.vacancyAreaId = vacancyAreaId;
+    this.cost = cost;
   }
 
-  public Integer getId() {
-    return id;
+  public Long getReportId() {
+    return reportId;
   }
 
-  public void setId(Integer id) {
-    this.id = id;
+  public void setReportId(Long reportId) {
+    this.reportId = reportId;
+  }
+
+  public LocalDate getReportDate() {
+    return LocalDate.parse(reportDate);
+  }
+
+  public void setReportDate(String reportDate) {
+    this.reportDate = reportDate;
   }
 
   public Integer getEmployerId() {
@@ -54,68 +69,76 @@ public class DayReportConsumerDto {
     this.serviceCode = serviceCode;
   }
 
-  public String getServiceName() {
-    return serviceName;
-  }
-
-  public void setServiceName(String serviceName) {
-    this.serviceName = serviceName;
-  }
-
-  public Integer getServiceAreaId() {
-    return serviceAreaId;
-  }
-
-  public void setServiceAreaId(Integer serviceAreaId) {
-    this.serviceAreaId = serviceAreaId;
-  }
-
-  public Integer getServiceProfareaId() {
-    return serviceProfareaId;
-  }
-
-  public void setServiceProfareaId(Integer serviceProfareaId) {
-    this.serviceProfareaId = serviceProfareaId;
-  }
-
-  public Integer getSpendingCount() {
-    return spendingCount;
-  }
-
-  public void setSpendingCount(Integer spendingCount) {
-    this.spendingCount = spendingCount;
-  }
-
-  public Integer getResponsesCount() {
+  public Long getResponsesCount() {
     return responsesCount;
   }
 
-  public void setResponsesCount(Integer responsesCount) {
+  public void setResponsesCount(Long responsesCount) {
     this.responsesCount = responsesCount;
   }
 
-  public LocalDate getReportCreationDate() {
-    LocalDate date = LocalDate.of(1970, 1, 1);
-    date = date.plusDays(reportCreationDate);
-    return date;
+  public Long getSpendingId() {
+    return spendingId;
   }
 
-  public void setReportCreationDate(Integer reportCreationDate) {
-    this.reportCreationDate = reportCreationDate;
+  public void setSpendingId(Long spendingId) {
+    this.spendingId = spendingId;
+  }
+
+  public LocalDateTime getSpendingDate() {
+    return LocalDateTime.parse(spendingDate);
+  }
+
+  public void setSpendingDate(String spendingDate) {
+    this.spendingDate = spendingDate;
+  }
+
+  public Boolean getReportSpendingSameDay() {
+    return reportSpendingSameDay;
+  }
+
+  public void setReportSpendingSameDay(Boolean reportSpendingSameDay) {
+    this.reportSpendingSameDay = reportSpendingSameDay;
+  }
+
+  public Long getVacancyId() {
+    return vacancyId;
+  }
+
+  public void setVacancyId(Long vacancyId) {
+    this.vacancyId = vacancyId;
+  }
+
+  public Integer getVacancyAreaId() {
+    return vacancyAreaId;
+  }
+
+  public void setVacancyAreaId(Integer vacancyAreaId) {
+    this.vacancyAreaId = vacancyAreaId;
+  }
+
+  public BigDecimal getCost() {
+    return cost;
+  }
+
+  public void setCost(BigDecimal cost) {
+    this.cost = cost;
   }
 
   @Override
   public String toString() {
     return "DayReportConsumerDto{" +
-        "id=" + id +
+        "reportId=" + reportId +
+        ", reportDate=" + reportDate +
         ", employerId=" + employerId +
         ", serviceCode='" + serviceCode + '\'' +
-        ", serviceName='" + serviceName + '\'' +
-        ", serviceAreaId=" + serviceAreaId +
-        ", serviceProfareaId=" + serviceProfareaId +
-        ", spendingCount=" + spendingCount +
         ", responsesCount=" + responsesCount +
-        ", reportCreationDate=" + getReportCreationDate() +
+        ", spendingId=" + spendingId +
+        ", spendingDate=" + spendingDate +
+        ", reportSpendingSameDay=" + reportSpendingSameDay +
+        ", vacancyId=" + vacancyId +
+        ", vacancyAreaId=" + vacancyAreaId +
+        ", cost=" + cost +
         '}';
   }
 }
