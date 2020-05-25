@@ -7,6 +7,7 @@ import Heading from 'components/Heading/Heading';
 import Search from 'components/Search/Search';
 import Loader from 'components/Loader/Loader';
 import ServiciesList from 'components/ServiciesList/ServiciesList';
+import ServicesDownload from 'components/CommercialOffer/ServicesDownload/ServicesDownload';
 
 import {initProfAreas} from 'redux/profAreas/profAreasActions';
 import {filterArea} from 'redux/areas/areasAction';
@@ -56,10 +57,16 @@ const CommercialOffer = ({
             <div className="commercial-offer-section__offer">
                 <Heading level={3}>Коммерческое предложение</Heading>
             </div>
-            <div>
-                {`Фильтр услуг для компании ${companyName}`}<br />
-                {`- по области: ${plainAreas && choosenAreaId && plainAreas[choosenAreaId].name || 'не определена'}`}<br />
-                {`- по проф. области: ${profAreas && choosenProfAreaId && profAreas[choosenProfAreaId].name || 'не определена'}`}
+            <div className="commercial-offer-section__header">
+                <div>
+                    {`Фильтр услуг для компании ${companyName}`}<br />
+                    {`- по области: ${plainAreas && choosenAreaId && plainAreas[choosenAreaId].name || 'не определена'}`}<br />
+                    {`- по проф. области: ${profAreas && choosenProfAreaId && profAreas[choosenProfAreaId].name || 'не определена'}`}
+                </div>
+                <ServicesDownload
+                    choosenAreaId={choosenAreaId}
+                    choosenProfAreaId={choosenProfAreaId}
+                />
             </div>
             <div className="commercial-offer-section__filter">
                 <Search
