@@ -22,6 +22,7 @@ VALUES (1455, 1870, 113, 0.9),
        (1455, 2624107, 113, 0.44),
        (1455, 1269556, 113, 0.7);
 
+
 create TABLE day_report (
     day_report_id bigint NOT NULL,
     report_date date NOT NULL,
@@ -68,4 +69,35 @@ values
 (111, 1),
 (222, 1),
 (333, 2),
+(333, 1);
+
+
+
+create TABLE tracked_companies (
+    employer_id integer NOT NULL,
+    vacancy_area_id integer NOT NULL,
+    vacancy_mask varchar(1000) DEFAULT ''::varchar NOT NULL,
+    industry numeric(8,5),
+    publication_amount integer DEFAULT 0,
+    employees_number bigint NOT NULL
+);
+
+create TABLE employer_profarea (
+    employer_id bigint NOT NULL,
+    profarea_id integer NOT NULL
+);    
+    
+insert into tracked_companies(employer_id, vacancy_area_id, vacancy_mask, industry, publication_amount, employees_number)
+values
+(111, 3, '*sales*,*manager*',1,10,100),
+(222, 3, '*developer*,*manager*',2,100,1000),
+(333, 3, '*lawyer*',1,100,100),
+(444, 3, '*sales*,*lawyer*',1,10,100);
+
+
+insert into employer_profarea(employer_id, profarea_id)
+values
+(111, 1),
+(222, 1),
+(222, 2),
 (333, 1);

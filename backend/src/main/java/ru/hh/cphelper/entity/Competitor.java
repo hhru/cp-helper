@@ -11,7 +11,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "competitors")
-public class Competitor implements Serializable {
+public class Competitor implements Serializable, Comparable<Competitor> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +37,13 @@ public class Competitor implements Serializable {
     this.employerId = employerId;
     this.competitorId = competitorId;
     this.areaId = areaId;
+  }
+
+  public Competitor(Integer employerId, Integer competitorId, Integer areaId, Float relevanceIndex) {
+    this.employerId = employerId;
+    this.competitorId = competitorId;
+    this.areaId = areaId;
+    this.relevanceIndex = relevanceIndex;
   }
 
   public Integer getId() {
@@ -96,5 +103,10 @@ public class Competitor implements Serializable {
   @Override
   public int hashCode() {
     return Objects.hash(employerId, competitorId, areaId);
+  }
+
+  @Override
+  public int compareTo(Competitor competitor) {
+    return this.getRelevanceIndex().compareTo(competitor.getRelevanceIndex());
   }
 }
