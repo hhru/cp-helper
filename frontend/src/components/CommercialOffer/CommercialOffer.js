@@ -28,10 +28,9 @@ const CommercialOffer = ({
     isLoading,
     companyName,
     plainAreas,
-    areaId,
 }) => {
 
-    const [choosenAreaId, setChoosenAreaId] = useState(areaId);
+    const [choosenAreaId, setChoosenAreaId] = useState(null);
     const [choosenProfAreaId, setChoosenProfAreaId] = useState(null);
 
     const [filteredProfAreas, setFilteredProfAreas] = useState([]);
@@ -58,7 +57,7 @@ const CommercialOffer = ({
                 <Heading level={3}>Коммерческое предложение</Heading>
             </div>
             <div>
-                {`Конкуренты компании ${companyName}`}<br />
+                {`Фильтр услуг для компании ${companyName}`}<br />
                 {`- по области: ${plainAreas && choosenAreaId && plainAreas[choosenAreaId].name || 'не определена'}`}<br />
                 {`- по проф. области: ${profAreas && choosenProfAreaId && profAreas[choosenProfAreaId].name || 'не определена'}`}
             </div>
@@ -114,7 +113,6 @@ CommercialOffer.propTypes = {
     isLoading: PropTypes.bool,
     companyName: PropTypes.string,
     plainAreas: PropTypes.object,
-    areaId: PropTypes.number,
 };
 
 export default connect(
@@ -128,7 +126,6 @@ export default connect(
         isLoading: state.services.isLoading,
         companyName: state.companies.companyName,
         plainAreas: state.areas.plainAreas,
-        areaId: state.areas.areaId,
     }),
     {
         initProfAreas,
