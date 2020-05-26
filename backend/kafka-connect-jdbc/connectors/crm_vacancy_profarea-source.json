@@ -9,10 +9,20 @@
     "connection.password": "cp_helper3A!",
     "topic.prefix": "crm_",
     "mode":"incrementing",
-    "table.whitelist": "CompetitorProfArea",
-    "incrementing.column.name": "competitor_profarea_id",
+    "table.whitelist": "VacancyProfArea",
+    "incrementing.column.name": "vacancy_profarea_id",
     "validate.non.null" : false,
     "poll.interval.ms": 10000,
-    "timestamp.interval.ms": 0
+    "timestamp.interval.ms": 0,
+    "transforms": "RenameFields, RenameTopic, TimestampConverterOfSnapshotDate",
+    "transforms.RenameFields.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+    "transforms.RenameFields.renames": "vacancy_profarea_id:vacancyProfAreaId, vacancy_id:vacancyId, profarea_id:profAreaId, snapshot_date:snapshotDate",
+    "transforms.RenameTopic.type":"org.apache.kafka.connect.transforms.RegexRouter",
+    "transforms.RenameTopic.regex":".*",
+    "transforms.RenameTopic.replacement":"crm_vacancy_profarea",
+    "transforms.TimestampConverterOfSnapshotDate.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+    "transforms.TimestampConverterOfSnapshotDate.field": "snapshotDate",
+    "transforms.TimestampConverterOfSnapshotDate.format": "yyyy-MM-dd'T'HH:mm:ss.SSS",
+    "transforms.TimestampConverterOfSnapshotDate.target.type": "string"
   }
 }

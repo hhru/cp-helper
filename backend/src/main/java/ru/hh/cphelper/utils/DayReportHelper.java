@@ -28,6 +28,18 @@ public final class DayReportHelper {
   }
 
   public static DayReport map(DayReportConsumerDto dayReportConsumerDto) {
-    return new DayReport();
+    return new DayReport(
+        dayReportConsumerDto.getReportId(),
+        dayReportConsumerDto.getReportDate(),
+        dayReportConsumerDto.getEmployerId(),
+        dayReportConsumerDto.getServiceCode(),
+        dayReportConsumerDto.getResponsesCount(),
+        dayReportConsumerDto.getSpendingId(),
+        dayReportConsumerDto.getSpendingDate(),
+        dayReportConsumerDto.getReportSpendingSameDay(),
+        dayReportConsumerDto.getVacancyId(),
+        dayReportConsumerDto.getVacancyAreaId(),
+        dayReportConsumerDto.getCost()
+        );
   }
 }
