@@ -9,7 +9,11 @@ import ru.hh.cphelper.dao.VacancyProfAreaDao;
 import ru.hh.cphelper.entity.Competitor;
 import ru.hh.cphelper.entity.DayReport;
 import ru.hh.cphelper.entity.VacancyProfArea;
+import ru.hh.cphelper.dao.TrackedEmployersDao;
+import ru.hh.cphelper.entity.TrackedEmployer;
 import ru.hh.cphelper.service.CompetitorsService;
+import ru.hh.cphelper.service.DayReportExcelService;
+import ru.hh.cphelper.service.DayReportPDFService;
 import ru.hh.cphelper.service.DayReportService;
 import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.nab.datasource.DataSourceFactory;
@@ -29,12 +33,15 @@ import javax.sql.DataSource;
     CompetitorsService.class,
     DayReportDao.class,
     DayReportService.class,
-    VacancyProfAreaDao.class
+    VacancyProfAreaDao.class,
+    TrackedEmployersDao.class,
+    DayReportPDFService.class,
+    DayReportExcelService.class,
 })
 public class CpHelperCommonConfig {
   @Bean
   public MappingConfig mappingConfig() {
-    return new MappingConfig(Competitor.class, DayReport.class, VacancyProfArea.class);
+    return new MappingConfig(Competitor.class, DayReport.class, VacancyProfArea.class, TrackedEmployer.class);
   }
 
   @Bean
