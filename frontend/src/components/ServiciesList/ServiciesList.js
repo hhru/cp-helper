@@ -43,10 +43,10 @@ const ServiciesList = ({ services, competitors, companyName, companyId }) => {
             </tr>
             </thead>
             <tbody className="hh-table__body">
-                {services ? Object.entries(services).map((employer) => (
-                    employer[1].map((service, index) => (
+                {services ? Object.entries(services).map(([employer, services]) => (
+                    services.map((service, index) => (
                         <Service
-                            employerName={getEmployerName(employer[0])}
+                            employerName={getEmployerName(employer)}
                             key={service.serviceName + service.employerId}
                             service={service}
                             rowspan={employer.length}
