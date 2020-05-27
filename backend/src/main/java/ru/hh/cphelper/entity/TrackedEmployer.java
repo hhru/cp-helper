@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -70,13 +71,27 @@ public class TrackedEmployer implements Serializable {
     BigDecimal index = BigDecimal.ZERO;
     index = tr1.getVacancyAreaId().equals(tr2.getVacancyAreaId()) ? index :
         index.add(anchor.multiply(areaWeight));
-    index = tr1.getVacancyMask().equals(tr2.getVacancyMask()) ? index : index.add(anchor.multiply(maskWeight));
+    if (!(tr1.getVacancyMask().equals(tr2.getVacancyMask()))) {
+      var VacancyMaskSet1 = Set.of(tr1.getVacancyMask().split(","));
+      var VacancyMaskSet2 = Set.of(tr2.getVacancyMask().split(","));
+      Set<String> allMasksSet = new HashSet<>(VacancyMaskSet1);
+      allMasksSet.addAll(VacancyMaskSet2);
+      index = index.add(BigDecimal.valueOf(allMasksSet.size())
+          .divide(BigDecimal.valueOf(VacancyMaskSet1.size() + VacancyMaskSet2.size()), RoundingMode.HALF_DOWN)
+          .multiply(maskWeight));
+    }
     index = tr1.getIndustry().equals(tr2.getIndustry()) ? index : index.add(anchor.multiply(industryWeight));
     index = tr1.getPublicationAmount().equals(tr2.getPublicationAmount()) ? index :
         index.add(anchor.multiply(publicationAmountWeight));
     index = tr1.getEmployeesNumber().equals(tr2.getEmployeesNumber()) ? index :
         index.add(anchor.multiply(employeesNumberWeight));
-    index = tr1.getProfAreaId().equals(tr2.getProfAreaId()) ? index : index.add(anchor.multiply(profAreaWeight));
+    if (!(tr1.getProfAreaId().equals(tr2.getProfAreaId()))) {
+      Set<Integer> allProfAreaSet = new HashSet<>(tr1.getProfAreaId());
+      allProfAreaSet.addAll(tr2.getProfAreaId());
+      index = index.add(BigDecimal.valueOf(allProfAreaSet.size())
+          .divide(BigDecimal.valueOf(tr1.getProfAreaId().size() + tr2.getProfAreaId().size()), RoundingMode.HALF_DOWN)
+          .multiply(profAreaWeight));
+    }
     return index.floatValue();
   }
 
