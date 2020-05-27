@@ -56,6 +56,11 @@ const CommercialOffer = ({
             <div className="commercial-offer-section__offer">
                 <Heading level={3}>Коммерческое предложение</Heading>
             </div>
+            <div>
+                {`Фильтр услуг для компании ${companyName}`}<br />
+                {`- по области: ${plainAreas && choosenAreaId && plainAreas[choosenAreaId].name || 'не определена'}`}<br />
+                {`- по проф. области: ${profAreas && choosenProfAreaId && profAreas[choosenProfAreaId].name || 'не определена'}`}
+            </div>
             <div className="commercial-offer-section__filter">
                 <Search
                     fetch={filterArea}
@@ -84,7 +89,7 @@ const CommercialOffer = ({
                     competitors={competitors}
                     companyName={companyName}
                     companyId={companyId}
-                    plainAreas={plainAreas} />
+                />
                 )
             }
             <div className="commercial-offer-section__btn">

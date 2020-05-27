@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import ButtonIcon from 'components/ButtonIcon/ButtonIcon';
 import AddIcon from 'components/Icons/AddIcon';
 
-const Service = ({employerName, profareaName, service, rowspan, firstRow, addService, disabledAddService, areaName}) => {
-    const {serviceName, spendingCount, responseCount, responsePerService} = service;
+const Service = ({employerName, service, rowspan, firstRow, addService, disabledAddService}) => {
+    const {costPerResponse, responsesCount, responsesPerDay, responsesPerSpending, serviceCode, spendingCount} = service;
 
     return (
     <tr>
@@ -13,13 +13,13 @@ const Service = ({employerName, profareaName, service, rowspan, firstRow, addSer
             {employerName}
         </td>
         )}
-        {[serviceName, areaName, profareaName, spendingCount, responseCount, responsePerService].map((element) => (
-            <td key={employerName + serviceName}>
+        {[serviceCode, responsesCount, spendingCount, responsesPerSpending, responsesPerDay, costPerResponse].map((element) => (
+            <td key={employerName + serviceCode}>
                 {element}
             </td>
         ))}
         <td>
-            <ButtonIcon onClick={() => addService(serviceName)} disabled={disabledAddService}>
+            <ButtonIcon onClick={() => addService(serviceCode)} disabled={disabledAddService}>
                 <AddIcon size={30}/>
             </ButtonIcon>
         </td>
@@ -30,12 +30,10 @@ const Service = ({employerName, profareaName, service, rowspan, firstRow, addSer
 Service.propTypes = {
     employerName: PropTypes.string,
     service: PropTypes.object,
-    profareaName: PropTypes.string,
     rowspan: PropTypes.number,
     firstRow: PropTypes.boolean,
     addService: PropTypes.func,
     disabledAddService: PropTypes.boolean,
-    areaName: PropTypes.string,
 };
 
 export default Service;

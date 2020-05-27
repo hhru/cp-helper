@@ -6,14 +6,15 @@
         border: 1px solid black;
         border-collapse: collapse;
         text-align: center;
+        max-width: 150px;
     }
 
     &__head {
-        font-weight: bold;
-        white-space: nowrap;
-
         & td {
             padding: 8px 4px;
+            font-weight: bold;
+            white-space: break-spaces;
+            font-size: 14px;
         }
     }
 
