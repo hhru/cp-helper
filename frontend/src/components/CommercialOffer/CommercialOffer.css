@@ -2,6 +2,11 @@
     font-family: ProximaNovaCond, Arial, sans-serif;
     color: #333;
 
+    &__header {
+        display: flex;
+        justify-content: space-between;
+    }
+
     &__offer {
         margin-bottom: 15px;
     }

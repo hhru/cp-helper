@@ -1,0 +1,5 @@
+.download {
+    display: flex;
+    width: 90px;
+    justify-content: space-between;
+}
