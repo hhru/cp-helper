@@ -183,3 +183,71 @@ VacancyDataMart.dbo.vw_VacancyResponses - тут лежат отклики
     `application/pdf` - для формата PDF
     
     `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet` - для формата Microsoft Excel
+    
+3. Отслеживаемые работодатели
+
+    3.1 Получение списка отслеживаемых работодателей
+    
+    `GET /tracked`
+    
+    Отбор отслеживаемых работодателей по имени
+    
+    `GET /tracked?name=employer_name`
+    
+    где `employer_name` - название или часть названия компании
+    
+    ОТВЕТ
+    
+    ```
+    {
+    "employers": 
+     [
+      {
+       "employerId": 1870,
+       "employerName": "Работа.ру"
+      },
+      {
+       "employerId": 1455,
+       "employerName": "HeadHunter"
+      },
+      ...
+     ]
+    }   
+    ```
+
+   где 
+   
+   `employerId` - код работодателя,
+   
+   `employerName` - название компании-работодателя.
+   
+   3.2 Добавление работодателя в список отслеживаемых
+   
+   `POST /tracked`
+   
+   В теле запроса указывается id работодателя и его наименование
+   
+   ```
+   {
+    "employerId" : 1455,
+    "employerName" : "HeadHunter"
+   }
+   ```
+      
+   ОТВЕТ
+   
+   `204 No Content` - в случае успешного добавления
+   
+   `400 Bad Request` - в случае ошибки добавления   
+         
+   3.3 Удаление работодателя из списка отслеживаемых
+   
+   `DELETE /tracked/{employerId}`
+   
+   где employerId - идентификатор удаляемого работодателя
+   
+   ОТВЕТ
+  
+   `204 No Content` - в случае успешного удаления
+  
+   `400 Bad Request` - в случае ошибки удаления 
