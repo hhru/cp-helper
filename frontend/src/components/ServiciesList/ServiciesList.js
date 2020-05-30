@@ -39,7 +39,6 @@ const ServiciesList = ({ services, competitors, companyName, companyId }) => {
                         {name}
                     </td>
                 ))}
-                <td/>
             </tr>
             </thead>
             <tbody className="hh-table__body">

@@ -8,6 +8,7 @@ import CompetitorsList from './CompetitorsList/CompetitorsList';
 import CommercialOffer from './CommercialOffer/CommercialOffer';
 import Footer from './Footer/Footer';
 import Tab from './Tab/Tab';
+import Settings from './Settings/Settings';
 
 import './MainComponent.css';
 
@@ -18,6 +19,15 @@ export const COMMERCIAL_OFFER = 'COMMERCIAL_OFFER';
 const MainComponent = () => {
 
     const [tab, setTab] = useState(COMPANY_SEARCH);
+    const [settingsIsOpen, setSettingsIsOpen] = useState(false);
+
+    const openSettings = () => {
+        setSettingsIsOpen(true);
+    };
+
+    const closeSettings = () => {
+        setSettingsIsOpen(false);
+    };
 
     const openCompanySearch = () => {
         setTab(COMPANY_SEARCH);
@@ -33,22 +43,26 @@ const MainComponent = () => {
 
     return (
         <Fragment>
-            <Header/>
-            <Tab currentTab={tab}>
-                {tab === COMPANY_SEARCH &&
-                    <CompanySearch
-                        openCompetitorsList={openCompetitorsList}
-                    />}
-                {tab === COMPETITORS_LIST &&
-                    <CompetitorsList
-                        openCompanySearch={openCompanySearch}
-                        openCommercialOffer={openCommercialOffer}
-                    />}
-                {tab === COMMERCIAL_OFFER &&
-                    <CommercialOffer
-                        openCompetitorsList={openCompetitorsList}
-                    />}
-            </Tab>
+            <Header openSettings={openSettings}/>
+            {settingsIsOpen ?
+                <Settings closeSettings={closeSettings}/>
+                :
+                <Tab currentTab={tab}>
+                    {tab === COMPANY_SEARCH &&
+                        <CompanySearch
+                            openCompetitorsList={openCompetitorsList}
+                        />}
+                    {tab === COMPETITORS_LIST &&
+                        <CompetitorsList
+                            openCompanySearch={openCompanySearch}
+                            openCommercialOffer={openCommercialOffer}
+                        />}
+                    {tab === COMMERCIAL_OFFER &&
+                        <CommercialOffer
+                            openCompetitorsList={openCompetitorsList}
+                        />}
+                </Tab>
+            }
             <Footer/>
             <NotificationContainer/>
         </Fragment>

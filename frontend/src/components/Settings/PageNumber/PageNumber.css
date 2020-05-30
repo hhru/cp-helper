@@ -1,0 +1,10 @@
+.number {
+    display: flex;
+    height: 30px;
+    width: 30px;
+    border: 1px solid #eee;
+    font: bold 14px/16px ProximaNovaCond, Arial, sans-serif;
+    color: #333;
+    align-items: center;
+    justify-content: center;
+}
