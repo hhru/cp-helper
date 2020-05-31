@@ -15,6 +15,7 @@ import ru.hh.cphelper.service.CompetitorsService;
 import ru.hh.cphelper.service.DayReportExcelService;
 import ru.hh.cphelper.service.DayReportPDFService;
 import ru.hh.cphelper.service.DayReportService;
+import ru.hh.cphelper.service.EmployerCompareService;
 import ru.hh.cphelper.service.TrackedEmployersService;
 import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.nab.datasource.DataSourceFactory;
@@ -39,6 +40,8 @@ import javax.sql.DataSource;
     DayReportPDFService.class,
     DayReportExcelService.class,
     TrackedEmployersService.class,
+    TrackedEmployersDao.class,
+    EmployerCompareService.class
 })
 public class CpHelperCommonConfig {
   @Bean
