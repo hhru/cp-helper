@@ -17,16 +17,12 @@ public class TrackedEmployer implements Serializable {
   @Column(name = "employer_name")
   private String employerName;
 
-  @Column(name = "employer_staff_number")
-  private Integer employerStaffNumber;
-
   public TrackedEmployer() {
   }
 
-  public TrackedEmployer(Integer employerId, String employerName, Integer employerStaffNumber) {
+  public TrackedEmployer(Integer employerId, String employerName) {
     this.employerId = employerId;
     this.employerName = employerName;
-    this.employerStaffNumber = employerStaffNumber;
   }
 
   public Integer getEmployerId() {
@@ -45,14 +41,6 @@ public class TrackedEmployer implements Serializable {
     this.employerName = employerName;
   }
 
-  public Integer getEmployerStaffNumber() {
-    return employerStaffNumber;
-  }
-
-  public void setEmployerStaffNumber(Integer employerStaffNumber) {
-    this.employerStaffNumber = employerStaffNumber;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -63,12 +51,11 @@ public class TrackedEmployer implements Serializable {
     }
     TrackedEmployer that = (TrackedEmployer) o;
     return employerId.equals(that.employerId) &&
-        employerName.equals(that.employerName) &&
-        employerStaffNumber.equals(that.employerStaffNumber);
+        employerName.equals(that.employerName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(employerId, employerName, employerStaffNumber);
+    return Objects.hash(employerId, employerName);
   }
 }

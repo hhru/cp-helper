@@ -43,14 +43,6 @@ public class DayReportDao {
     return session.createQuery(criteriaQuery.select(root).where(criteriaBuilder.and(predicate))).stream();
   }
 
-  public Stream<DayReport> getAllDayReports() {
-    Session session = getCurrentSession();
-    CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-    CriteriaQuery<DayReport> criteriaQuery = criteriaBuilder.createQuery(DayReport.class);
-    Root<DayReport> root = criteriaQuery.from(DayReport.class);
-    return session.createQuery(criteriaQuery.select(root)).stream();
-  }
-
   @Transactional
   public void save(DayReport dayReport) {
     getCurrentSession().save(dayReport);

@@ -4,7 +4,6 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
@@ -55,7 +54,7 @@ public class DayReport implements Serializable {
   @Column(name = "cost")
   private BigDecimal cost;
 
-  @ElementCollection(fetch = FetchType.EAGER)
+  @ElementCollection
   @CollectionTable(name = "vacancy_profarea",
       joinColumns = @JoinColumn(name = "vacancy_id", referencedColumnName = "vacancy_id"))
   @Column(name = "profarea_id")
@@ -67,10 +66,24 @@ public class DayReport implements Serializable {
   @Transient
   private Long dayCount = 1L;
 
-  @Column(name = "vacancy_name")
-  private String vacancyName;
-
   public DayReport() {
+  }
+
+  public DayReport(Long dayReportId, LocalDate reportDate, Integer employerId,
+                   String serviceCode, Long responsesCount, Long spendingId,
+                   LocalDateTime spendingDate, Boolean reportSpendingSameDay,
+                   Long vacancyId, Integer vacancyAreaId, BigDecimal cost) {
+    this.dayReportId = dayReportId;
+    this.reportDate = reportDate;
+    this.employerId = employerId;
+    this.serviceCode = serviceCode;
+    this.responsesCount = responsesCount;
+    this.spendingId = spendingId;
+    this.spendingDate = spendingDate;
+    this.reportSpendingSameDay = reportSpendingSameDay;
+    this.vacancyId = vacancyId;
+    this.vacancyAreaId = vacancyAreaId;
+    this.cost = cost;
   }
 
   public static class DayReportBuilder {
@@ -88,7 +101,6 @@ public class DayReport implements Serializable {
     private Set<Integer> profAreaId;
     private Long spendingCount = 1L;
     private Long dayCount = 1L;
-    private String vacancyName;
 
     public DayReportBuilder setDayReportId(Long dayReportId) {
       this.dayReportId = dayReportId;
@@ -160,11 +172,6 @@ public class DayReport implements Serializable {
       return this;
     }
 
-    public DayReportBuilder setVacancyName(String vacancyName) {
-      this.vacancyName = vacancyName;
-      return this;
-    }
-
     public DayReport createDayReport() {
       DayReport dayReport = new DayReport();
       dayReport.setDayReportId(this.dayReportId);
@@ -181,7 +188,6 @@ public class DayReport implements Serializable {
       dayReport.setProfAreaId(this.profAreaId);
       dayReport.setSpendingCount(this.spendingCount);
       dayReport.setDayCount(this.dayCount);
-      dayReport.setVacancyName(this.vacancyName);
       return dayReport;
     }
   }
@@ -198,7 +204,7 @@ public class DayReport implements Serializable {
         .setProfAreaId(dr1.getProfAreaId())
         .setSpendingCount(dr1.getReportSpendingSameDay() && dr2.getReportSpendingSameDay() ?
             dr1.getSpendingCount() + dr2.getSpendingCount() : dr1.getSpendingCount())
-        .setDayCount(dr1.getDayCount() + dr2.getDayCount()).setVacancyName(dr1.getVacancyName()).createDayReport();
+        .setDayCount(dr1.getDayCount() + dr2.getDayCount()).createDayReport();
   }
 
   public BigDecimal responsesPerSpending() {
@@ -274,10 +280,6 @@ public class DayReport implements Serializable {
     return dayCount;
   }
 
-  public String getVacancyName() {
-    return vacancyName;
-  }
-
   public void setDayReportId(Long dayReportId) {
     this.dayReportId = dayReportId;
   }
@@ -332,9 +334,5 @@ public class DayReport implements Serializable {
 
   public void setDayCount(Long dayCount) {
     this.dayCount = dayCount;
-  }
-
-  public void setVacancyName(String vacancyName) {
-    this.vacancyName = vacancyName;
   }
 }
