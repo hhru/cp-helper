@@ -5,18 +5,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import ru.hh.cphelper.dao.CompetitorsDao;
 import ru.hh.cphelper.dao.DayReportDao;
-import ru.hh.cphelper.dao.TrackedEmployerDao;
+import ru.hh.cphelper.dao.TrackedEmployersDao;
 import ru.hh.cphelper.entity.Competitor;
 import ru.hh.cphelper.entity.DayReport;
 import ru.hh.cphelper.entity.TrackedEmployer;
 import ru.hh.cphelper.service.CompetitorsService;
 import ru.hh.cphelper.service.DayReportService;
-<<<<<<< HEAD
-import ru.hh.cphelper.service.TrackedEmployerService;
-=======
 import ru.hh.cphelper.service.EmployerCompareService;
 import ru.hh.cphelper.service.TrackedEmployersService;
->>>>>>> 206aff0... backend-26 add new dayreport comparison class
 import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.nab.datasource.DataSourceFactory;
 import ru.hh.nab.datasource.DataSourceType;
@@ -35,18 +31,9 @@ import javax.sql.DataSource;
     CompetitorsService.class,
     DayReportDao.class,
     DayReportService.class,
-<<<<<<< HEAD
-    TrackedEmployerDao.class,
-    TrackedEmployerService.class
-=======
-    VacancyProfAreaDao.class,
     TrackedEmployersDao.class,
-    DayReportPDFService.class,
-    DayReportExcelService.class,
     TrackedEmployersService.class,
-    TrackedEmployersDao.class,
     EmployerCompareService.class
->>>>>>> 206aff0... backend-26 add new dayreport comparison class
 })
 public class CpHelperCommonConfig {
   @Bean

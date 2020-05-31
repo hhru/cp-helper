@@ -41,23 +41,6 @@ create TABLE day_report (
 create index idx_day_report_employer_id_report_date on day_report(employer_id, report_date);
 
 insert into 
-<<<<<<< HEAD
-day_report(day_report_id, report_date, employer_id, service_code, responses_count, spending_id, spending_date, report_spending_same_day, vacancy_id, vacancy_area_id, cost)
-values
-(1, now()::date - interval '3 day', 1455, 'VP', 20, 100, now() - INTERVAL '7 day', false, 111, 1, 1000),
-(2, now()::date - interval '3 day', 1455, 'VP', 15, 200, now() - INTERVAL '3 day', true, 222, 2, 1000),
-(3, now()::date - interval '3 day', 1455, 'VPPREM', 40, 300, now() - INTERVAL '5 day', false, 333, 3, 2000),
-
-(4, now()::date - interval '2 day', 1455, 'VPPREM', 50, 400, now() - INTERVAL '2 day', true, 111, 1, 2000),
-(5, now()::date - interval '2 day', 1455, 'VP', 10, 200, now() - INTERVAL '3 day', false, 222, 2, 1000),
-(6, now()::date - interval '2 day', 1455, 'VPPREM', 20, 500, now() - INTERVAL '5 day', false, 333, 3, 2000),
-
-(7, now()::date - interval '1 day', 1455, 'VPPREM', 44, 400, now() - INTERVAL '2 day', false, 111, 1, 2000),
-(8, now()::date - interval '1 day', 1455, 'VP', 12, 200, now() - INTERVAL '3 day', false, 222, 2, 1000),
-(9, now()::date - interval '1 day', 1455, 'VP', 15, 500, now() - INTERVAL '5 day', false, 333, 3, 2000),
-
-(10, now()::date, 1870, 'VP', 100, 600, now(), true, 333, 3, 3000);
-=======
 day_report(day_report_id, report_date, employer_id, service_code, responses_count, spending_id, spending_date, report_spending_same_day, vacancy_id, vacancy_area_id, cost, vacancy_name)
 values
 (1, now()::date - interval '3 day', 1455, 'VP', 20, 100, now() - INTERVAL '7 day', false, 111, 1, 1000, 'aaa'),
@@ -73,7 +56,6 @@ values
 (9, now()::date - interval '1 day', 1455, 'VP', 15, 500, now() - INTERVAL '5 day', false, 333, 3, 2000, 'ccc'),
 
 (10, now()::date, 1870, 'VP', 100, 600, now(), true, 333, 3, 3000, 'ccc');
->>>>>>> 206aff0... backend-26 add new dayreport comparison class
 
 create TABLE vacancy_profarea (
     vacancy_id bigint NOT NULL,
@@ -90,47 +72,13 @@ values
 (333, 2),
 (333, 1);
 
-<<<<<<< HEAD
-
-
-create TABLE tracked_companies (
-    employer_id integer NOT NULL,
-    vacancy_area_id integer NOT NULL,
-    vacancy_mask varchar(1000) DEFAULT ''::varchar NOT NULL,
-    industry numeric(8,5),
-    publication_amount integer DEFAULT 0,
-    employees_number bigint NOT NULL
-=======
-create index idx_vacancy_profarea_vacancy_id on day_report(vacancy_id);
 
 CREATE TABLE tracked_employers (
     employer_id integer PRIMARY KEY,
     employer_name VARCHAR(200) NOT null,
     employer_staff_number integer NOT NULL
->>>>>>> 206aff0... backend-26 add new dayreport comparison class
 );
 
-create TABLE employer_profarea (
-    employer_id bigint NOT NULL,
-    profarea_id integer NOT NULL
-);    
-    
-insert into tracked_companies(employer_id, vacancy_area_id, vacancy_mask, industry, publication_amount, employees_number)
-values
-(111, 3, '*sales*,*manager*',1,10,100),
-(222, 3, '*developer*,*manager*',2,100,1000),
-(333, 3, '*lawyer*',1,100,100),
-(444, 3, '*sales*,*lawyer*',1,10,100);
-
-
-<<<<<<< HEAD
-insert into employer_profarea(employer_id, profarea_id)
-values
-(111, 1),
-(222, 1),
-(222, 2),
-(333, 1);
-=======
 insert into
 tracked_employers (employer_id, employer_name, employer_staff_number)
 values
@@ -141,4 +89,4 @@ values
 (2605703, 'Зарплата.ру', 100000),
 (2624107, 'MOS.RU', 100),
 (1269556,'Jooble', 1000);
->>>>>>> 206aff0... backend-26 add new dayreport comparison class
+

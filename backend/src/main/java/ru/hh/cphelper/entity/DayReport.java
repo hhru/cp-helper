@@ -70,12 +70,9 @@ public class DayReport implements Serializable {
   @Column(name = "vacancy_name")
   private String vacancyName;
 
-<<<<<<< HEAD
-=======
   public DayReport() {
   }
 
->>>>>>> 206aff0... backend-26 add new dayreport comparison class
   public static class DayReportBuilder {
     private Long dayReportId;
     private LocalDate reportDate;
