@@ -42,9 +42,13 @@ public class TrackedEmployer implements Serializable {
   @Column(name = "profarea_id")
   private Set<Integer> profAreaId = new HashSet<>();
 
+  @Column(name = "employer_staff_number")
+  private Integer employerStaffNumber;
+
   public TrackedEmployer() {
   }
 
+<<<<<<< HEAD
   public TrackedEmployer(Integer employerId, Integer vacancyAreaId, String vacancyMask, Double industry,
                          Integer publicationAmount, Long employeesNumber, Set<Integer> profAreaId) {
     this.employerId = employerId;
@@ -93,6 +97,12 @@ public class TrackedEmployer implements Serializable {
           .multiply(profAreaWeight));
     }
     return index.floatValue();
+=======
+  public TrackedEmployer(Integer employerId, String employerName, Integer employerStaffNumber) {
+    this.employerId = employerId;
+    this.employerName = employerName;
+    this.employerStaffNumber = employerStaffNumber;
+>>>>>>> 206aff0... backend-26 add new dayreport comparison class
   }
 
   public Integer getEmployerId() {
@@ -111,6 +121,7 @@ public class TrackedEmployer implements Serializable {
     this.vacancyAreaId = vacancyAreaId;
   }
 
+<<<<<<< HEAD
   public String getVacancyMask() {
     return vacancyMask;
   }
@@ -149,5 +160,32 @@ public class TrackedEmployer implements Serializable {
 
   public void setProfAreaId(Set<Integer> profAreaId) {
     this.profAreaId = profAreaId;
+=======
+  public Integer getEmployerStaffNumber() {
+    return employerStaffNumber;
+  }
+
+  public void setEmployerStaffNumber(Integer employerStaffNumber) {
+    this.employerStaffNumber = employerStaffNumber;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    TrackedEmployer that = (TrackedEmployer) o;
+    return employerId.equals(that.employerId) &&
+        employerName.equals(that.employerName) &&
+        employerStaffNumber.equals(that.employerStaffNumber);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(employerId, employerName, employerStaffNumber);
+>>>>>>> 206aff0... backend-26 add new dayreport comparison class
   }
 }

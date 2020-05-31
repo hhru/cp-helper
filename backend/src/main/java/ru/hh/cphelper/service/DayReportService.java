@@ -36,4 +36,13 @@ public class DayReportService {
         .map(dayReports -> dayReports.stream().reduce(DayReport::aggregateReports))
         .map(Optional::get).collect(Collectors.toList());
   }
+
+  @Transactional(readOnly = true)
+  public List<DayReport> getAllDayReports() {
+    return dayReportDao.getAllDayReports()
+        .collect(Collectors.groupingBy(dr -> List.of(dr.getVacancyId(), dr.getSpendingId())))
+        .values().stream()
+        .filter(dayReports -> dayReports.stream().anyMatch(DayReport::getReportSpendingSameDay))
+        .flatMap(Collection::stream).collect(Collectors.toList());
+  }
 }
