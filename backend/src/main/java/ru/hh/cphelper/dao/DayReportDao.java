@@ -2,6 +2,7 @@ package ru.hh.cphelper.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.transaction.annotation.Transactional;
 import ru.hh.cphelper.entity.DayReport;
 
 import javax.inject.Inject;
@@ -9,8 +10,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -43,12 +44,14 @@ public class DayReportDao {
     return session.createQuery(criteriaQuery.select(root).where(criteriaBuilder.and(predicate))).stream();
   }
 
-  public Stream<DayReport> getAllDayReports() {
+  @Transactional(readOnly = true)
+  public List<DayReport> getDayReportsWithSpending() {
     Session session = getCurrentSession();
     CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
     CriteriaQuery<DayReport> criteriaQuery = criteriaBuilder.createQuery(DayReport.class);
     Root<DayReport> root = criteriaQuery.from(DayReport.class);
-    return session.createQuery(criteriaQuery.select(root)).stream();
+    return session.createQuery(criteriaQuery.select(root)
+        .where(criteriaBuilder.equal(root.get("reportSpendingSameDay"), true))).getResultList();
   }
 
   @Transactional

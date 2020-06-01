@@ -6,10 +6,10 @@ import java.util.List;
 
 public class EmployerCompare {
   private Integer employerId;
-  private Long spendingCount = 0L;
+  private Long spendingCount;
   private List<Integer> vacancyAreaId;
   private List<String> vacancyMask;
-  private Integer staffNumber = 0;
+  private Integer staffNumber;
   private List<Integer> profAreaId;
 
   public EmployerCompare(Integer employerId, Long spendingCount, List<Integer> vacancyAreaId, List<String> vacancyMask,

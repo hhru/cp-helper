@@ -1,45 +1,53 @@
 package ru.hh.cphelper.service;
 
+import ru.hh.cphelper.dao.DayReportDao;
+import ru.hh.cphelper.dao.TrackedEmployersDao;
 import ru.hh.cphelper.entity.DayReport;
 import ru.hh.cphelper.entity.TrackedEmployer;
 import ru.hh.cphelper.utils.EmployerCompare;
 
+
 import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class EmployerCompareService {
 
-  private final DayReportService dayReportService;
-  private final TrackedEmployersService trackedEmployersService;
+  private final TrackedEmployersDao trackedEmployersDao;
+  private final DayReportDao dayReportDao;
 
   @Inject
-  public EmployerCompareService(DayReportService dayReportService, TrackedEmployersService trackedEmployersService) {
-    this.dayReportService = dayReportService;
-    this.trackedEmployersService = trackedEmployersService;
+  public EmployerCompareService(TrackedEmployersDao trackedEmployersDao, DayReportDao dayReportDao) {
+    this.trackedEmployersDao = trackedEmployersDao;
+    this.dayReportDao = dayReportDao;
   }
 
-  public Map<Integer, EmployerCompare> employerComparison() {
+  public List<TrackedEmployer> employerComparison() {
     Map<Integer, EmployerCompare> employersComparison = new HashMap<>();
-    List<DayReport> dayReports = dayReportService.getAllDayReports();
+    List<DayReport> dayReports = dayReportDao.getDayReportsWithSpending();
+/*
     dayReports.forEach(dayReport -> {
       if (employersComparison.get(dayReport.getEmployerId()) == null) {
         employersComparison.put(dayReport.getEmployerId(), new EmployerCompare(dayReport.getEmployerId(),
             dayReport.getSpendingCount(), List.of(dayReport.getVacancyAreaId()),
-            List.of(dayReport.getVacancyName().split(" ")), null,
+            Arrays.asList(dayReport.getVacancyName().split(" ")), 0,
             new ArrayList<>(dayReport.getProfAreaId())));
       } else {
         employersComparison.get(dayReport.getEmployerId()).addDayReport(dayReport);
       }
     });
-    List<TrackedEmployer> trackedEmployers = trackedEmployersService
-        .getTrackedEmployersBySetId(employersComparison.keySet());
-
+*/
+    List<TrackedEmployer> trackedEmployers = trackedEmployersDao
+        .getTrackedEmployersBySetId(Set.of(1455, 1445));
+/*
     trackedEmployers.forEach(trackedEmployer -> employersComparison.get(trackedEmployer.getEmployerId())
         .setStaffNumber(trackedEmployer.getEmployerStaffNumber()));
-    return employersComparison; // test only
+*/
+
+    return trackedEmployers;
+
   }
 
 }

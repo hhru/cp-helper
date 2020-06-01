@@ -2,6 +2,7 @@ package ru.hh.cphelper.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.transaction.annotation.Transactional;
 import ru.hh.cphelper.entity.TrackedEmployer;
 
 import javax.inject.Inject;
@@ -41,6 +42,15 @@ public class TrackedEmployersDao {
         .getResultList();
   }
 
+  public void save(TrackedEmployer trackedEmployer) {
+    getCurrentSession().save(trackedEmployer);
+  }
+
+  public void delete(TrackedEmployer trackedEmployer) {
+    getCurrentSession().delete(trackedEmployer);
+  }
+
+  @Transactional(readOnly = true)
   public List<TrackedEmployer> getTrackedEmployersBySetId(Set<Integer> employerIds) {
     Session session = getCurrentSession();
     CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
@@ -48,13 +58,5 @@ public class TrackedEmployersDao {
     Root<TrackedEmployer> root = criteriaQuery.from(TrackedEmployer.class);
     return session.createQuery(criteriaQuery.select(root).where(root.get("employerId").in(employerIds)))
         .getResultList();
-  }
-
-  public void save(TrackedEmployer trackedEmployer) {
-    getCurrentSession().save(trackedEmployer);
-  }
-
-  public void delete(TrackedEmployer trackedEmployer) {
-    getCurrentSession().delete(trackedEmployer);
   }
 }
