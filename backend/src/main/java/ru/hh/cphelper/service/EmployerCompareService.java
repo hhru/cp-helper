@@ -8,10 +8,10 @@ import ru.hh.cphelper.utils.EmployerCompare;
 
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class EmployerCompareService {
 
@@ -24,30 +24,23 @@ public class EmployerCompareService {
     this.dayReportDao = dayReportDao;
   }
 
-  public List<TrackedEmployer> employerComparison() {
+  public Map<Integer, EmployerCompare> employerComparison() {
     Map<Integer, EmployerCompare> employersComparison = new HashMap<>();
     List<DayReport> dayReports = dayReportDao.getDayReportsWithSpending();
-/*
     dayReports.forEach(dayReport -> {
-      if (employersComparison.get(dayReport.getEmployerId()) == null) {
-        employersComparison.put(dayReport.getEmployerId(), new EmployerCompare(dayReport.getEmployerId(),
-            dayReport.getSpendingCount(), List.of(dayReport.getVacancyAreaId()),
-            Arrays.asList(dayReport.getVacancyName().split(" ")), 0,
-            new ArrayList<>(dayReport.getProfAreaId())));
-      } else {
-        employersComparison.get(dayReport.getEmployerId()).addDayReport(dayReport);
-      }
+      employersComparison.computeIfAbsent(dayReport.getEmployerId(), k -> getEmployerCompare(dayReport))
+          .addDayReport(dayReport);
     });
-*/
     List<TrackedEmployer> trackedEmployers = trackedEmployersDao
-        .getTrackedEmployersBySetId(Set.of(1455, 1445));
-/*
+        .getTrackedEmployersBySetId(employersComparison.keySet());
     trackedEmployers.forEach(trackedEmployer -> employersComparison.get(trackedEmployer.getEmployerId())
         .setStaffNumber(trackedEmployer.getEmployerStaffNumber()));
-*/
-
-    return trackedEmployers;
+    return employersComparison;
 
   }
 
+  private static EmployerCompare getEmployerCompare(DayReport dayReport) {
+    return new EmployerCompare(dayReport.getEmployerId(), 0L, new ArrayList<>(),
+        new ArrayList<>(), 0, new ArrayList<>());
+  }
 }

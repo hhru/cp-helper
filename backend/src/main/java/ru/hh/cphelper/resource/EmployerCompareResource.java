@@ -1,15 +1,14 @@
 package ru.hh.cphelper.resource;
 
-import ru.hh.cphelper.entity.TrackedEmployer;
 import ru.hh.cphelper.service.EmployerCompareService;
+import ru.hh.cphelper.utils.EmployerCompare;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.util.List;
-
+import java.util.Map;
 
 @Path("/findCompetitors")
 public class EmployerCompareResource {
@@ -23,7 +22,7 @@ public class EmployerCompareResource {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public List<TrackedEmployer> getReports() {
+  public Map<Integer, EmployerCompare> getReports() {
     return employerCompareService.employerComparison();
   }
 }

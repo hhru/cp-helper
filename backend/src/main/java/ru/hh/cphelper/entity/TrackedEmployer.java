@@ -10,6 +10,9 @@ import java.util.Objects;
 @Entity(name = "TrackedEmployer")
 @Table(name = "tracked_employers")
 public class TrackedEmployer implements Serializable {
+
+  private static final long serialVersionUID = 1L;
+
   @Id
   @Column(name = "employer_id")
   private Integer employerId;

@@ -6,9 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.hh.cphelper.entity.TrackedEmployer;
 
 import javax.inject.Inject;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Set;
 
@@ -52,11 +49,9 @@ public class TrackedEmployersDao {
 
   @Transactional(readOnly = true)
   public List<TrackedEmployer> getTrackedEmployersBySetId(Set<Integer> employerIds) {
-    Session session = getCurrentSession();
-    CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-    CriteriaQuery<TrackedEmployer> criteriaQuery = criteriaBuilder.createQuery(TrackedEmployer.class);
-    Root<TrackedEmployer> root = criteriaQuery.from(TrackedEmployer.class);
-    return session.createQuery(criteriaQuery.select(root).where(root.get("employerId").in(employerIds)))
+    return getCurrentSession()
+        .createQuery("FROM TrackedEmployer WHERE employerId IN :employerIds", TrackedEmployer.class)
+        .setParameter("employerIds", employerIds)
         .getResultList();
   }
 }

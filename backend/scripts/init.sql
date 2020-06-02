@@ -62,7 +62,7 @@ create TABLE vacancy_profarea (
     profarea_id integer NOT NULL
 );
 
-create index idx_vacancy_profarea_vacancy_id on day_report(vacancy_id);
+create index idx_vacancy_profarea_vacancy_id on vacancy_profarea(vacancy_id);
 
 insert into 
 vacancy_profarea(vacancy_id, profarea_id)
@@ -72,7 +72,6 @@ values
 (333, 2),
 (333, 1);
 
-create index idx_vacancy_profarea_vacancy_id on day_report(vacancy_id);
 
 CREATE TABLE tracked_employers (
     employer_id integer PRIMARY KEY,
