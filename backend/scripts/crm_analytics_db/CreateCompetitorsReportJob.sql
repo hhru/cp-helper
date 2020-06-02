@@ -31,6 +31,17 @@ CREATE TABLE dbo.VacancyProfArea(
 ) ON [PRIMARY]
 GO
 
+CREATE TABLE dbo.TrackedEmployers(
+    [employer_id] INT NOT NULL PRIMARY KEY
+) ON [PRIMARY]
+GO
+
+INSERT INTO [CRMData750].[dbo].[TrackedEmployers]
+(employer_id)
+VALUES
+(1455), (1870), (84585), (2096237), (2605703), (2624107), (1269556)
+GO
+
 -- 2. Create Procedure
 
 USE CRMData750;
@@ -107,7 +118,7 @@ BEGIN
         WHERE s.leaddate > @start_date AND s.RegionID IS NOT NULL AND s.cost IS NOT NULL
         GROUP BY s.ID, s.date, s.leaddate,
         s.employer_id, s.employer_service_id, s.code, s.object_id, s.qtty, s.unit_price, s.cost, s.cnt, s.RegionID
-    ) as t
+    ) as t WHERE t.employer_id IN (SELECT employer_id FROM CRMData750.dbo.TrackedEmployers)
 
     INSERT INTO [CRMData750].[dbo].[VacancyProfArea] (vacancy_id, profarea_id, snapshot_date)
     SELECT pa.VacancyID, pa.ProfAreaID, pa.SnapshotDate
