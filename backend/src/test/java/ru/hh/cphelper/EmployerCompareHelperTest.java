@@ -35,4 +35,10 @@ public class EmployerCompareHelperTest {
             List.of(1, 2, 3)),
         0.01);
   }
+
+  @Test
+  public void shouldReturnCorrectBaseFormsOfWords() {
+    assertEquals(List.of("личный", "автомобилем5", "be", "_run", "start"),
+        EmployerCompareHelper.lemmatize(List.of("личным", "автомобилем5", "was", "_run", "started")));
+  }
 }
