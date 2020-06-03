@@ -1,5 +1,11 @@
 package ru.hh.cphelper.utils;
 
+import org.apache.lucene.morphology.LuceneMorphology;
+import org.apache.lucene.morphology.WrongCharaterException;
+import org.apache.lucene.morphology.english.EnglishLuceneMorphology;
+import org.apache.lucene.morphology.russian.RussianLuceneMorphology;
+
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
@@ -7,9 +13,21 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class EmployerCompareHelper {
+public final class EmployerCompareHelper {
 
   private EmployerCompareHelper() {
+  }
+
+  private static LuceneMorphology russianMorphology;
+  private static LuceneMorphology englishMorphology;
+
+  static {
+    try {
+      russianMorphology = new RussianLuceneMorphology();
+      englishMorphology = new EnglishLuceneMorphology();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   public static double compareTwoLists(List<?> list1, List<?> list2) {
@@ -17,6 +35,30 @@ public class EmployerCompareHelper {
       return 1.0;
     }
     return cosineDistance(list1, list2);
+  }
+
+  public static List<String> lemmatize(List<String> words) {
+    return words.stream().map(EmployerCompareHelper::getBaseForm).collect(Collectors.toList());
+  }
+
+  private static String getBaseForm(String word) {
+    try {
+      if (isRussianWord(word)) {
+        return russianMorphology.getNormalForms(word).get(0);
+      }
+      return englishMorphology.getNormalForms(word).get(0);
+    } catch (WrongCharaterException e) {
+      return word;
+    }
+  }
+
+  private static boolean isRussianWord(String word) {
+    for (Character c : word.toCharArray()) {
+      if (!Character.UnicodeBlock.of(c).equals(Character.UnicodeBlock.CYRILLIC)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   private static double cosineDistance(List<?> list1, List<?> list2) {
