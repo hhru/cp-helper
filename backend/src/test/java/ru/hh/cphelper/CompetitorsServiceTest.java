@@ -61,15 +61,17 @@ public class CompetitorsServiceTest extends CpHelperTestBase {
   public void shouldReturnCompetitorsIdsListWithoutDuplicates() {
     Integer employerId = 1;
     Integer areaId = 3;
+    Integer maxCompetitors = 100;
     List<Competitor> competitors = List.of(
-      new Competitor(employerId, 2, 3),
-      new Competitor(employerId, 2, 3),
-      new Competitor(employerId, 2, null),
-      new Competitor(employerId, 4, 3),
-      new Competitor(employerId, 4, 5));
+        new Competitor(employerId, 2, 3),
+        new Competitor(employerId, 2, 3),
+        new Competitor(employerId, 2, null),
+        new Competitor(employerId, 4, 3),
+        new Competitor(employerId, 4, 5));
 
     transactionalScope.write(() -> competitors.forEach(comp -> currentSession().save(comp)));
-    List<Integer> actualCompetitorsIds = transactionalScope.read(() -> competitorsService.getCompetitorsIds(employerId, areaId));
+    List<Integer> actualCompetitorsIds = transactionalScope.read(() ->
+        competitorsService.getCompetitorsIds(employerId, areaId, maxCompetitors));
     assertEquals(List.of(2, 4), actualCompetitorsIds);
   }
 }

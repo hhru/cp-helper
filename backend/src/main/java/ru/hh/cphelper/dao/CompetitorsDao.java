@@ -26,11 +26,13 @@ public class CompetitorsDao {
     return sessionFactory.getCurrentSession();
   }
 
-  public Stream<Competitor> getCompetitors(Integer employerId, Integer areaId) {
+  public Stream<Competitor> getCompetitors(Integer employerId, Integer areaId, Integer maxNumberOfCompetitors) {
     return getCurrentSession()
-        .createQuery("from Competitor c where c.employerId=:id and c.areaId=:areaId", Competitor.class)
+        .createQuery("from Competitor c where c.employerId=:id and c.areaId=:areaId ORDER BY c.relevanceIndex",
+            Competitor.class)
         .setParameter("id", employerId)
         .setParameter("areaId", areaId)
+        .setMaxResults(maxNumberOfCompetitors)
         .stream();
   }
 
@@ -59,5 +61,9 @@ public class CompetitorsDao {
 
   public void save(Competitor competitor) {
     getCurrentSession().save(competitor);
+  }
+
+  public void deleteCalculatedCompetitors(){
+    getCurrentSession().createQuery("DELETE FROM Competitor c WHERE c.relevanceIndex != 0").executeUpdate();
   }
 }

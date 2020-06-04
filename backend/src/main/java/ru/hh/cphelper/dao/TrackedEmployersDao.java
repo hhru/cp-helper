@@ -2,7 +2,6 @@ package ru.hh.cphelper.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.transaction.annotation.Transactional;
 import ru.hh.cphelper.entity.TrackedEmployer;
 
 import javax.inject.Inject;
@@ -47,7 +46,6 @@ public class TrackedEmployersDao {
     getCurrentSession().delete(trackedEmployer);
   }
 
-  @Transactional(readOnly = true)
   public List<TrackedEmployer> getTrackedEmployersBySetId(Set<Integer> employerIds) {
     return getCurrentSession()
         .createQuery("FROM TrackedEmployer WHERE employerId IN :employerIds", TrackedEmployer.class)

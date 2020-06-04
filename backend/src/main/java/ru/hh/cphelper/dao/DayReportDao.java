@@ -44,7 +44,11 @@ public class DayReportDao {
     return session.createQuery(criteriaQuery.select(root).where(criteriaBuilder.and(predicate))).stream();
   }
 
-  @Transactional(readOnly = true)
+  @Transactional
+  public void save(DayReport dayReport) {
+    getCurrentSession().save(dayReport);
+  }
+
   public List<DayReport> getDayReportsWithSpending() {
     Session session = getCurrentSession();
     CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
@@ -52,10 +56,5 @@ public class DayReportDao {
     Root<DayReport> root = criteriaQuery.from(DayReport.class);
     return session.createQuery(criteriaQuery.select(root)
         .where(criteriaBuilder.equal(root.get("reportSpendingSameDay"), true))).getResultList();
-  }
-
-  @Transactional
-  public void save(DayReport dayReport) {
-    getCurrentSession().save(dayReport);
   }
 }

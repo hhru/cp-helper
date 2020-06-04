@@ -24,11 +24,6 @@ public class TrackedEmployersService {
     return trackedEmployersDao.getTrackedEmployersByName(name);
   }
 
-  @Transactional(readOnly = true)
-  public List<TrackedEmployer> getTrackedEmployersBySetId(Set<Integer> employerIds) {
-    return trackedEmployersDao.getTrackedEmployersBySetId(employerIds);
-  }
-
   @Transactional
   public void add(TrackedEmployer trackedEmployer) {
     if (trackedEmployersDao.getEmployerById(trackedEmployer.getEmployerId()) != null) {
@@ -40,5 +35,10 @@ public class TrackedEmployersService {
   @Transactional
   public void delete(Integer employerId) {
     trackedEmployersDao.delete(trackedEmployersDao.getEmployerById(employerId));
+  }
+
+  @Transactional(readOnly = true)
+  public List<TrackedEmployer> getTrackedEmployersBySetId(Set<Integer> employerIds) {
+    return trackedEmployersDao.getTrackedEmployersBySetId(employerIds);
   }
 }
