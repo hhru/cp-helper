@@ -4,13 +4,12 @@ import {connect} from 'react-redux';
 
 import Button from 'components/Button/Button';
 import ButtonIcon from 'components/ButtonIcon/ButtonIcon';
-import CloseIcon from 'components/Icons/CloseIcon';
 import Competitor from 'components/CompetitorsList/Competitor/Competitor';
 import AddIcon from 'components/Icons/AddIcon';
 import Loader from 'components/Loader/Loader';
-import Search from 'components/Search/Search';
 import Heading from 'components/Heading/Heading';
 import CompetitorsForm from 'components/forms/CompetitorsForm/CompetitorsForm';
+import PopupSearch from 'components/Search/PopupSearch/PopupSearch';
 
 import { fetchCompetitors, deleteCompetitor, addCompetitor, chooseCompetitor } from 'redux/competitors/competitorsActions';
 import { fetchCompany } from 'redux/companies/companiesActions';
@@ -98,26 +97,16 @@ const CompetitorsList = ({
                 </ButtonIcon>
             </div>
             {searchIsOpen &&
-                <div className="background-section">
-                    <div className="competitors-list-section__search">
-                        <Search
-                            fetch={fetchCompany}
-                            items={companies}
-                            choose={chooseCompetitor}
-                            payload={competitorId}
-                            placeholderText={'Введите название компании'}
-                        >
-                        <div className="search__btn">
-                            <Button onClick={clickSearch} disabled={!competitorId}>Выбрать компанию</Button>
-                        </div>
-                        <div className="close">
-                            <ButtonIcon onClick={clickClose}>
-                                <CloseIcon size={30}/>
-                            </ButtonIcon>
-                        </div>
-                        </Search>
-                    </div>
-                </div>
+                <PopupSearch
+                    fetch={fetchCompany}
+                    items={companies}
+                    choose={chooseCompetitor}
+                    payload={competitorId}
+                    placeholderText={'Введите название компании'}
+                    onClick={clickSearch}
+                    buttonName={'Выбрать компанию'}
+                    clickClose={clickClose}
+                    />
             }
             <div className="competitors-list-section__btn">
                 <Button onClick={openCompanySearch}>К предыдущему шагу</Button>

@@ -1,122 +1,97 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from "prop-types";
 import {connect} from 'react-redux';
 
 import ContentWrapper from 'components/ContentWrapper/ContentWrapper';
 import Heading from 'components/Heading/Heading';
-import ColumnsWrapper from 'components/ColumnsWrapper/ColumnsWrapper';
 import Button from 'components/Button/Button';
-import PageNumber from 'components/Settings/PageNumber/PageNumber';
-import Company from 'components/Settings/Company/Company';
-import Loader from 'components/Loader/Loader';
-import Input from 'components/Input/Input';
+import AddIcon from 'components/Icons/AddIcon';
+import ButtonIcon from 'components/ButtonIcon/ButtonIcon';
+import PopupSearch from 'components/Search/PopupSearch/PopupSearch';
+import TrackedCompanySearch from 'components/Settings/TrackedCompanySearch/TrackedCompanySearch';
+import TrackedCompaniesList from 'components/Settings/TrackedCompaniesList/TrackedCompaniesList';
 
-import {fetchTrackedCompanies, deleteTrackedCompany} from 'redux/companies/companiesActions';
+import {fetchTrackedCompanies, addTrackedCompany, fetchCompany} from 'redux/companies/companiesActions';
 
 import './Settings.css';
 
-const Settings = ({closeSettings, fetchTrackedCompanies, trackedCompanies, isLoading, deleteTrackedCompany}) => {
+const Settings = ({closeSettings, fetchTrackedCompanies, fetchCompany, companies, addTrackedCompany}) => {
 
-    const ITEMS_ON_PAGE = 15;
-    const [slicedCompanies, setSlicedCompanies] = useState([]);
-    const [pageNumbers, setPageNumbers] = useState([]);
-    const companyNameInput = useRef(null);
+    const [searchIsOpen, setSearchIsOpen] = useState(false);
+    const [trackedCompany, setTrackedCompany] = useState({id: null, name: null});
 
     useEffect(() => {
         fetchTrackedCompanies();
     }, []);
 
-    const getPageNumbers = () => {
-        const numbers = [];
-        for (let i = 0; i < trackedCompanies.length / ITEMS_ON_PAGE; i++) {
-            numbers.push(i);
-        }
-        return numbers;
+    const chooseTrackedCompany = (id, name) => {
+        setTrackedCompany({id, name});
     };
 
-    const sliceCompanies = (pageNumber) => {
-        const startPage = pageNumber * ITEMS_ON_PAGE;
-        setSlicedCompanies(trackedCompanies.slice(startPage, startPage + ITEMS_ON_PAGE > trackedCompanies.length ? trackedCompanies.length : startPage + ITEMS_ON_PAGE));
+    const clickSearch = () => {
+        addTrackedCompany(trackedCompany.id, trackedCompany.name);
+        setSearchIsOpen(false);
+        setTrackedCompany({id: null, name: null});
     };
 
-    useEffect(() => {
-        if (trackedCompanies) {
-            setPageNumbers(getPageNumbers());
-            sliceCompanies(0);
-        }
-    }, [trackedCompanies]);
+    const clickAdd = () => {
+        setSearchIsOpen(true);
+    };
 
-    const inputCompanyName = () => {
-        fetchTrackedCompanies(companyNameInput.current.value);
+    const clickClose = () => {
+        setSearchIsOpen(false);
     };
 
     return (
-        <div className="settings">
+        <section className="settings">
             <ContentWrapper>
                 <div className="settings__title">
                     <Heading level={3}>Настройки</Heading>
                 </div>
-                <div className="settings__filter">
-                    <div className="settings__title">
-                        <Heading level={4}>Поиск по отслеживаемым работодателям</Heading>
-                    </div>
-                    <Input
+                <TrackedCompanySearch />
+                <TrackedCompaniesList />
+                <div className="settings__add">
+                    <ButtonIcon onClick={clickAdd}>
+                        <AddIcon size={30}/>
+                    </ButtonIcon>
+                </div>
+                {searchIsOpen &&
+                    <PopupSearch
+                        fetch={fetchCompany}
+                        items={companies}
+                        choose={chooseTrackedCompany}
+                        payload={trackedCompany.id}
                         placeholderText={'Введите название компании'}
-                        ref={companyNameInput}
-                        onChange={inputCompanyName}
-                    />
-                </div>
-                <div className="settings__companies">
-                    <div className="settings__title">
-                        <Heading level={4}>Список отслеживаемых работодателей</Heading>
-                    </div>
-                    {isLoading &&
-                        <div className="settings__loader">
-                            <Loader/>
-                        </div>
-                    }
-                    <ColumnsWrapper>
-                        { slicedCompanies.map((el) =>
-                            <Company
-                                key={el.employerId}
-                                name={el.employerName}
-                                deleteCompany={() => deleteTrackedCompany(el.employerId)}
-                            />
-                        )}
-                    </ColumnsWrapper>
-                </div>
-                { trackedCompanies && <div className="settings__pagination">
-                    {(trackedCompanies.length > ITEMS_ON_PAGE) && pageNumbers.map((el) =>
-                        <PageNumber
-                            key={el}
-                            number={el}
-                            changePage={() => sliceCompanies(el)}
+                        onClick={clickSearch}
+                        buttonName={'Добавить компанию'}
+                        clickClose={clickClose}
                         />
-                    )}
-                </div>}
-                <Button onClick={closeSettings}>
-                    Выход
-                </Button>
+                }
+                <div className="settings__btn">
+                    <Button onClick={closeSettings}>
+                        Выход
+                    </Button>
+                </div>
             </ContentWrapper>
-        </div>
+        </section>
     );
 };
 
 Settings.propTypes = {
     closeSettings: PropTypes.func,
     fetchTrackedCompanies: PropTypes.func,
-    trackedCompanies: PropTypes.array,
-    isLoading: PropTypes.bool,
-    deleteTrackedCompany: PropTypes.func,
+    addTrackedCompany: PropTypes.func,
+    fetchCompany: PropTypes.func,
+    companies: PropTypes.array,
 };
 
 export default connect(
     (state) => ({
-        trackedCompanies: state.companies.trackedCompanies,
-        isLoading: state.companies.isLoading,
+        companies: state.companies.companies,
     }),
     {
         fetchTrackedCompanies,
-        deleteTrackedCompany,
+        fetchCompany,
+        addTrackedCompany,
     }
 )(Settings);

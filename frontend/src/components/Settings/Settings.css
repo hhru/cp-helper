@@ -5,21 +5,12 @@
         margin: 20px 0;
     }
 
-    &__filter {
-        width: 50%;
+    &__add {
+        text-align: center;
+        margin-bottom: 20px;
     }
 
-    &__companies {
-        margin: 20px 0;
-    }
-
-    &__pagination {
-        display: flex;
-        justify-content: center;
-    }
-
-    &__loader {
-        display: flex;
-        justify-content: center;
+    &__btn {
+        height: 150px;
     }
 }

@@ -1,0 +1,17 @@
+.tracked-companies-list {
+    &__title {
+        margin: 20px 0;
+    }
+
+    &__pagination {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+    }
+
+    &__loader {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+    }
+}
