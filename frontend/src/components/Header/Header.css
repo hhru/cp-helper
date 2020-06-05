@@ -11,4 +11,9 @@
     &__title {
         margin-left: 10px;
     }
+
+    &__btn {
+        margin-right: 0;
+        margin-left: auto;
+    }
 }

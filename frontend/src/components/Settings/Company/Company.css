@@ -1,0 +1,22 @@
+.company {
+    display: flex;
+    height: 30px;
+    border: 1px solid #eee;
+    padding: 5px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    position: relative;
+    font: 14px/16px ProximaNovaCond, Arial, sans-serif;
+    color: #333;
+
+    &__name {
+        display: flex;
+        justify-content: center;
+        flex-grow: 5;
+    }
+
+    &__delete {
+        position: absolute;
+        right: 10px;
+    }
+}

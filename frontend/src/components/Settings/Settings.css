@@ -1,0 +1,21 @@
+.settings {
+    position: relative;
+
+    &__title {
+        margin: 20px 0;
+    }
+
+    &__companies {
+        margin: 20px 0;
+    }
+
+    &__pagination {
+        display: flex;
+        justify-content: center;
+    }
+
+    &__loader {
+        display: flex;
+        justify-content: center;
+    }
+}
