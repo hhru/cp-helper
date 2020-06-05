@@ -10,11 +10,11 @@ import PageNumber from 'components/Settings/PageNumber/PageNumber';
 import Company from 'components/Settings/Company/Company';
 import Loader from 'components/Loader/Loader';
 
-import {fetchTrackedCompanies} from 'redux/companies/companiesActions';
+import {fetchTrackedCompanies, deleteTrackedCompany} from 'redux/companies/companiesActions';
 
 import './Settings.css';
 
-const Settings = ({closeSettings, fetchTrackedCompanies, trackedCompanies, isLoading}) => {
+const Settings = ({closeSettings, fetchTrackedCompanies, trackedCompanies, isLoading, deleteTrackedCompany}) => {
 
     const ITEMS_ON_PAGE = 15;
     const [slicedCompanies, setSlicedCompanies] = useState([]);
@@ -64,7 +64,7 @@ const Settings = ({closeSettings, fetchTrackedCompanies, trackedCompanies, isLoa
                             <Company
                                 key={el.employerId}
                                 name={el.employerName}
-                                deleteCompany={() => {}} // TODO: frontend-21
+                                deleteCompany={() => deleteTrackedCompany(el.employerId)}
                             />
                         )}
                     </ColumnsWrapper>
@@ -91,6 +91,7 @@ Settings.propTypes = {
     fetchTrackedCompanies: PropTypes.func,
     trackedCompanies: PropTypes.array,
     isLoading: PropTypes.bool,
+    deleteTrackedCompany: PropTypes.func,
 };
 
 export default connect(
@@ -100,5 +101,6 @@ export default connect(
     }),
     {
         fetchTrackedCompanies,
+        deleteTrackedCompany,
     }
 )(Settings);

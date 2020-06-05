@@ -9,6 +9,7 @@ export const RESET_COMPANY = 'RESET_COMPANY';
 export const FETCH_TRACKED_COMPANIES_SUCCESS = 'FETCH_TRACKED_COMPANIES_SUCCESS';
 export const FETCH_TRACKED_COMPANIES_BEGIN = 'FETCH_TRACKED_COMPANIES_BEGIN';
 export const FETCH_TRACKED_COMPANIES_FAILURE = 'FETCH_TRACKED_COMPANIES_FAILURE';
+export const DELETE_TRACKED_COMPANY = 'DELETE_TRACKED_COMPANY';
 
 export const fetchCompanyAction = (companies) => {
     return {
@@ -46,6 +47,13 @@ export const fetchTrackedCompaniesSuccessAction = (trackedCompanies) => {
 export const fetchTrackedCompaniesFailureAction = () => {
     return {
         type: FETCH_TRACKED_COMPANIES_FAILURE,
+    };
+};
+
+export const deleteTrackedCompanyAction = (companyId) => {
+    return {
+        type: DELETE_TRACKED_COMPANY,
+        companyId,
     };
 };
 
@@ -95,5 +103,19 @@ export function fetchTrackedCompanies() {
                 createNotification('error', 'Сервер недоступен', 'Ошибка');
                 dispatch(fetchTrackedCompaniesFailureAction());
             });
+    };
+}
+
+export function deleteTrackedCompany(companyId) {
+    const url = `${CP_HELPER_TRACKED_URL}/${companyId}`;
+    return (dispatch) => {
+        axios.delete(url)
+        .then(() => {
+            createNotification('success', 'Компания удалена из списка отслеживаемых');
+            dispatch(deleteTrackedCompanyAction(companyId));
+        })
+        .catch(() => {
+            createNotification('error', 'Сервер недоступен', 'Ошибка');
+        });
     };
 }

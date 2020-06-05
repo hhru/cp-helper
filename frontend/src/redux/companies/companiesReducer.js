@@ -1,6 +1,6 @@
 import {createReducer} from 'redux-create-reducer';
 
-import {FETCH_COMPANY, CHOOSE_COMPANY, RESET_COMPANY, FETCH_TRACKED_COMPANIES_BEGIN, FETCH_TRACKED_COMPANIES_FAILURE, FETCH_TRACKED_COMPANIES_SUCCESS} from './companiesActions';
+import {FETCH_COMPANY, CHOOSE_COMPANY, RESET_COMPANY, FETCH_TRACKED_COMPANIES_BEGIN, FETCH_TRACKED_COMPANIES_FAILURE, FETCH_TRACKED_COMPANIES_SUCCESS, DELETE_TRACKED_COMPANY} from './companiesActions';
 
 export const initialState = {
     companyId: undefined,
@@ -55,6 +55,14 @@ export const companiesReducer = createReducer(initialState, {
         return {
             ...state,
             isLoading: false,
+        };
+    },
+
+    [DELETE_TRACKED_COMPANY](state, action) {
+        const trackedCompaniesNew = state.trackedCompanies.filter((el) => el.employerId !== action.companyId);
+        return {
+            ...state,
+            trackedCompanies: trackedCompaniesNew,
         };
     },
 });
