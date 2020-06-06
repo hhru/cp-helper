@@ -125,6 +125,7 @@ services:
     depends_on:
       - kafka
       - mssql
+      - postgres
     ports:
       - 8083:8083
     environment:
@@ -167,4 +168,6 @@ services:
         echo -e "\n--\n+> Creating Kafka Connector(s)"
         curl -X POST -H "Content-Type:application/json" http://kafka-connect:8083/connectors/ -d @./tmp/connectors/crm_competitor_report-source.json
         curl -X POST -H "Content-Type:application/json" http://kafka-connect:8083/connectors/ -d @./tmp/connectors/crm_vacancy_profarea-source.json
+        curl -X POST -H "Content-Type:application/json" http://kafka-connect:8083/connectors/ -d @./tmp/connectors/cp_helper_tracked_employers-source.json
+        curl -X POST -H "Content-Type:application/json" http://kafka-connect:8083/connectors/ -d @./tmp/connectors/crm_tracked_employers-sink.json
         sleep infinity

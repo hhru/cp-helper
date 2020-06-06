@@ -48,6 +48,7 @@ create TABLE vacancy_profarea (
 create index idx_vacancy_profarea_vacancy_id on day_report(vacancy_id);
 
 CREATE TABLE tracked_employers (
+    tracked_employers_id serial,
     employer_id integer PRIMARY KEY,
     employer_name VARCHAR(200) NOT NULL
 );

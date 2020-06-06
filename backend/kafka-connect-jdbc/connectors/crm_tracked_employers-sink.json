@@ -1,0 +1,18 @@
+{
+  "name": "crm_tracked_employers-sink",
+  "config":
+  {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+    "connection.url": "jdbc:sqlserver://mssql:1433;databaseName=CRMData750",
+    "dialect.name": "SqlServerDatabaseDialect",
+    "connection.user": "sa",
+    "connection.password": "cp_helper3A!",
+    "table.name.format": "TrackedEmployers",
+    "topics": "cp_helper_tracked_employers",
+    "fields.whitelist": "employer_id",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": "true",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "true"
+  }
+}

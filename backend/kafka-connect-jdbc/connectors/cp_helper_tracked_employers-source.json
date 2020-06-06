@@ -1,0 +1,21 @@
+{
+  "name": "cp_helper_tracked_employers_source",
+  "config":
+  {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+    "connection.url": "jdbc:postgresql://postgres:5432/cp_helper",
+    "dialect.name": "PostgreSqlDatabaseDialect",
+    "connection.user": "cp_helper",
+    "connection.password": "cp_helper",
+    "topic.prefix": "cp_helper_",
+    "mode":"incrementing",
+    "table.whitelist": "tracked_employers",
+    "incrementing.column.name": "tracked_employers_id",
+    "poll.interval.ms": 10000,
+    "timestamp.interval.ms": 0,
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": "true",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "true"
+  }
+}
