@@ -4,6 +4,7 @@ GO
 CREATE OR ALTER PROCEDURE dbo.InsertCleansed
 AS
 BEGIN
+  SET NOCOUNT ON;
   DECLARE @Employers TABLE (employer_id int)
   INSERT INTO @Employers (employer_id) VALUES (1455), (1870), (84585), (2096237), (2605703), (2624107), (1269556)
 
@@ -45,6 +46,7 @@ GO
 CREATE OR ALTER PROCEDURE dbo.InsertUncleansed
 AS
 BEGIN
+  SET NOCOUNT ON;
   DECLARE @Employers TABLE (employer_id int)
   INSERT INTO @Employers (employer_id) VALUES (1455), (1870), (84585), (2096237), (2605703), (2624107), (1269556)
 
@@ -83,6 +85,7 @@ GO
 CREATE OR ALTER PROCEDURE dbo.InsertSpending
 AS
 BEGIN
+  SET NOCOUNT ON;
   DECLARE @ProfArea TABLE (id int, name varchar(100))
   INSERT INTO @ProfArea (id, name) VALUES (1, 'Информационные технологии, интернет, телеком'),
                                     (2, 'Бухгалтерия, управленческий учет, финансы предприятия'),
@@ -141,6 +144,7 @@ GO
 CREATE OR ALTER PROCEDURE dbo.InsertResponses
 AS
 BEGIN
+  SET NOCOUNT ON;
   DECLARE @vacancy_id as int
   DECLARE @employer_id as int
   DECLARE @response_date as date
@@ -200,6 +204,7 @@ GO
 CREATE OR ALTER PROCEDURE dbo.InsertSnapshot
 AS
 BEGIN
+  SET NOCOUNT ON;
   DECLARE @Regions TABLE (id int, name varchar(100))
   INSERT INTO @Regions (id, name) VALUES (113, 'Россия'), (1, 'Москва'), (2, 'Санкт-Петербург'), (3, 'Екатеринбург')
 

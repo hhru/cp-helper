@@ -1,14 +1,12 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import {useSelector} from 'react-redux';
 
 import Service from './Service';
 
 import './ServiciesList.css';
 
-const ServiciesList = ({ services, competitors, companyName, companyId, plainAreas }) => {
+const ServiciesList = ({ services, competitors, companyName, companyId }) => {
 
-    const profAreas = useSelector((state) => state.profAreas.profAreas);
     const [selectedServices, setSelectedServices] = useState([]);
     const addService = (serviceName) => {
         setSelectedServices([...selectedServices, serviceName]);
@@ -21,7 +19,15 @@ const ServiciesList = ({ services, competitors, companyName, companyId, plainAre
         return competitors && competitors[id] && competitors[id].name;
     };
 
-    const COLUMN_NAMES = ['Работодатель', 'Код услуги', 'Регион', 'Проф. область', 'Количество трат', 'Количество откликов', 'Отклик/трата'];
+    const COLUMN_NAMES = [
+        'Работодатель',
+        'Код услуги',
+        'Количество откликов',
+        'Количество потраченных услуг',
+        'Отклик/трата',
+        'Откликов в день',
+        'Средняя цена отклика',
+        ];
 
     return (
         <>
@@ -33,22 +39,19 @@ const ServiciesList = ({ services, competitors, companyName, companyId, plainAre
                         {name}
                     </td>
                 ))}
-                <td/>
             </tr>
             </thead>
             <tbody className="hh-table__body">
-                {services ? Object.values(services).map((employer) => (
-                    employer.map((service, index) => (
+                {services ? Object.entries(services).map(([employer, services]) => (
+                    services.map((service, index) => (
                         <Service
-                            employerName={getEmployerName(service.employerId)}
-                            areaName={plainAreas && plainAreas[service.serviceAreaId].name}
-                            profareaName={profAreas && profAreas[service.serviceProfArea].name}
+                            employerName={getEmployerName(employer)}
                             key={service.serviceName + service.employerId}
                             service={service}
                             rowspan={employer.length}
                             firstRow={index === 0}
                             addService={addService}
-                            disabledAddService={selectedServices.includes(service.serviceName)} />
+                            disabledAddService={selectedServices.includes(service.serviceCode)} />
                 )))) : (
                     <td colSpan={8}>
                         Нет данных
@@ -73,11 +76,9 @@ const ServiciesList = ({ services, competitors, companyName, companyId, plainAre
 
 ServiciesList.propTypes = {
     services: PropTypes.object,
-    profAreas: PropTypes.object,
     competitors: PropTypes.object,
     companyName: PropTypes.string,
     companyId: PropTypes.string,
-    plainAreas: PropTypes.object,
 };
 
 export default ServiciesList;

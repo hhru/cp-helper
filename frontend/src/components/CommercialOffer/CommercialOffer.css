@@ -2,6 +2,11 @@
     font-family: ProximaNovaCond, Arial, sans-serif;
     color: #333;
 
+    &__header {
+        display: flex;
+        justify-content: space-between;
+    }
+
     &__offer {
         margin-bottom: 15px;
     }
@@ -12,6 +17,8 @@
 
     &__filter {
         display: flex;
+        margin-top: 8px;
+        margin-bottom: 8px;
     }
 
     &__btn-filter {

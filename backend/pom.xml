@@ -33,6 +33,8 @@
 
     <properties>
         <nab.version>4.23.2</nab.version>
+        <easytable.version>0.6.6</easytable.version>
+        <apache.poi.version>3.15</apache.poi.version>
     </properties>
 
     <dependencies>
@@ -66,6 +68,20 @@
             <groupId>org.apache.lucene.morphology</groupId>
             <artifactId>english</artifactId>
             <version>1.1</version>
+        <dependency>
+            <groupId>com.github.vandeseer</groupId>
+            <artifactId>easytable</artifactId>
+            <version>${easytable.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>${apache.poi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${apache.poi.version}</version>
         </dependency>
     </dependencies>
 

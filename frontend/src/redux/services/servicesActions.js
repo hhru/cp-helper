@@ -32,21 +32,33 @@ export const resetServicesAction = () => {
     };
 };
 
-export function fetchServices(companyId, competitors, date, areaId, profAreaId) {
-
-    let url = `${CP_HELPER_REPORT_URL}?employerId=${companyId}`;
+export function generateURL(companyId, competitors, date, areaId, profAreaId, typeFile) {
+    let url = CP_HELPER_REPORT_URL;
+    if (typeFile) {
+        url += `/${typeFile}`;
+    }
+    url += '?';
+    if (companyId) {
+        url += `employerId=${companyId}&`;
+    }
     if (competitors) {
-        url += `&employerId=${Object.keys(competitors).join('&employerId=')}`;
+        url += `employerId=${Object.keys(competitors).join('&employerId=')}&`;
     }
     if (date) {
-        url += `&startDate=${date.startDate}&endDate=${date.endDate}`;
+        url += `startDate=${date.startDate}&endDate=${date.endDate}&`;
     }
     if (areaId) {
-        url += `&areaId=${areaId}`;
+        url += `areaId=${areaId}&`;
     }
     if (profAreaId) {
-        url += `&profAreaId=${profAreaId}`;
+        url += `profAreaId=${profAreaId}`;
     }
+    return url;
+}
+
+export function fetchServices(companyId, competitors, date, areaId, profAreaId) {
+
+    const url = generateURL(companyId, competitors, date, areaId, profAreaId);
     return (dispatch) => {
         dispatch(fetchServicesBeginAction());
         axios.get(url)
@@ -56,7 +68,6 @@ export function fetchServices(companyId, competitors, date, areaId, profAreaId) 
             .catch(() => {
                 createNotification('error', 'Введены некорректные даты', 'Ошибка');
                 dispatch(fetchServicesFailureAction());
-
             });
     };
 }

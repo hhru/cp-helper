@@ -16,7 +16,7 @@ public final class DayReportHelper {
   private DayReportHelper() {
   }
 
-  public static Map<Integer, Object> map(List<DayReport> dayReports) {
+  public static Map<Integer, List<DayReportResponseDto>> map(List<DayReport> dayReports) {
     return dayReports.stream().collect(
         Collectors.groupingBy(DayReport::getEmployerId,
             Collectors.collectingAndThen(toList(),
@@ -28,6 +28,18 @@ public final class DayReportHelper {
   }
 
   public static DayReport map(DayReportConsumerDto dayReportConsumerDto) {
-    return new DayReport();
+    return new DayReport(
+        dayReportConsumerDto.getReportId(),
+        dayReportConsumerDto.getReportDate(),
+        dayReportConsumerDto.getEmployerId(),
+        dayReportConsumerDto.getServiceCode(),
+        dayReportConsumerDto.getResponsesCount(),
+        dayReportConsumerDto.getSpendingId(),
+        dayReportConsumerDto.getSpendingDate(),
+        dayReportConsumerDto.getReportSpendingSameDay(),
+        dayReportConsumerDto.getVacancyId(),
+        dayReportConsumerDto.getVacancyAreaId(),
+        dayReportConsumerDto.getCost()
+        );
   }
 }

@@ -1,9 +1,15 @@
 import axios from 'axios';
-import {EMPLOYERS_HH_API_URL} from 'utils/constants';
+import {EMPLOYERS_HH_API_URL, CP_HELPER_TRACKED_URL} from 'utils/constants';
+
+import createNotification from 'utils/notifications';
 
 export const FETCH_COMPANY = 'FETCH_COMPANY';
 export const CHOOSE_COMPANY = 'CHOOSE_COMPANY';
 export const RESET_COMPANY = 'RESET_COMPANY';
+export const FETCH_TRACKED_COMPANIES_SUCCESS = 'FETCH_TRACKED_COMPANIES_SUCCESS';
+export const FETCH_TRACKED_COMPANIES_BEGIN = 'FETCH_TRACKED_COMPANIES_BEGIN';
+export const FETCH_TRACKED_COMPANIES_FAILURE = 'FETCH_TRACKED_COMPANIES_FAILURE';
+export const DELETE_TRACKED_COMPANY = 'DELETE_TRACKED_COMPANY';
 
 export const fetchCompanyAction = (companies) => {
     return {
@@ -23,6 +29,31 @@ export const chooseCompanyAction = (companyId, companyName) => {
 export const resetCompanyAction = () => {
     return {
         type: RESET_COMPANY,
+    };
+};
+
+export const fetchTrackedCompaniesBeginAction = () => {
+    return {
+        type: FETCH_TRACKED_COMPANIES_BEGIN,
+    };
+};
+
+export const fetchTrackedCompaniesSuccessAction = (trackedCompanies) => {
+    return {
+        type: FETCH_TRACKED_COMPANIES_SUCCESS,
+        trackedCompanies,
+    };
+};
+export const fetchTrackedCompaniesFailureAction = () => {
+    return {
+        type: FETCH_TRACKED_COMPANIES_FAILURE,
+    };
+};
+
+export const deleteTrackedCompanyAction = (companyId) => {
+    return {
+        type: DELETE_TRACKED_COMPANY,
+        companyId,
     };
 };
 
@@ -57,5 +88,37 @@ export function getCompanyNameById(companyId) {
                     dispatch(chooseCompanyAction(companyId, res.data.name));
                 }
             });
+    };
+}
+
+export function fetchTrackedCompanies(name) {
+    let url = `${CP_HELPER_TRACKED_URL}`;
+    if (name) {
+        url += `?name=${name}`;
+    }
+    return (dispatch) => {
+        dispatch(fetchTrackedCompaniesBeginAction());
+        axios.get(url)
+            .then((res) => {
+                dispatch(fetchTrackedCompaniesSuccessAction(res.data.trackedEmployerMapDto.employers));
+            })
+            .catch(() => {
+                createNotification('error', 'Сервер недоступен', 'Ошибка');
+                dispatch(fetchTrackedCompaniesFailureAction());
+            });
+    };
+}
+
+export function deleteTrackedCompany(companyId) {
+    const url = `${CP_HELPER_TRACKED_URL}/${companyId}`;
+    return (dispatch) => {
+        axios.delete(url)
+        .then(() => {
+            createNotification('success', 'Компания удалена из списка отслеживаемых');
+            dispatch(deleteTrackedCompanyAction(companyId));
+        })
+        .catch(() => {
+            createNotification('error', 'Сервер недоступен', 'Ошибка');
+        });
     };
 }

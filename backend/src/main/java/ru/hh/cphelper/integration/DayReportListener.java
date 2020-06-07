@@ -13,7 +13,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 public class DayReportListener {
-  private static final String TOPIC_NAME = "crm_CompetitorReport";
+  private static final String TOPIC_NAME = "crm_competitor_report";
   private static final String OPERATION_NAME = "add_report";
 
   private DayReportDao dayReportDao;
@@ -30,7 +30,7 @@ public class DayReportListener {
     try {
       messages.stream()
           .map(ConsumerRecord::value)
-          .map(dto -> DayReportHelper.map(dto))
+          .map(DayReportHelper::map)
           .forEach(dayReportDao::save);
       ack.acknowledge();
     } catch (RuntimeException e) {

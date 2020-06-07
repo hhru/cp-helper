@@ -23,11 +23,23 @@ CREATE TABLE dbo.CompetitorReport(
 ) ON [PRIMARY]
 GO
 
-CREATE TABLE dbo.CompetitorProfArea(
-     [competitor_profarea_id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-     [report_id] [int] NOT NULL,
-     [profarea_id] [int] NOT NULL
+CREATE TABLE dbo.VacancyProfArea(
+     [vacancy_profarea_id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+     [vacancy_id] [int] NOT NULL,
+     [profarea_id] [int] NOT NULL,
+     [snapshot_date] [datetime] NOT NULL
 ) ON [PRIMARY]
+GO
+
+CREATE TABLE dbo.TrackedEmployers(
+    [employer_id] INT NOT NULL PRIMARY KEY
+) ON [PRIMARY]
+GO
+
+INSERT INTO [CRMData750].[dbo].[TrackedEmployers]
+(employer_id)
+VALUES
+(1455), (1870), (84585), (2096237), (2605703), (2624107), (1269556)
 GO
 
 -- 2. Create Procedure
@@ -106,24 +118,22 @@ BEGIN
         WHERE s.leaddate > @start_date AND s.RegionID IS NOT NULL AND s.cost IS NOT NULL
         GROUP BY s.ID, s.date, s.leaddate,
         s.employer_id, s.employer_service_id, s.code, s.object_id, s.qtty, s.unit_price, s.cost, s.cnt, s.RegionID
-    ) as t
+    ) as t WHERE t.employer_id IN (SELECT employer_id FROM CRMData750.dbo.TrackedEmployers)
 
-
-    INSERT INTO [CRMData750].[dbo].[CompetitorProfArea]
-    SELECT cr.report_id, pa.ProfAreaID as profarea_id
-    FROM (
-             -- выбрать 3 последних profarea для вакансии
-             SELECT p.ProfAreaID, p.VacancyID
-             FROM(
-                     SELECT *, ROW_NUMBER() OVER (PARTITION BY VacancyID ORDER BY SnapshotDate DESC) AS RowNum
-                     FROM [VacancySnapshot].[dbo].[VacancySnapshotProfAreaLast]
-                 ) as p
-             WHERE RowNum <= 3) as pa
-             JOIN(
-        SELECT c.report_id, c.vacancy_id
-        FROM [CRMData750].[dbo].[CompetitorReport] c
-        WHERE c.report_date = CAST(@start_date as date)
-    ) as cr ON pa.VacancyID = cr.vacancy_id;
+    INSERT INTO [CRMData750].[dbo].[VacancyProfArea] (vacancy_id, profarea_id, snapshot_date)
+    SELECT pa.VacancyID, pa.ProfAreaID, pa.SnapshotDate
+    FROM(
+        SELECT p.VacancyID, p.ProfAreaID, p.SnapshotDate
+        FROM(
+            SELECT *,
+            RANK() OVER (PARTITION BY VacancyID ORDER BY SnapshotDate DESC) as rankByDate
+            FROM [VacancySnapshot].[dbo].[VacancySnapshotProfAreaLast] p) as p
+        WHERE p.rankByDate = 1) as pa
+    JOIN(
+    SELECT DISTINCT(c.vacancy_id)
+    FROM [CRMData750].[dbo].[CompetitorReport] c) as cr
+    ON pa.VacancyID = cr.vacancy_id
+    WHERE NOT EXISTS (SELECT vacancy_id, profarea_id FROM [CRMData750].[dbo].[VacancyProfArea] WHERE vacancy_id = pa.VacancyID AND profarea_id = pa.ProfAreaID)
 END
 GO
 
@@ -162,7 +172,7 @@ EXEC msdb.dbo.sp_add_schedule
     @active_end_time=235959;
 GO
 
--- 4. Sets the 'Every 10 seconds' schedule to the 'Competitor reporting' Job
+-- 4. Sets the 'Every 15 seconds' schedule to the 'Competitor reporting' Job
 EXEC msdb.dbo.sp_attach_schedule
    @job_name = N'Competitor reporting',
    @schedule_name = N'Every 15 seconds';

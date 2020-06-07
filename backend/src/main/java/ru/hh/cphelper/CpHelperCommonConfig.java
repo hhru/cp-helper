@@ -5,11 +5,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import ru.hh.cphelper.dao.CompetitorsDao;
 import ru.hh.cphelper.dao.DayReportDao;
-import ru.hh.cphelper.dao.TrackedEmployersDao;
+import ru.hh.cphelper.dao.VacancyProfAreaDao;
 import ru.hh.cphelper.entity.Competitor;
 import ru.hh.cphelper.entity.DayReport;
+import ru.hh.cphelper.entity.VacancyProfArea;
+import ru.hh.cphelper.dao.TrackedEmployersDao;
 import ru.hh.cphelper.entity.TrackedEmployer;
 import ru.hh.cphelper.service.CompetitorsService;
+import ru.hh.cphelper.service.DayReportExcelService;
+import ru.hh.cphelper.service.DayReportPDFService;
 import ru.hh.cphelper.service.DayReportService;
 import ru.hh.cphelper.service.EmployerCompareService;
 import ru.hh.cphelper.service.TrackedEmployersService;
@@ -31,14 +35,17 @@ import javax.sql.DataSource;
     CompetitorsService.class,
     DayReportDao.class,
     DayReportService.class,
+    EmployerCompareService.class,
+    VacancyProfAreaDao.class,
     TrackedEmployersDao.class,
+    DayReportPDFService.class,
+    DayReportExcelService.class,
     TrackedEmployersService.class,
-    EmployerCompareService.class
 })
 public class CpHelperCommonConfig {
   @Bean
   public MappingConfig mappingConfig() {
-    return new MappingConfig(Competitor.class, DayReport.class, TrackedEmployer.class);
+    return new MappingConfig(Competitor.class, DayReport.class, VacancyProfArea.class, TrackedEmployer.class);
   }
 
   @Bean

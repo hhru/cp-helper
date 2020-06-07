@@ -33,8 +33,8 @@ create TABLE day_report (
     service_code varchar(50) DEFAULT ''::varchar NOT NULL,
     responses_count integer NOT NULL,
     spending_id integer NOT NULL,
-    spending_date timestamp NOT null,
-    report_spending_same_day boolean NOT null,
+    spending_date timestamp NOT NULL,
+    report_spending_same_day boolean NOT NULL,
     vacancy_id bigint NOT NULL,
     vacancy_area_id integer NOT NULL,
     cost numeric(8,2),
@@ -43,27 +43,11 @@ create TABLE day_report (
 
 create index idx_day_report_employer_id_report_date on day_report(employer_id, report_date);
 
-insert into
-day_report(day_report_id, report_date, employer_id, service_code, responses_count, spending_id, spending_date, report_spending_same_day, vacancy_id, vacancy_area_id, cost, vacancy_name)
-values
-(1, now()::date - interval '3 day', 1455, 'VP', 20, 100, now() - INTERVAL '7 day', false, 111, 113, 1000, 'aaa'),
-(2, now()::date - interval '3 day', 1455, 'VP', 15, 200, now() - INTERVAL '3 day', true, 222, 113, 1000, 'bbb'),
-(3, now()::date - interval '3 day', 1455, 'VPPREM', 40, 300, now() - INTERVAL '5 day', false, 333, 113, 2000, 'ccc'),
-
-(4, now()::date - interval '2 day', 1455, 'VPPREM', 50, 400, now() - INTERVAL '2 day', true, 111, 113, 2000, 'aaa'),
-(5, now()::date - interval '2 day', 1455, 'VP', 10, 200, now() - INTERVAL '3 day', false, 222, 113, 1000, 'bbb'),
-(6, now()::date - interval '2 day', 1455, 'VPPREM', 20, 500, now() - INTERVAL '5 day', false, 333, 113, 2000, 'ccc'),
-
-(7, now()::date - interval '1 day', 1455, 'VPPREM', 44, 400, now() - INTERVAL '2 day', false, 111, 113, 2000, 'aaa'),
-(8, now()::date - interval '1 day', 1455, 'VP', 12, 200, now() - INTERVAL '3 day', false, 222, 113, 1000, 'bbb'),
-(9, now()::date - interval '1 day', 1455, 'VP', 15, 500, now() - INTERVAL '5 day', false, 333, 113, 2000, 'ccc'),
-
-(10, now()::date, 1870, 'VP', 100, 600, now(), true, 333, 113, 3000, 'ccc'),
-(11, now()::date, 84585, 'VP', 100, 600, now(), true, 333, 113, 3000, 'ccc');
-
 create TABLE vacancy_profarea (
+    vacancy_profarea_id bigint NOT NULL,
     vacancy_id bigint NOT NULL,
-    profarea_id integer NOT NULL
+    profarea_id integer NOT NULL,
+    snapshot_date timestamp NOT NULL
 );
 
 create index idx_vacancy_profarea_vacancy_id on vacancy_profarea(vacancy_id);
@@ -75,7 +59,6 @@ values
 (222, 1),
 (333, 2),
 (333, 1);
-
 
 CREATE TABLE tracked_employers (
     employer_id integer PRIMARY KEY,
