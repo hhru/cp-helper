@@ -34,9 +34,11 @@ VacancyDataMart.dbo.vw_VacancyResponses - тут лежат отклики
 
     1.1 Получение списка конкурентов:
     
-    GET `/employer/{companyId}/competitors?areaId={id}`
+    GET `/employer/{companyId}/competitors?areaId={id}&competitorsNumber={n}`
         
     По умолчанию используется регион Россия.
+
+    n - Максимальное количество конкурентов
     
     ОТВЕТ:
     
@@ -146,4 +148,17 @@ VacancyDataMart.dbo.vw_VacancyResponses - тут лежат отклики
     
     Если делитель по какой-то причине = 0, то при продсчёте метрик будет = 1.
     
-    Если startDate больше endDate, то возвращается ошибка 400.  
+    Если startDate больше endDate, то возвращается ошибка 400.
+
+3. Поиск новых конкурентов
+
+	GET `/findCompetitors?spendingCountWeight={w1}&vacancyAreaWeight={w2}&vacancyMaskWeight={w3}&staffNumberWeight={w4}&profAreaWeight={w5}`
+
+	где w1...w5 - веса соответствующих параметров.
+	
+	Все параметры опциональные, по умолчанию стоит 1.
+	
+	Ответ: 200 The competitors have been successfully updated
+
+
+  

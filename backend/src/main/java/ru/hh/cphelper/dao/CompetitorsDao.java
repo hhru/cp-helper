@@ -63,7 +63,7 @@ public class CompetitorsDao {
     getCurrentSession().save(competitor);
   }
 
-  public void deleteCalculatedCompetitors(){
+  public void deleteCalculatedCompetitors() {
     getCurrentSession().createQuery("DELETE FROM Competitor c WHERE c.relevanceIndex != 0").executeUpdate();
   }
 }

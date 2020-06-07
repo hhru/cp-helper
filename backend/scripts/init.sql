@@ -58,7 +58,8 @@ values
 (8, now()::date - interval '1 day', 1455, 'VP', 12, 200, now() - INTERVAL '3 day', false, 222, 113, 1000, 'bbb'),
 (9, now()::date - interval '1 day', 1455, 'VP', 15, 500, now() - INTERVAL '5 day', false, 333, 113, 2000, 'ccc'),
 
-(10, now()::date, 1870, 'VP', 100, 600, now(), true, 333, 113, 3000, 'ccc');
+(10, now()::date, 1870, 'VP', 100, 600, now(), true, 333, 113, 3000, 'ccc'),
+(11, now()::date, 84585, 'VP', 100, 600, now(), true, 333, 113, 3000, 'ccc');
 
 create TABLE vacancy_profarea (
     vacancy_id bigint NOT NULL,
