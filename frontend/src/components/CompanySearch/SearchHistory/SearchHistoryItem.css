@@ -1,0 +1,11 @@
+.search-history-item {
+    margin-bottom: 8px;
+    color: #09f;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.25s;
+
+    &:hover {
+        color: #c00;
+    }
+}

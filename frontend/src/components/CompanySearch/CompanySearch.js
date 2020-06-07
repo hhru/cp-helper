@@ -36,6 +36,11 @@ const CompanySearch = ({
 }) => {
 
     const [isSearchById, setIsSearchById] = useState(false);
+    const [inputCompany, setInputCompany] = useState("");
+    const initialHistory = localStorage.getItem('companySearchHistory') ?
+    JSON.parse(localStorage.getItem('companySearchHistory')) :
+    {};
+    const [history, setHistory] = useState(initialHistory);
 
     const companyIdInput = useRef(null);
 
@@ -63,7 +68,22 @@ const CompanySearch = ({
         if (!companyName) {
             getCompanyNameById(companyId);
         }
+        if (!(companyId in history)) {
+            const newHistory = {...history, [companyId]: companyName};
+            setHistory(newHistory);
+            localStorage.setItem('companySearchHistory', JSON.stringify(newHistory));
+        }
         openCompetitorsList();
+    };
+
+    const handleChooseCompany = (id, name) => {
+        setInputCompany(name);
+        chooseCompany(id, name);
+    };
+
+    const handleClearHistory = () => {
+        localStorage.removeItem("companySearchHistory");
+        setHistory({});
     };
 
     return (
@@ -83,6 +103,7 @@ const CompanySearch = ({
                         choose={chooseCompany}
                         payload={companyId}
                         placeholderText={'Введите название компании'}
+                        initialValue={inputCompany}
                     />
                 }
                 <Search
@@ -103,9 +124,11 @@ const CompanySearch = ({
                     onChange={changeTypeSearch}
                 />
             </div>
-            <div className="history">
-                <SearchHistory/>
+            {!isSearchById && Object.keys(history).length > 0 && (
+                <div className="history">
+                <SearchHistory history={history} onChooseCompany={handleChooseCompany} onClearHistory={handleClearHistory}/>
             </div>
+            )}
         </section>
     );
 };

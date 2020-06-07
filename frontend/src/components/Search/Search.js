@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import PropTypes from 'prop-types';
 
 import Input from 'components/Input/Input';
@@ -14,6 +14,7 @@ const Search = ({
     payload,
     placeholderText,
     children,
+    initialValue,
 }) => {
 
     const [selectOpen, setSelectOpen] = useState(false);
@@ -22,6 +23,9 @@ const Search = ({
     const SELECT_ITEMS_LENGTH = 7;
 
     const input = useRef(null);
+    useEffect(() => {
+        setInputValue(initialValue);
+    }, [initialValue]);
 
     const handleInputChange = () => {
         setInputValue(input.current.value);
@@ -84,6 +88,7 @@ Search.propTypes = {
         PropTypes.arrayOf(PropTypes.node),
         PropTypes.node,
     ]),
+    initialValue: PropTypes.string,
 };
 
 export default Search;

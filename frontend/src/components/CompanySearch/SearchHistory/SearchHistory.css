@@ -1,5 +1,11 @@
 .search-history {
     font-family: ProximaNovaCond, Arial, sans-serif;
-    margin: 20px 0;
-    color: #aeb5b9;
+    margin: 40px 0;
+
+    &__title {
+        color: #333;
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 12px;
+    }
 }
