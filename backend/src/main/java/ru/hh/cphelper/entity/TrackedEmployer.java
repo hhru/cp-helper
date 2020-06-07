@@ -20,7 +20,6 @@ public class TrackedEmployer implements Serializable {
   @Column(name = "employer_name")
   private String employerName;
 
-
   @Column(name = "employer_staff_number")
   private Integer employerStaffNumber;
 
@@ -31,14 +30,10 @@ public class TrackedEmployer implements Serializable {
     this.employerId = employerId;
     this.employerName = employerName;
     this.employerStaffNumber = employerStaffNumber;
-
-  public TrackedEmployer() {
   }
 
   public TrackedEmployer(Integer employerId, String employerName) {
-    this.employerId = employerId;
-    this.employerName = employerName;
-
+    this(employerId, employerName, null);
   }
 
   public Integer getEmployerId() {
@@ -77,7 +72,6 @@ public class TrackedEmployer implements Serializable {
     return employerId.equals(that.employerId) &&
         employerName.equals(that.employerName) &&
         employerStaffNumber.equals(that.employerStaffNumber);
-
   }
 
   @Override

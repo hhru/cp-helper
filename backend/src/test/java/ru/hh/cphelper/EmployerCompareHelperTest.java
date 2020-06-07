@@ -38,7 +38,13 @@ public class EmployerCompareHelperTest {
 
   @Test
   public void shouldReturnCorrectBaseFormsOfWords() {
-    assertEquals(List.of("личный", "автомобилем5", "be", "_run", "start"),
+    assertEquals(List.of("личный", "автомобилем5", "_run", "start"),
+        EmployerCompareHelper.lemmatize(List.of("личным", "автомобилем5", "_run", "started")));
+  }
+
+  @Test
+  public void shouldReturnWithoutStopWords() {
+    assertEquals(List.of("личный", "автомобилем5", "_run", "start"),
         EmployerCompareHelper.lemmatize(List.of("личным", "автомобилем5", "was", "_run", "started")));
   }
 }

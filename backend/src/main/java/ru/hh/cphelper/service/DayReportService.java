@@ -37,7 +37,7 @@ public class DayReportService {
   }
 
   @Transactional(readOnly = true)
-  public List<DayReport> getDayReportsWithSpending() {
-    return dayReportDao.getDayReportsWithSpending();
+  public List<DayReport> getDayReportsWithSpendingByIds(Set<Integer> employerIds) {
+    return dayReportDao.getDayReportsWithSpendingByIds(employerIds);
   }
 }

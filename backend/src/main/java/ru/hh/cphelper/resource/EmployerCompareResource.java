@@ -28,11 +28,11 @@ public class EmployerCompareResource {
 
   @GET
   @Produces(MediaType.TEXT_PLAIN)
-  public String getReports(@DefaultValue(SPENDING_COUNT_WEIGHT) @QueryParam(value = "spendingCountWeight") final Float spendingCountWeight,
-                           @DefaultValue(VACANCY_AREA_WEIGHT) @QueryParam(value = "vacancyAreaWeight") final Float vacancyAreaWeight,
-                           @DefaultValue(VACANCY_MASK_WEIGHT) @QueryParam(value = "vacancyMaskWeight") final Float vacancyMaskWeight,
-                           @DefaultValue(STAFF_NUMBER_WEIGHT) @QueryParam(value = "staffNumberWeight") final Float staffNumberWeight,
-                           @DefaultValue(PROF_AREA_WEIGHT) @QueryParam(value = "profAreaWeight") final Float profAreaWeight) {
+  public String getReports(@DefaultValue(SPENDING_COUNT_WEIGHT) @QueryParam("spendingCountWeight") final Float spendingCountWeight,
+                           @DefaultValue(VACANCY_AREA_WEIGHT) @QueryParam("vacancyAreaWeight") final Float vacancyAreaWeight,
+                           @DefaultValue(VACANCY_MASK_WEIGHT) @QueryParam("vacancyMaskWeight") final Float vacancyMaskWeight,
+                           @DefaultValue(STAFF_NUMBER_WEIGHT) @QueryParam("staffNumberWeight") final Float staffNumberWeight,
+                           @DefaultValue(PROF_AREA_WEIGHT) @QueryParam("profAreaWeight") final Float profAreaWeight) {
     return employerCompareService.employerComparison(Map.of(
         "spendingCountWeight", spendingCountWeight,
         "vacancyAreaWeight", vacancyAreaWeight,

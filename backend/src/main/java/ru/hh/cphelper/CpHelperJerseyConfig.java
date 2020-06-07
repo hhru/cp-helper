@@ -11,7 +11,7 @@ import ru.hh.cphelper.resource.TrackedEmployersResource;
 @Import({
     CompetitorsResource.class,
     DayReportResource.class,
-    EmployerCompareResource.class
+    EmployerCompareResource.class,
     TrackedEmployersResource.class,
 })
 public class CpHelperJerseyConfig {

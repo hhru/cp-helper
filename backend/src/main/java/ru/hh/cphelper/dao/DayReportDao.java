@@ -49,12 +49,16 @@ public class DayReportDao {
     getCurrentSession().save(dayReport);
   }
 
-  public List<DayReport> getDayReportsWithSpending() {
+  public List<DayReport> getDayReportsWithSpendingByIds(Set<Integer> employerIds) {
     Session session = getCurrentSession();
     CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
     CriteriaQuery<DayReport> criteriaQuery = criteriaBuilder.createQuery(DayReport.class);
     Root<DayReport> root = criteriaQuery.from(DayReport.class);
+    Predicate[] predicate = new Predicate[]{
+        criteriaBuilder.equal(root.get("reportSpendingSameDay"), true),
+        root.get("employerId").in(employerIds)
+    };
     return session.createQuery(criteriaQuery.select(root)
-        .where(criteriaBuilder.equal(root.get("reportSpendingSameDay"), true))).getResultList();
+        .where(criteriaBuilder.and(predicate))).getResultList();
   }
 }

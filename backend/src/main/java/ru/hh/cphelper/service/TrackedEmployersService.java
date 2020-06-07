@@ -6,7 +6,6 @@ import ru.hh.cphelper.entity.TrackedEmployer;
 
 import javax.inject.Inject;
 import java.util.List;
-import java.util.Set;
 
 public class TrackedEmployersService {
   private final TrackedEmployersDao trackedEmployersDao;
@@ -35,10 +34,5 @@ public class TrackedEmployersService {
   @Transactional
   public void delete(Integer employerId) {
     trackedEmployersDao.delete(trackedEmployersDao.getEmployerById(employerId));
-  }
-
-  @Transactional(readOnly = true)
-  public List<TrackedEmployer> getTrackedEmployersBySetId(Set<Integer> employerIds) {
-    return trackedEmployersDao.getTrackedEmployersBySetId(employerIds);
   }
 }

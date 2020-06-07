@@ -6,7 +6,6 @@ import ru.hh.cphelper.entity.TrackedEmployer;
 
 import javax.inject.Inject;
 import java.util.List;
-import java.util.Set;
 
 public class TrackedEmployersDao {
 
@@ -44,12 +43,5 @@ public class TrackedEmployersDao {
 
   public void delete(TrackedEmployer trackedEmployer) {
     getCurrentSession().delete(trackedEmployer);
-  }
-
-  public List<TrackedEmployer> getTrackedEmployersBySetId(Set<Integer> employerIds) {
-    return getCurrentSession()
-        .createQuery("FROM TrackedEmployer WHERE employerId IN :employerIds", TrackedEmployer.class)
-        .setParameter("employerIds", employerIds)
-        .getResultList();
   }
 }

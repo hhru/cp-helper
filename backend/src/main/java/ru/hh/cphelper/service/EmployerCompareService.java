@@ -5,7 +5,6 @@ import ru.hh.cphelper.entity.DayReport;
 import ru.hh.cphelper.entity.TrackedEmployer;
 import ru.hh.cphelper.utils.EmployerCompare;
 
-
 import javax.inject.Inject;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,6 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class EmployerCompareService {
@@ -33,9 +33,12 @@ public class EmployerCompareService {
   }
 
   public String employerComparison(Map<String, Float> weights) {
+    Map<Integer, TrackedEmployer> trackedEmployers = trackedEmployersService.getTrackedEmployers("").stream()
+        .collect(Collectors.toMap(TrackedEmployer::getEmployerId, Function.identity()));
+
+    List<DayReport> dayReports = dayReportService.getDayReportsWithSpendingByIds(trackedEmployers.keySet());
     Map<Integer, EmployerCompare> employersComparison = new HashMap<>();
     Map<Integer, Map<String, Object>> employersLastAreaId = new HashMap<>();
-    List<DayReport> dayReports = dayReportService.getDayReportsWithSpending();
     dayReports.forEach(dayReport -> {
       employersComparison.computeIfAbsent(dayReport.getEmployerId(), k -> EmployerCompare.getEmployerCompare(dayReport))
           .addDayReport(dayReport);
@@ -56,10 +59,9 @@ public class EmployerCompareService {
         - employersComparison.values().stream().map(EmployerCompare::getSpendingCount)
         .min(Comparator.comparing(Long::valueOf)).orElse(0L);
 
-    List<TrackedEmployer> trackedEmployers = trackedEmployersService
-        .getTrackedEmployersBySetId(employersComparison.keySet());
-    trackedEmployers.forEach(trackedEmployer -> employersComparison.get(trackedEmployer.getEmployerId())
-        .setStaffNumber(trackedEmployer.getEmployerStaffNumber()));
+    employersComparison.keySet().forEach(employerId -> employersComparison.get(employerId)
+        .setStaffNumber(trackedEmployers.get(employerId).getEmployerStaffNumber()));
+
     List<EmployerCompare> employersComparisonList = new ArrayList<>(employersComparison.values());
 
     Map<Integer, Set<Competitor>> competitors = new HashMap<>();

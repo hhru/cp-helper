@@ -255,7 +255,7 @@ VacancyDataMart.dbo.vw_VacancyResponses - тут лежат отклики
   
    `400 Bad Request` - в случае ошибки удаления 
    
-   4. Поиск новых конкурентов
+4. Поиск новых конкурентов
 
 	  GET `/findCompetitors?spendingCountWeight={w1}&vacancyAreaWeight={w2}&vacancyMaskWeight={w3}&staffNumberWeight={w4}&profAreaWeight={w5}`
 
@@ -263,4 +263,4 @@ VacancyDataMart.dbo.vw_VacancyResponses - тут лежат отклики
 	
 	  Все параметры опциональные, по умолчанию стоит 1.
 	
-	  Ответ: 200 The competitors have been successfully updated
+	  Ответ: 200 The competitors have been successfully updated   
