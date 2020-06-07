@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import PropTypes from "prop-types";
 import {connect} from 'react-redux';
 
@@ -9,6 +9,7 @@ import Button from 'components/Button/Button';
 import PageNumber from 'components/Settings/PageNumber/PageNumber';
 import Company from 'components/Settings/Company/Company';
 import Loader from 'components/Loader/Loader';
+import Input from 'components/Input/Input';
 
 import {fetchTrackedCompanies, deleteTrackedCompany} from 'redux/companies/companiesActions';
 
@@ -19,6 +20,7 @@ const Settings = ({closeSettings, fetchTrackedCompanies, trackedCompanies, isLoa
     const ITEMS_ON_PAGE = 15;
     const [slicedCompanies, setSlicedCompanies] = useState([]);
     const [pageNumbers, setPageNumbers] = useState([]);
+    const companyNameInput = useRef(null);
 
     useEffect(() => {
         fetchTrackedCompanies();
@@ -44,11 +46,25 @@ const Settings = ({closeSettings, fetchTrackedCompanies, trackedCompanies, isLoa
         }
     }, [trackedCompanies]);
 
+    const inputCompanyName = () => {
+        fetchTrackedCompanies(companyNameInput.current.value);
+    };
+
     return (
         <div className="settings">
             <ContentWrapper>
                 <div className="settings__title">
                     <Heading level={3}>Настройки</Heading>
+                </div>
+                <div className="settings__filter">
+                    <div className="settings__title">
+                        <Heading level={4}>Поиск по отслеживаемым работодателям</Heading>
+                    </div>
+                    <Input
+                        placeholderText={'Введите название компании'}
+                        ref={companyNameInput}
+                        onChange={inputCompanyName}
+                    />
                 </div>
                 <div className="settings__companies">
                     <div className="settings__title">

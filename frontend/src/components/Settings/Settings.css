@@ -5,6 +5,10 @@
         margin: 20px 0;
     }
 
+    &__filter {
+        width: 50%;
+    }
+
     &__companies {
         margin: 20px 0;
     }

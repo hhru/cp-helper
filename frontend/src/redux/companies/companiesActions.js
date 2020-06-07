@@ -91,8 +91,11 @@ export function getCompanyNameById(companyId) {
     };
 }
 
-export function fetchTrackedCompanies() {
-    const url = `${CP_HELPER_TRACKED_URL}`;
+export function fetchTrackedCompanies(name) {
+    let url = `${CP_HELPER_TRACKED_URL}`;
+    if (name) {
+        url += `?name=${name}`;
+    }
     return (dispatch) => {
         dispatch(fetchTrackedCompaniesBeginAction());
         axios.get(url)
