@@ -17,7 +17,7 @@ const Tab = ({children, currentTab}) => {
             <ContentWrapper>
                 <div className="tab">
                     <ColumnsWrapper>
-                        <Columns s={1} m={2} l={4}>
+                        <Columns s={2} m={2} l={4}>
                             <div className={classNames(
                                 'tab__element',
                                 {'tab__element_active': currentTab === COMPANY_SEARCH}
@@ -25,7 +25,7 @@ const Tab = ({children, currentTab}) => {
                                 1. Поиск по компаниям
                             </div>
                         </Columns>
-                        <Columns s={1} m={2} l={4}>
+                        <Columns s={2} m={2} l={4}>
                             <div className={classNames(
                                 'tab__element',
                                 {'tab__element_active': currentTab === COMPETITORS_LIST}
@@ -33,7 +33,7 @@ const Tab = ({children, currentTab}) => {
                                 2. Просмотр конкурентов
                             </div>
                         </Columns>
-                        <Columns s={1} m={2} l={4}>
+                        <Columns s={2} m={2} l={4}>
                             <div className={classNames(
                                 'tab__element',
                                 {'tab__element_active': currentTab === COMMERCIAL_OFFER}

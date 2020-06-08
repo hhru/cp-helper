@@ -4,7 +4,32 @@
         display: flex;
     }
 
+    &__item {
+        display: flex;
+        width: 45%;
+    }
+
     &__btn {
-        width: 50%;
+        width: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .company-search-section {
+        &__search {
+            flex-wrap: wrap;
+        }
+
+        &__item {
+            width: 100%;
+        }
+
+        &__btn {
+            width: 100%;
+
+            & > button {
+                width: 100%;
+            }
+        }
     }
 }

@@ -1,0 +1,24 @@
+.search-history-item {
+    margin-bottom: 8px;
+    color: #09f;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.25s;
+    display: flex;
+    border-radius: 8px;
+
+    &-company {
+        width: 50%;
+        padding: 8px;
+    }
+
+    &-area {
+        width: 50%;
+        padding: 8px;
+    }
+
+    &:hover {
+        color: #c00;
+        background: #ebeced;
+    }
+}

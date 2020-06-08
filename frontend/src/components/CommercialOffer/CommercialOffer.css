@@ -25,3 +25,19 @@
         width: 51%;
     }
 }
+
+@media (max-width: 768px) {
+    .commercial-offer-section {
+        &__filter {
+            flex-wrap: wrap;
+        }
+
+        &__btn-filter {
+            width: 100%;
+
+            & > button {
+                width: 100%;
+            }
+        }
+    }
+}

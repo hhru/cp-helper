@@ -33,9 +33,15 @@ const CompanySearch = ({
     getCompanyNameById,
     companyName,
     resetServices,
+    areaName,
 }) => {
 
     const [isSearchById, setIsSearchById] = useState(false);
+    const [inputCompany, setInputCompany] = useState({companyName: "", companyId: "", areaId: "", areaName: ""});
+    const initialHistory = localStorage.getItem('companySearchHistory') ?
+                            JSON.parse(localStorage.getItem('companySearchHistory')) :
+                            {};
+    const [history, setHistory] = useState(initialHistory);
 
     const companyIdInput = useRef(null);
 
@@ -51,8 +57,13 @@ const CompanySearch = ({
         }
     }, []);
 
+    useEffect(() => {
+        getCompanyNameById(inputCompany.companyId);
+    }, [inputCompany]);
+
     const inputCompanyId = () => {
         chooseCompany(companyIdInput.current.value);
+        setInputCompany({...inputCompany, companyId: companyIdInput.current.value, companyName: ""});
     };
 
     const changeTypeSearch = () => {
@@ -63,35 +74,59 @@ const CompanySearch = ({
         if (!companyName) {
             getCompanyNameById(companyId);
         }
+        if (!(companyId in history)) {
+            const newHistory = {...history, [`${companyId}-${areaId}`]: {companyName, companyId, areaId, areaName}};
+            setHistory(newHistory);
+            localStorage.setItem('companySearchHistory', JSON.stringify(newHistory));
+        }
         openCompetitorsList();
+    };
+
+    const handleChooseCompany = ({companyId, companyName, areaId, areaName}) => {
+        setInputCompany({companyName, companyId, areaId, areaName});
+        chooseCompany(companyId, companyName);
+        chooseArea(areaId, areaName);
+
+    };
+
+    const handleClearHistory = () => {
+        localStorage.removeItem("companySearchHistory");
+        setHistory({});
     };
 
     return (
         <section className="company-search-section">
             <div className="company-search-section__search">
-                { isSearchById ?
-                    <Input
-                        placeholderText={'Введите идентификатор компании'}
-                        ref={companyIdInput}
-                        onChange={inputCompanyId}
-                        inputType={"number"}
-                    />
-                    :
+                <div className="company-search-section__item">
+                    { isSearchById ?
+                        <Input
+                            placeholderText={'Введите идентификатор компании'}
+                            ref={companyIdInput}
+                            onChange={inputCompanyId}
+                            inputType={"number"}
+                            value={inputCompany.companyId}
+                        />
+                        :
+                        <Search
+                            fetch={fetchCompany}
+                            items={companies}
+                            choose={chooseCompany}
+                            payload={companyId}
+                            placeholderText={'Введите название компании'}
+                            initialValue={inputCompany.companyName}
+                        />
+                    }
+                </div>
+                <div className="company-search-section__item">
                     <Search
-                        fetch={fetchCompany}
-                        items={companies}
-                        choose={chooseCompany}
-                        payload={companyId}
-                        placeholderText={'Введите название компании'}
+                        fetch={filterArea}
+                        items={filteredAreas}
+                        choose={chooseArea}
+                        payload={areaId}
+                        placeholderText={'Введите регион'}
+                        initialValue={inputCompany.areaName}
                     />
-                }
-                <Search
-                    fetch={filterArea}
-                    items={filteredAreas}
-                    choose={chooseArea}
-                    payload={areaId}
-                    placeholderText={'Введите регион'}
-                />
+                </div>
                 <div className="company-search-section__btn">
                     <Button onClick={openNextTab} disabled={!(companyId && areaId)}>Выбрать компанию</Button>
                 </div>
@@ -103,9 +138,11 @@ const CompanySearch = ({
                     onChange={changeTypeSearch}
                 />
             </div>
-            <div className="history">
-                <SearchHistory/>
+            {Object.keys(history).length > 0 && (
+                <div className="history">
+                <SearchHistory history={history} onChooseCompany={handleChooseCompany} onClearHistory={handleClearHistory}/>
             </div>
+            )}
         </section>
     );
 };
@@ -124,6 +161,7 @@ CompanySearch.propTypes = {
     chooseArea: PropTypes.func,
     filteredAreas: PropTypes.array,
     areaId: PropTypes.string,
+    areaName: PropTypes.string,
     resetArea: PropTypes.func,
     getCompanyNameById: PropTypes.func,
     companyName: PropTypes.string,
@@ -136,6 +174,7 @@ export default connect(
         companyName: state.companies.companyName,
         companies: state.companies.companies,
         areaId: state.areas.areaId,
+        areaName: state.areas.areaName,
         plainAreas: state.areas.plainAreas,
         filteredAreas: state.areas.filteredAreas,
     }),

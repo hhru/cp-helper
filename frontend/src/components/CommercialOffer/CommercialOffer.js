@@ -100,7 +100,7 @@ const CommercialOffer = ({
                 )
             }
             <div className="commercial-offer-section__btn">
-                <Button onClick={openCompetitorsList}>К предыдущему шагу</Button>
+                <Button onClick={openCompetitorsList} outline>К предыдущему шагу</Button>
             </div>
         </section>
     );

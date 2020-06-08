@@ -36,3 +36,13 @@
         margin-bottom: 30px;
     }
 }
+
+@media (max-width: 768px) {
+    .competitors-list-section {
+        &__search {
+            width: 85%;
+            left: 5%;
+            right: 5%;
+        }
+    }
+}
