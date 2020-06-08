@@ -3,16 +3,15 @@ import PropTypes from 'prop-types';
 
 import './SearchHistoryItem.css';
 
-const SearchHistoryItem = ({id, name, onChooseCompany}) => {
+const SearchHistoryItem = ({name, onChooseCompany}) => {
     return (
-        <div className="search-history-item" onClick={() => onChooseCompany(id, name)}>
+        <div className="search-history-item" onClick={onChooseCompany}>
             {name}
         </div>
     );
 };
 
 SearchHistoryItem.propTypes = {
-    id: PropTypes.string,
     name: PropTypes.string,
     onChooseCompany: PropTypes.func,
 };

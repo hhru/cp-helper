@@ -10,7 +10,7 @@ const SearchHistory = ({history, onChooseCompany, onClearHistory}) => (
     <div className="search-history">
         <div className="search-history__title">История поиска</div>
         {Object.entries(history).map(([id, name]) => (
-            <SearchHistoryItem key={id} onChooseCompany={onChooseCompany} id={id} name={name}/>
+            <SearchHistoryItem key={id} onChooseCompany={() => onChooseCompany(id, name)} name={name}/>
         ))}
         <Button onClick={onClearHistory}>Очистить историю</Button>
     </div>

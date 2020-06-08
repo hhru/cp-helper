@@ -38,8 +38,8 @@ const CompanySearch = ({
     const [isSearchById, setIsSearchById] = useState(false);
     const [inputCompany, setInputCompany] = useState("");
     const initialHistory = localStorage.getItem('companySearchHistory') ?
-    JSON.parse(localStorage.getItem('companySearchHistory')) :
-    {};
+                            JSON.parse(localStorage.getItem('companySearchHistory')) :
+                            {};
     const [history, setHistory] = useState(initialHistory);
 
     const companyIdInput = useRef(null);
@@ -124,7 +124,7 @@ const CompanySearch = ({
                     onChange={changeTypeSearch}
                 />
             </div>
-            {!isSearchById && Object.keys(history).length > 0 && (
+            {Object.keys(history).length > 0 && (
                 <div className="history">
                 <SearchHistory history={history} onChooseCompany={handleChooseCompany} onClearHistory={handleClearHistory}/>
             </div>
