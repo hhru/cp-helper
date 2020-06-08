@@ -8,11 +8,27 @@ import './SearchHistory.css';
 
 const SearchHistory = ({history, onChooseCompany, onClearHistory}) => (
     <div className="search-history">
-        <div className="search-history__title">История поиска</div>
-        {Object.entries(history).map(([id, name]) => (
-            <SearchHistoryItem key={id} onChooseCompany={() => onChooseCompany(id, name)} name={name}/>
+        <div className="search-history__title">
+            История поиска
+            <Button onClick={onClearHistory}>Очистить историю</Button>
+        </div>
+        <div className="search-history__header">
+            <div className="search-history__header-item">
+                Компания
+            </div>
+            <div className="search-history__header-item">
+                Регион
+            </div>
+        </div>
+        {Object.entries(history).map(([id, item]) => (
+            <SearchHistoryItem key={id}
+                onChooseCompany={() => onChooseCompany({companyId: item.companyId,
+                                                        companyName: item.companyName,
+                                                        areaId: item.areaId,
+                                                        areaName: item.areaName})}
+                name={item.companyName}
+                area={item.areaName}/>
         ))}
-        <Button onClick={onClearHistory}>Очистить историю</Button>
     </div>
 );
 

@@ -3,8 +3,4 @@
     &__search {
         display: flex;
     }
-
-    &__btn {
-        width: 50%;
-    }
 }

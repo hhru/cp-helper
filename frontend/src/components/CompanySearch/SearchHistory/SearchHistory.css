@@ -4,8 +4,24 @@
 
     &__title {
         color: #333;
-        font-size: 14px;
+        font-size: 16px;
         font-weight: bold;
         margin-bottom: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__header {
+        display: flex;
+        border-bottom: 1px solid currentColor;
+        color: #333;
+        font-size: 14px;
+        font-weight: bold;
+
+        &-item {
+            width: 50%;
+            padding: 8px;
+        }
     }
 }
