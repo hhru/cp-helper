@@ -1,0 +1,7 @@
+.tracked-company-search {
+    width: 50%;
+
+    &__title {
+        margin: 20px 0 10px;
+    }
+}

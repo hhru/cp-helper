@@ -10,6 +10,7 @@ export const FETCH_TRACKED_COMPANIES_SUCCESS = 'FETCH_TRACKED_COMPANIES_SUCCESS'
 export const FETCH_TRACKED_COMPANIES_BEGIN = 'FETCH_TRACKED_COMPANIES_BEGIN';
 export const FETCH_TRACKED_COMPANIES_FAILURE = 'FETCH_TRACKED_COMPANIES_FAILURE';
 export const DELETE_TRACKED_COMPANY = 'DELETE_TRACKED_COMPANY';
+export const ADD_TRACKED_COMPANY = 'ADD_TRACKED_COMPANY';
 
 export const fetchCompanyAction = (companies) => {
     return {
@@ -54,6 +55,14 @@ export const deleteTrackedCompanyAction = (companyId) => {
     return {
         type: DELETE_TRACKED_COMPANY,
         companyId,
+    };
+};
+
+export const addTrackedCompanyAction = (companyId, companyName) => {
+    return {
+        type: ADD_TRACKED_COMPANY,
+        companyId,
+        companyName,
     };
 };
 
@@ -116,6 +125,23 @@ export function deleteTrackedCompany(companyId) {
         .then(() => {
             createNotification('success', 'Компания удалена из списка отслеживаемых');
             dispatch(deleteTrackedCompanyAction(companyId));
+        })
+        .catch(() => {
+            createNotification('error', 'Сервер недоступен', 'Ошибка');
+        });
+    };
+}
+
+export function addTrackedCompany(companyId, companyName) {
+    const url = `${CP_HELPER_TRACKED_URL}`;
+    return (dispatch) => {
+        axios.post(url, {
+            employerId: Number(companyId),
+            employerName: companyName,
+        })
+        .then(() => {
+            createNotification('success', 'Компания добавлена в список отслеживаемых');
+            dispatch(addTrackedCompanyAction(companyId, companyName));
         })
         .catch(() => {
             createNotification('error', 'Сервер недоступен', 'Ошибка');
