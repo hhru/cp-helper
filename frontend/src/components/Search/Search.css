@@ -8,3 +8,11 @@
         position: relative;
     }
 }
+
+@media (max-width: 768px) {
+    .search {
+        &__select {
+            margin-right: 0;
+        }
+    }
+}

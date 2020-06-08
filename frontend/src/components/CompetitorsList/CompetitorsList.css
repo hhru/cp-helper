@@ -61,3 +61,13 @@
 .close {
     margin: -15px -15px 0 0;
 }
+
+@media (max-width: 768px) {
+    .competitors-list-section {
+        &__search {
+            width: 85%;
+            left: 5%;
+            right: 5%;
+        }
+    }
+}

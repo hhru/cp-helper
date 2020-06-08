@@ -10,7 +10,7 @@ const SearchHistory = ({history, onChooseCompany, onClearHistory}) => (
     <div className="search-history">
         <div className="search-history__title">
             История поиска
-            <Button onClick={onClearHistory}>Очистить историю</Button>
+            <Button onClick={onClearHistory} outline>Очистить историю</Button>
         </div>
         <div className="search-history__header">
             <div className="search-history__header-item">

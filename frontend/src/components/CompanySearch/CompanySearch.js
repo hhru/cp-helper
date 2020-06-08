@@ -97,32 +97,36 @@ const CompanySearch = ({
     return (
         <section className="company-search-section">
             <div className="company-search-section__search">
-                { isSearchById ?
-                    <Input
-                        placeholderText={'Введите идентификатор компании'}
-                        ref={companyIdInput}
-                        onChange={inputCompanyId}
-                        inputType={"number"}
-                        value={inputCompany.companyId}
-                    />
-                    :
+                <div className="company-search-section__item">
+                    { isSearchById ?
+                        <Input
+                            placeholderText={'Введите идентификатор компании'}
+                            ref={companyIdInput}
+                            onChange={inputCompanyId}
+                            inputType={"number"}
+                            value={inputCompany.companyId}
+                        />
+                        :
+                        <Search
+                            fetch={fetchCompany}
+                            items={companies}
+                            choose={chooseCompany}
+                            payload={companyId}
+                            placeholderText={'Введите название компании'}
+                            initialValue={inputCompany.companyName}
+                        />
+                    }
+                </div>
+                <div className="company-search-section__item">
                     <Search
-                        fetch={fetchCompany}
-                        items={companies}
-                        choose={chooseCompany}
-                        payload={companyId}
-                        placeholderText={'Введите название компании'}
-                        initialValue={inputCompany.companyName}
+                        fetch={filterArea}
+                        items={filteredAreas}
+                        choose={chooseArea}
+                        payload={areaId}
+                        placeholderText={'Введите регион'}
+                        initialValue={inputCompany.areaName}
                     />
-                }
-                <Search
-                    fetch={filterArea}
-                    items={filteredAreas}
-                    choose={chooseArea}
-                    payload={areaId}
-                    placeholderText={'Введите регион'}
-                    initialValue={inputCompany.areaName}
-                />
+                </div>
                 <div className="company-search-section__btn">
                     <Button onClick={openNextTab} disabled={!(companyId && areaId)}>Выбрать компанию</Button>
                 </div>

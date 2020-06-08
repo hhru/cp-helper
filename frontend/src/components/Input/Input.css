@@ -6,6 +6,8 @@
     height: 38px;
     width: 100%;
     margin: 5px 10px 5px 0;
+    transition: 0.25s;
+    border-radius: 2px;
 
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
@@ -19,6 +21,10 @@
         outline: none;
         position: relative;
         z-index: 1;
+    }
+
+    &:hover:not(:focus) {
+        border-color: #a7b8d3;
     }
 
     &::placeholder {

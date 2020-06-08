@@ -37,3 +37,9 @@
         }
     }
 }
+
+@media (max-width: 768px) {
+    .select {
+        width: 100%;
+    }
+}

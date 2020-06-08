@@ -120,7 +120,7 @@ const CompetitorsList = ({
                 </div>
             }
             <div className="competitors-list-section__btn">
-                <Button onClick={openCompanySearch}>К предыдущему шагу</Button>
+                <Button onClick={openCompanySearch} outline>К предыдущему шагу</Button>
             </div>
         </section>
     );

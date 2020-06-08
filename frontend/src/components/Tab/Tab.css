@@ -6,9 +6,12 @@
         padding: 10px;
         display: flex;
         justify-content: center;
+        border-radius: 4px 4px 0 0;
+        font-size: 14px;
 
         &_active {
             background-color: #eee;
+            font-weight: bold;
         }
     }
 }
@@ -23,4 +26,12 @@
 
 .content {
     padding-bottom: 80px;
+}
+
+@media (max-width: 768px) {
+    .tab {
+        &__element {
+            justify-content: left;
+        }
+    }
 }

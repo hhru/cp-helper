@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 import './Button.css';
 
-const Button = forwardRef(({ children, buttonType, disabled, onClick, ...rest }, ref) => {
+const Button = forwardRef(({ children, buttonType, disabled, onClick, outline, ...rest }, ref) => {
     return (
         <button
             ref={ref}
-            className="hh-button"
+            className={`hh-button ${outline ? "hh-button--outline" : ""}`}
             type={buttonType}
             disabled={disabled}
             onClick={onClick}
@@ -27,6 +27,7 @@ Button.propTypes = {
     buttonType: PropTypes.string,
     disabled: PropTypes.bool,
     onClick: PropTypes.func,
+    outline: PropTypes.bool,
 };
 
 export default Button;

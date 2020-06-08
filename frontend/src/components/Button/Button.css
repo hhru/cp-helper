@@ -4,7 +4,7 @@
     display: inline-block;
     padding: 0 15px;
     border: 1px solid transparent;
-    border-radius: 1px;
+    border-radius: 2px;
     background: #0f8fee;
     font: 14px/36px Arial, sans-serif;
     text-align: center;
@@ -16,6 +16,20 @@
     transition-property: background-color, border-color, color;
     -webkit-appearance: none;
     margin: 5px 0;
+
+    &--outline {
+        color: #0f8fee;
+        background: transparent;
+        border: 1px solid currentColor;
+
+        &:hover,
+        &:focus,
+        &:active {
+            background-color: #3781d0;
+            outline: none;
+            color: #fff;
+        }
+    }
 
     &:hover,
     &:focus,

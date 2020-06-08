@@ -39,6 +39,7 @@ const ServiciesList = ({ services, competitors, companyName, companyId }) => {
                         {name}
                     </td>
                 ))}
+                <td/>
             </tr>
             </thead>
             <tbody className="hh-table__body">
@@ -48,7 +49,7 @@ const ServiciesList = ({ services, competitors, companyName, companyId }) => {
                             employerName={getEmployerName(employer)}
                             key={service.serviceName + service.employerId}
                             service={service}
-                            rowspan={employer.length}
+                            rowspan={services.length}
                             firstRow={index === 0}
                             addService={addService}
                             disabledAddService={selectedServices.includes(service.serviceCode)} />
