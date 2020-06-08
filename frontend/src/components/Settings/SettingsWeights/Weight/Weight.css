@@ -1,0 +1,7 @@
+.weight {
+    font: 14px/16px ProximaNovaCond, Arial, sans-serif;
+
+    &__input {
+        margin-bottom: 10px;
+    }
+}

@@ -1,7 +1,8 @@
 .tracked-company-search {
-    width: 50%;
+    width: 80%;
 
     &__title {
         margin: 20px 0 10px;
+        width: 100%;
     }
 }

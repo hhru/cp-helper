@@ -16,7 +16,7 @@ const TrackedCompaniesList = ({deleteTrackedCompany, trackedCompanies, isLoading
 
     const [slicedCompanies, setSlicedCompanies] = useState([]);
     const [pageNumbers, setPageNumbers] = useState([]);
-    const ITEMS_ON_PAGE = 15;
+    const ITEMS_ON_PAGE = 10;
 
     const getPageNumbers = () => {
         const numbers = [];
