@@ -36,12 +36,6 @@ CREATE TABLE dbo.TrackedEmployers(
 ) ON [PRIMARY]
 GO
 
-INSERT INTO [CRMData750].[dbo].[TrackedEmployers]
-(employer_id)
-VALUES
-(1455), (1870), (84585), (2096237), (2605703), (2624107), (1269556)
-GO
-
 -- 2. Create Procedure
 
 USE CRMData750;
