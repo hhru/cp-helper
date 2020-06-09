@@ -94,9 +94,9 @@ BEGIN
   DECLARE @Regions TABLE (id int, name varchar(100))
   INSERT INTO @Regions (id, name) VALUES (113, 'Россия'), (1, 'Москва'), (2, 'Санкт-Петербург'), (3, 'Екатеринбург')
 
-  DECLARE @VacancyName TABLE (name varchar(255))
-  INSERT INTO @VacancyName (name) VALUES ( "Аппаратчик стерилизации консервов"), ("Архитектор"), ("Ассистент стоматолога"),
-  ("Ассистент врача стоматолога"), ("Ассистент отдела продаж"), ("Ассистент стоматолога")
+  DECLARE @VacancyName TABLE (name nvarchar(256))
+  INSERT INTO @VacancyName (name) VALUES (N"Аппаратчик стерилизации консервов"), (N"Архитектор"),
+  (N"Ассистент стоматолога"), (N"Ассистент врача стоматолога"), (N"Ассистент отдела продаж"), (N"Ассистент стоматолога")
 
   DECLARE @id as int = 1
   DECLARE @date as date

@@ -21,7 +21,7 @@ CREATE TABLE dbo.CompetitorReport(
     [vacancy_area_id] [int] NULL,
     [cost] [float] NULL,
     [vacancy_name] [nvarchar](255) NULL,
-    [employees_number] [nvarchar](255) NULL
+    [employees_number] [nvarchar](256) NULL
 ) ON [PRIMARY]
 GO
 
@@ -37,6 +37,8 @@ CREATE TABLE dbo.TrackedEmployers(
     [employer_id] INT NOT NULL PRIMARY KEY
 ) ON [PRIMARY]
 GO
+
+INSERT INTO CRMData750.dbo.TrackedEmployers (employer_id) VALUES (1455), (1870), (84585), (2096237), (2605703), (2624107), (1269556)
 
 -- 2. Create Procedure
 

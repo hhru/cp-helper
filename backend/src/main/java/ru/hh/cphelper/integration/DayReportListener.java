@@ -7,7 +7,6 @@ import ru.hh.cphelper.dao.DayReportDao;
 import ru.hh.cphelper.dao.TrackedEmployersDao;
 import ru.hh.cphelper.dto.DayReportConsumerDto;
 import ru.hh.cphelper.utils.DayReportHelper;
-import ru.hh.cphelper.utils.TrackedEmployersHelper;
 import ru.hh.nab.kafka.consumer.Ack;
 import ru.hh.nab.kafka.consumer.KafkaConsumerFactory;
 
