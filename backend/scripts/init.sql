@@ -20,7 +20,11 @@ VALUES (1455, 1870, 113, 0.9),
        (1455, 2096237, 113, 0.5),
        (1455, 2605703, 113, 0.66),
        (1455, 2624107, 113, 0.44),
-       (1455, 1269556, 113, 0.7);
+       (1455, 5554, 113, 0.01),
+       (1455, 24343, 113, 0),
+       (1455, 26247, 113, 0.1),
+       (1455, 1269556, 113, 0.11);
+
 
 create TABLE day_report (
     day_report_id bigint NOT NULL,
@@ -33,7 +37,8 @@ create TABLE day_report (
     report_spending_same_day boolean NOT NULL,
     vacancy_id bigint NOT NULL,
     vacancy_area_id integer NOT NULL,
-    cost numeric(8,2)
+    cost numeric(8,2),
+    vacancy_name varchar(500) DEFAULT ''::varchar NOT NULL
 );
 
 create index idx_day_report_employer_id_report_date on day_report(employer_id, report_date);
@@ -45,23 +50,32 @@ create TABLE vacancy_profarea (
     snapshot_date timestamp NOT NULL
 );
 
-create index idx_vacancy_profarea_vacancy_id on day_report(vacancy_id);
+create index idx_vacancy_profarea_vacancy_id on vacancy_profarea(vacancy_id);
+
+insert into
+vacancy_profarea(vacancy_id, profarea_id)
+values
+(111, 1),
+(222, 1),
+(333, 2),
+(333, 1);
 
 CREATE TABLE tracked_employers (
     tracked_employers_id serial,
     employer_id integer PRIMARY KEY,
-    employer_name VARCHAR(200) NOT NULL
+    employer_name VARCHAR(200) NOT null,
+    employer_staff_number integer NOT NULL
 );
 
 CREATE INDEX idx_tracked_employers_employer_id on tracked_employers(employer_id);
 
 insert into
-tracked_employers (employer_id, employer_name)
+tracked_employers (employer_id, employer_name, employer_staff_number)
 values
-(1455, 'HeadHunter'),
-(1870, 'Работа.ру'),
-(84585, 'Авито'),
-(2096237,'Из рук в руки. Ярославль'),
-(2605703, 'Зарплата.ру'),
-(2624107, 'MOS.RU'),
-(1269556,'Jooble');
+(1455, 'HeadHunter', 10000),
+(1870, 'Работа.ру', 100),
+(84585, 'Авито', 1000),
+(2096237,'Из рук в руки. Ярославль', 100),
+(2605703, 'Зарплата.ру', 100000),
+(2624107, 'MOS.RU', 100),
+(1269556,'Jooble', 1000);

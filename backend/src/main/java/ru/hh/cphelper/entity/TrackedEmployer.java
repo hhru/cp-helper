@@ -7,9 +7,12 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Entity(name = "TrackedEmployer")
+@Entity
 @Table(name = "tracked_employers")
 public class TrackedEmployer implements Serializable {
+
+  private static final long serialVersionUID = 1L;
+
   @Id
   @Column(name = "employer_id")
   private Integer employerId;
@@ -17,12 +20,20 @@ public class TrackedEmployer implements Serializable {
   @Column(name = "employer_name")
   private String employerName;
 
+  @Column(name = "employer_staff_number")
+  private Integer employerStaffNumber;
+
   public TrackedEmployer() {
   }
 
-  public TrackedEmployer(Integer employerId, String employerName) {
+  public TrackedEmployer(Integer employerId, String employerName, Integer employerStaffNumber) {
     this.employerId = employerId;
     this.employerName = employerName;
+    this.employerStaffNumber = employerStaffNumber;
+  }
+
+  public TrackedEmployer(Integer employerId, String employerName) {
+    this(employerId, employerName, null);
   }
 
   public Integer getEmployerId() {
@@ -41,6 +52,14 @@ public class TrackedEmployer implements Serializable {
     this.employerName = employerName;
   }
 
+  public Integer getEmployerStaffNumber() {
+    return employerStaffNumber;
+  }
+
+  public void setEmployerStaffNumber(Integer employerStaffNumber) {
+    this.employerStaffNumber = employerStaffNumber;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -51,11 +70,12 @@ public class TrackedEmployer implements Serializable {
     }
     TrackedEmployer that = (TrackedEmployer) o;
     return employerId.equals(that.employerId) &&
-        employerName.equals(that.employerName);
+        employerName.equals(that.employerName) &&
+        employerStaffNumber.equals(that.employerStaffNumber);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(employerId, employerName);
+    return Objects.hash(employerId, employerName, employerStaffNumber);
   }
 }

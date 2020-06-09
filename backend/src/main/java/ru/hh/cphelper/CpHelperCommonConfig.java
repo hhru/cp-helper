@@ -15,6 +15,7 @@ import ru.hh.cphelper.service.CompetitorsService;
 import ru.hh.cphelper.service.DayReportExcelService;
 import ru.hh.cphelper.service.DayReportPDFService;
 import ru.hh.cphelper.service.DayReportService;
+import ru.hh.cphelper.service.EmployerCompareService;
 import ru.hh.cphelper.service.TrackedEmployersService;
 import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.nab.datasource.DataSourceFactory;
@@ -34,6 +35,7 @@ import javax.sql.DataSource;
     CompetitorsService.class,
     DayReportDao.class,
     DayReportService.class,
+    EmployerCompareService.class,
     VacancyProfAreaDao.class,
     TrackedEmployersDao.class,
     DayReportPDFService.class,

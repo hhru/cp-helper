@@ -7,6 +7,7 @@ import ru.hh.cphelper.entity.Competitor;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,8 +21,8 @@ public class CompetitorsService {
   }
 
   @Transactional(readOnly = true)
-  public List<Integer> getCompetitorsIds(Integer employerId, Integer areaId) {
-    return competitorsDao.getCompetitors(employerId, areaId)
+  public List<Integer> getCompetitorsIds(Integer employerId, Integer areaId, Integer maxNumberOfCompetitors) {
+    return competitorsDao.getCompetitors(employerId, areaId, maxNumberOfCompetitors)
         .map(Competitor::getCompetitorId)
         .distinct()
         .collect(Collectors.toList());
@@ -37,6 +38,16 @@ public class CompetitorsService {
 
   @Transactional
   public void add(Competitor competitor) {
+    addIfAbsent(competitor);
+  }
+
+  @Transactional
+  public void rewriteRelevanceIndexes(Set<Competitor> competitors) {
+    competitorsDao.deleteCalculatedCompetitors();
+    competitors.forEach(this::addIfAbsent);
+  }
+
+  private void addIfAbsent(Competitor competitor) {
     if (competitorsDao.find(competitor) == null) {
       competitorsDao.save(competitor);
     }

@@ -35,4 +35,9 @@ public class DayReportService {
         .map(dayReports -> dayReports.stream().reduce(DayReport::aggregateReports))
         .map(Optional::get).collect(Collectors.toList());
   }
+
+  @Transactional(readOnly = true)
+  public List<DayReport> getDayReportsWithSpendingByIds(Set<Integer> employerIds) {
+    return dayReportDao.getDayReportsWithSpendingByIds(employerIds);
+  }
 }

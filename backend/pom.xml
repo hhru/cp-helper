@@ -14,6 +14,10 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+        <repository>
+            <id>bintray</id>
+            <url>https://dl.bintray.com/cuba-platform/main</url>
+        </repository>
     </repositories>
 
     <artifactId>cp-helper</artifactId>
@@ -54,6 +58,16 @@
             <groupId>ru.hh.nab</groupId>
             <artifactId>nab-kafka</artifactId>
             <version>${nab.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene.morphology</groupId>
+            <artifactId>russian</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene.morphology</groupId>
+            <artifactId>english</artifactId>
+            <version>1.1</version>
         </dependency>
         <dependency>
             <groupId>com.github.vandeseer</groupId>
@@ -111,7 +125,7 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
-            
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
@@ -129,7 +143,7 @@
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
-             <plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>2.3</version>
