@@ -46,14 +46,6 @@ create TABLE vacancy_profarea (
 
 create index idx_vacancy_profarea_vacancy_id on vacancy_profarea(vacancy_id);
 
---insert into
---vacancy_profarea(vacancy_id, profarea_id)
---values
---(111, 1),
---(222, 1),
---(333, 2),
---(333, 1);
-
 CREATE TABLE tracked_employers (
     tracked_employers_id serial,
     employer_id integer PRIMARY KEY,
