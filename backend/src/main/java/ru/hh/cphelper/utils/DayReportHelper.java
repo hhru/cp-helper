@@ -39,7 +39,8 @@ public final class DayReportHelper {
         dayReportConsumerDto.getReportSpendingSameDay(),
         dayReportConsumerDto.getVacancyId(),
         dayReportConsumerDto.getVacancyAreaId(),
-        dayReportConsumerDto.getCost()
+        dayReportConsumerDto.getCost(),
+        dayReportConsumerDto.getVacancyName()
         );
   }
 }

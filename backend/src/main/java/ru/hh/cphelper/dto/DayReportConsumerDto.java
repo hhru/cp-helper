@@ -16,6 +16,8 @@ public class DayReportConsumerDto {
   private Long vacancyId;
   private Integer vacancyAreaId;
   private BigDecimal cost;
+  private String vacancyName;
+  private String employeesNumber;
 
   public DayReportConsumerDto() {
   }
@@ -23,7 +25,8 @@ public class DayReportConsumerDto {
   public DayReportConsumerDto(Long reportId, String reportDate, Integer employerId,
                               String serviceCode, Long responsesCount, Long spendingId,
                               String spendingDate, Boolean reportSpendingSameDay,
-                              Long vacancyId, Integer vacancyAreaId, BigDecimal cost) {
+                              Long vacancyId, Integer vacancyAreaId, BigDecimal cost,
+                              String vacancyName, String employeesNumber) {
     this.reportId = reportId;
     this.reportDate = reportDate;
     this.employerId = employerId;
@@ -35,6 +38,8 @@ public class DayReportConsumerDto {
     this.vacancyId = vacancyId;
     this.vacancyAreaId = vacancyAreaId;
     this.cost = cost;
+    this.vacancyName = vacancyName;
+    this.employeesNumber = employeesNumber;
   }
 
   public Long getReportId() {
@@ -125,20 +130,38 @@ public class DayReportConsumerDto {
     this.cost = cost;
   }
 
+  public String getVacancyName() {
+    return vacancyName;
+  }
+
+  public void setVacancyName(String vacancyName) {
+    this.vacancyName = vacancyName;
+  }
+
+  public String getEmployeesNumber() {
+    return employeesNumber;
+  }
+
+  public void setEmployeesNumber(String employeesNumber) {
+    this.employeesNumber = employeesNumber;
+  }
+
   @Override
   public String toString() {
     return "DayReportConsumerDto{" +
         "reportId=" + reportId +
-        ", reportDate=" + reportDate +
+        ", reportDate='" + reportDate + '\'' +
         ", employerId=" + employerId +
         ", serviceCode='" + serviceCode + '\'' +
         ", responsesCount=" + responsesCount +
         ", spendingId=" + spendingId +
-        ", spendingDate=" + spendingDate +
+        ", spendingDate='" + spendingDate + '\'' +
         ", reportSpendingSameDay=" + reportSpendingSameDay +
         ", vacancyId=" + vacancyId +
         ", vacancyAreaId=" + vacancyAreaId +
         ", cost=" + cost +
+        ", vacancyName='" + vacancyName + '\'' +
+        ", employeesNumber='" + employeesNumber + '\'' +
         '}';
   }
 }
