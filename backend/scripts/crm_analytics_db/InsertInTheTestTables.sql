@@ -30,9 +30,9 @@ BEGIN
     SET @adjusted_cost = CAST(RAND() * 10000 as int)
 
     INSERT INTO [TestShapshotData].[dbo].[orders_all_cleansed_test] (
-      [employer_id], [employer_service_id], [activation_time], [code], [original_cnt], [adjusted_cost]
+      [employer_id], [account_id], [employer_service_id], [activation_time], [code], [original_cnt], [adjusted_cost]
     ) VALUES (
-      @employer_id, @employer_service_id, @activation_time, @code, @original_cnt, @adjusted_cost
+      @employer_id, @employer_id, @employer_service_id, @activation_time, @code, @original_cnt, @adjusted_cost
     )
 
     SET @cl_cnt = @cl_cnt + 1
@@ -69,9 +69,9 @@ BEGIN
     SET @code = (SELECT TOP 1 code FROM @Codes ORDER BY NEWID())
     SET @cnt = CAST(RAND() * 500 as int)
     INSERT INTO [TestShapshotData].[dbo].[orders_all_uncleansed_test] (
-      [employer_service_id], [activation_time], [employer_id], [code], [cnt]
+      [employer_service_id], [activation_time], [employer_id], [account_id], [code], [cnt]
     ) VALUES (
-      @employer_service_id, @activation_time, @employer_id, @code, @cnt
+      @employer_service_id, @activation_time, @employer_id, @employer_id, @code, @cnt
     )
 
     SET @uncl_cnt = @uncl_cnt + 1
@@ -94,6 +94,10 @@ BEGIN
   DECLARE @Regions TABLE (id int, name varchar(100))
   INSERT INTO @Regions (id, name) VALUES (113, 'Россия'), (1, 'Москва'), (2, 'Санкт-Петербург'), (3, 'Екатеринбург')
 
+  DECLARE @VacancyName TABLE (name varchar(255))
+  INSERT INTO @VacancyName (name) VALUES ( "Аппаратчик стерилизации консервов"), ("Архитектор"), ("Ассистент стоматолога"),
+  ("Ассистент врача стоматолога"), ("Ассистент отдела продаж"), ("Ассистент стоматолога")
+
   DECLARE @id as int = 1
   DECLARE @date as date
   SET @date = (SELECT DATEFROMPARTS(2020, 4, 1))
@@ -114,9 +118,9 @@ BEGIN
     IF @t = 1 SET @qtty = 1 ELSE SET @qtty = -1
     SET @object_id = CAST(RAND() * 5000 as int)
     INSERT INTO [TestShapshotData].[dbo].[spending_test](
-      [ID], [date], [employer_id], [employer_service_id], [code], [qtty], [t], [object_id]
+      [ID], [date], [employer_id], [account_id], [employer_service_id], [code], [qtty], [t], [object_id]
     ) VALUES (
-      @id, @date, @employer_id, @employer_service_id, @code, @qtty, @t, @object_id
+      @id, @date, @employer_id, @employer_id, @employer_service_id, @code, @qtty, @t, @object_id
     )
     INSERT INTO [TestShapshotData].[dbo].[VacancySnapshotProfAreaLast_test] (
       ProfAreaID, VacancyID, SnapshotDate
@@ -132,6 +136,14 @@ BEGIN
       [VacancyID], [EmployerID], [ResponseCreationDate], [ID]
     ) VALUES (
       @object_id, @employer_id, @date, @id
+    )
+
+    INSERT INTO [TestShapshotData].[dbo].[VacancyTitle_test] (
+        vacancy_id, vacancy_name, creation_date
+    ) VALUES (
+        @object_id,
+        (SELECT TOP 1 name FROM @VacancyName ORDER BY NEWID()),
+        @date
     )
     SET @id = @id + 1
   END
@@ -172,6 +184,7 @@ GO
 CREATE OR ALTER PROCEDURE dbo.InsertProfArea
 AS
 BEGIN
+  SET NOCOUNT ON;
   DECLARE @ProfArea TABLE (id int, name varchar(100))
   INSERT INTO @ProfArea (id, name) VALUES (1, 'Информационные технологии, интернет, телеком'),
                                     (2, 'Бухгалтерия, управленческий учет, финансы предприятия'),
@@ -193,7 +206,7 @@ BEGIN
     ) VALUES (
       @profarea_id, @vacancy_id, @snapshot_date
     )
-    SET @area_cnt = @cnt + 1
+    SET @area_cnt = @area_cnt + 1
   END
 END
 GO

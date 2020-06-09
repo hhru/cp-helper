@@ -19,7 +19,9 @@ CREATE TABLE dbo.CompetitorReport(
     [report_spending_same_day] [bit] NULL,
     [vacancy_id] [int] NULL,
     [vacancy_area_id] [int] NULL,
-    [cost] [float] NULL
+    [cost] [float] NULL,
+    [vacancy_name] [nvarchar](255) NULL,
+    [employees_number] [nvarchar](255) NULL
 ) ON [PRIMARY]
 GO
 
@@ -57,27 +59,33 @@ BEGIN
     SELECT CAST(@start_date as date) as [report_date], t.employer_id as [employer_id], t.code as [service_code],
            t.resp_cnt as [responses_count], t.ID as [spending_id], t.date as [spending_date],
            CASE WHEN (CAST(@start_date as date) = CAST(t.date as date)) THEN 1 ELSE 0 END as [report_spending_same_day],
-           t.object_id as [vacancy_id], t.RegionID as [vacancy_area_id], t.unit_price as [cost]
+           t.object_id as [vacancy_id], t.RegionID as [vacancy_area_id], t.unit_price as [cost], t.LastTitle as [vacancy_name],
+           t.employees_number_name as [employees_number]
     FROM (
         SELECT s.ID, s.date, s.employer_id, s.employer_service_id, s.code, s.object_id, s.unit_price,
-               sum(ISNULL(r.responses, 0)) as resp_cnt, s.RegionID
+               sum(ISNULL(r.responses, 0)) as resp_cnt, s.RegionID, s.LastTitle, s.employees_number_name
         FROM (
             SELECT s.ID, s.date,
             -- здесь leaddate - когда услуга перестала действовать. нужно для фильтра откликов
                 CASE WHEN s.code = 'VPREM' AND COALESCE(s.leaddate, ArhivationDate, DATEADD(day, 1, @end_date)) > s.[vacancy_life] THEN s.[vacancy_life]
                 ELSE COALESCE(s.leaddate, ArhivationDate, DATEADD(day, 1, @end_date)) END as leaddate,
-                s.employer_id, s.employer_service_id, s.code, s.qtty, s.t, s.object_id, o.cost, o.cnt, s.qtty*CAST(o.cost as float)/o.cnt as unit_price, s.RegionID
+                s.employer_id, s.employer_service_id, s.code, s.qtty, s.t, s.object_id, o.cost, o.cnt, s.qtty*CAST(o.cost as float)/o.cnt as unit_price, s.RegionID,
+                s.LastTitle, s.employees_number_name
             FROM (
                 SELECT s.ID, s.date,
                     -- leaddate - дата следующей траты на вакансию
                     LEAD(date) over (partition by object_id order by date) as leaddate,
                     -- ArchivationDate - datetime когда вакансия была удалена
                     vl.ArhivationDate as ArhivationDate,
-                    CASE WHEN code = 'VPREM' THEN DATEADD(day, 7, date)
+                    CASE WHEN s.code = 'VPREM' THEN DATEADD(day, 7, date)
                     ELSE DATEADD(month, 1, date) END as [vacancy_life],
-                    s.employer_id, s.employer_service_id, s.code, CAST(s.qtty as int) as qtty, s.t, s.object_id, vl.RegionID
+                    s.employer_id, s.employer_service_id, s.code, CAST(s.qtty as int) as qtty, s.t, s.object_id, vl.RegionID,
+                    vn.LastTitle, en.Name as employees_number_name
                 FROM [ActivationAnalysisData].[dbo].[spending] s
                 LEFT JOIN [VacancySnapshot].[dbo].[VacancySnapshotLast] vl ON s.object_id = vl.VacancyID
+                LEFT JOIN [VacancySnapshot].[dbo].[VacancyTitle] vn ON s.object_id = vn.VacancyId
+                LEFT JOIN [CRMData750].[dbo].[Account] acc ON s.account_id = acc.Id
+                LEFT JOIN [CRMData750].[dbo].[AccountEmployeesNumber] en ON acc.EmployeesNumberId = en.Id
                 WHERE -- после того как услугу потратили, её срок действия - 1 месяц
                 DATEADD(month, 1, date) > @start_date AND date < @end_date
                 AND s.code IN ('VP', 'RENEWAL_VP', 'VPREM', 'AP', 'ADN')
@@ -111,7 +119,8 @@ BEGIN
         -- проверяем, что услуга действует в день отчета
         WHERE s.leaddate > @start_date AND s.RegionID IS NOT NULL AND s.cost IS NOT NULL
         GROUP BY s.ID, s.date, s.leaddate,
-        s.employer_id, s.employer_service_id, s.code, s.object_id, s.qtty, s.unit_price, s.cost, s.cnt, s.RegionID
+        s.employer_id, s.employer_service_id, s.code, s.object_id, s.qtty, s.unit_price, s.cost, s.cnt, s.RegionID,
+        s.LastTitle, s.employees_number_name
     ) as t WHERE t.employer_id IN (SELECT employer_id FROM CRMData750.dbo.TrackedEmployers)
 
     INSERT INTO [CRMData750].[dbo].[VacancyProfArea] (vacancy_id, profarea_id, snapshot_date)
