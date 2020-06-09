@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {EMPLOYERS_HH_API_URL, CP_HELPER_EMPLOYER_URL} from 'utils/constants';
+import {EMPLOYERS_HH_API_URL, CP_HELPER_EMPLOYER_URL, CP_HELPER_FIND_COMPETITORS_URL} from 'utils/constants';
 
 import createNotification from 'utils/notifications';
 
@@ -138,5 +138,25 @@ export function resetCompetitors() {
 export function chooseCompetitor(competitor) {
     return (dispatch) => {
         dispatch(chooseCompetitorAction(competitor));
+    };
+}
+
+export function fetchWeights(weights) {
+    let url = `${CP_HELPER_FIND_COMPETITORS_URL}?`;
+    weights.forEach((el) => {
+        if (el.value) {
+            url += `${el.id}=${el.value}&`;
+        }
+    });
+    return () => {
+        axios.get(url)
+        .then((res) => {
+            if (res.data === 'The competitors have been successfully updated') {
+                createNotification('success', 'Веса успешно применены');
+            }
+        })
+        .catch(() => {
+            createNotification('error', 'Сервер недоступен', 'Ошибка');
+        });
     };
 }

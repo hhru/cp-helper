@@ -10,6 +10,9 @@ import ButtonIcon from 'components/ButtonIcon/ButtonIcon';
 import PopupSearch from 'components/Search/PopupSearch/PopupSearch';
 import TrackedCompanySearch from 'components/Settings/TrackedCompanySearch/TrackedCompanySearch';
 import TrackedCompaniesList from 'components/Settings/TrackedCompaniesList/TrackedCompaniesList';
+import SettingsWeights from 'components/Settings/SettingsWeights/SettingsWeights';
+import ColumnsWrapper from 'components/ColumnsWrapper/ColumnsWrapper';
+import Columns from 'components/Columns/Columns';
 
 import {fetchTrackedCompanies, addTrackedCompany, fetchCompany} from 'redux/companies/companiesActions';
 
@@ -48,27 +51,34 @@ const Settings = ({closeSettings, fetchTrackedCompanies, fetchCompany, companies
                 <div className="settings__title">
                     <Heading level={3}>Настройки</Heading>
                 </div>
-                <TrackedCompanySearch />
-                <TrackedCompaniesList />
-                <div className="settings__add">
-                    <ButtonIcon onClick={clickAdd}>
-                        <AddIcon size={30}/>
-                    </ButtonIcon>
-                </div>
-                {searchIsOpen &&
-                    <PopupSearch
-                        fetch={fetchCompany}
-                        items={companies}
-                        choose={chooseTrackedCompany}
-                        payload={trackedCompany.id}
-                        placeholderText={'Введите название компании'}
-                        onClick={clickSearch}
-                        buttonName={'Добавить компанию'}
-                        clickClose={clickClose}
-                        />
-                }
+                <ColumnsWrapper>
+                    <Columns s={2} m={4} l={8}>
+                        <TrackedCompanySearch />
+                        <TrackedCompaniesList />
+                        <div className="settings__add">
+                            <ButtonIcon onClick={clickAdd}>
+                                <AddIcon size={30}/>
+                            </ButtonIcon>
+                        </div>
+                        {searchIsOpen &&
+                            <PopupSearch
+                                fetch={fetchCompany}
+                                items={companies}
+                                choose={chooseTrackedCompany}
+                                payload={trackedCompany.id}
+                                placeholderText={'Введите название компании'}
+                                onClick={clickSearch}
+                                buttonName={'Добавить компанию'}
+                                clickClose={clickClose}
+                                />
+                        }
+                    </Columns>
+                    <Columns s={2} m={2} l={4}>
+                        <SettingsWeights />
+                    </Columns>
+                </ColumnsWrapper>
                 <div className="settings__btn">
-                    <Button onClick={closeSettings}>
+                    <Button onClick={closeSettings} outline>
                         Выход
                     </Button>
                 </div>
