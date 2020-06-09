@@ -40,10 +40,8 @@ create TABLE day_report (
 create index idx_day_report_employer_id_report_date on day_report(employer_id, report_date);
 
 create TABLE vacancy_profarea (
-    vacancy_profarea_id bigint NOT NULL,
     vacancy_id bigint NOT NULL,
-    profarea_id integer NOT NULL,
-    snapshot_date timestamp NOT NULL
+    profarea_id integer NOT NULL
 );
 
 create index idx_vacancy_profarea_vacancy_id on vacancy_profarea(vacancy_id);
