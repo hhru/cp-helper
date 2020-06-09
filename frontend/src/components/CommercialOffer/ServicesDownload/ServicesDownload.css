@@ -3,3 +3,10 @@
     width: 90px;
     justify-content: space-between;
 }
+
+@media (max-width: 767px) {
+    .download {
+        justify-content: flex-start;
+        margin-top: 10px;
+    }
+}

@@ -9,10 +9,10 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .search {
         &__select {
-            margin-right: 0;
+            margin-right: 5px;
         }
     }
 }

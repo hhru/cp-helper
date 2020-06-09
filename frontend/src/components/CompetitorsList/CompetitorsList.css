@@ -37,8 +37,12 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .competitors-list-section {
+        &__competitors {
+            width: 100%;
+        }
+
         &__search {
             width: 85%;
             left: 5%;

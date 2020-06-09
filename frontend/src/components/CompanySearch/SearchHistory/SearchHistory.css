@@ -25,3 +25,11 @@
         }
     }
 }
+
+@media (max-width: 767px) {
+    .search-history {
+        &__title {
+            flex-wrap: wrap;
+        }
+    }
+}

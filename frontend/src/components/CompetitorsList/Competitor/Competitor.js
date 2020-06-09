@@ -14,7 +14,16 @@ const Competitor = ({logo, name, deleteCompetitor}) => {
                 {logo && <img src={logo} alt={name} height="20px"></img>}
             </div>
             <div className="competitor__name">
-                {name}
+                {name.length < 15 ?
+                    name
+                    :
+                    <>
+                        {name.slice(0, 15)}...
+                        <div className="competitor__name_full">
+                            {name}
+                        </div>
+                    </>
+                }
             </div>
             <div className="competitor__delete">
                 <ButtonIcon onClick={deleteCompetitor}>

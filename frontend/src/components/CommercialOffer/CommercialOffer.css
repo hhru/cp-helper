@@ -17,17 +17,22 @@
 
     &__filter {
         display: flex;
-        margin-top: 8px;
-        margin-bottom: 8px;
+        margin: 8px -10px 8px 0;
     }
 
-    &__btn-filter {
-        width: 51%;
+    &__filter-info {
+        margin-top: 5px;
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .commercial-offer-section {
+        font-size: 14px;
+
+        &__header {
+            flex-wrap: wrap;
+        }
+
         &__filter {
             flex-wrap: wrap;
         }
@@ -38,6 +43,10 @@
             & > button {
                 width: 100%;
             }
+        }
+
+        &__table {
+            overflow-x: scroll;
         }
     }
 }

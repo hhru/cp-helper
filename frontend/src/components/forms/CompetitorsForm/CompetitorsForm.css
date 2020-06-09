@@ -16,6 +16,7 @@
         align-items: center;
         margin-right: 20px;
         font-size: 14px;
+        text-align: center;
     }
 
     &__btn {
@@ -27,7 +28,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .hh-competitors-form {
         width: 100%;
 

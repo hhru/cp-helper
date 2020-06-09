@@ -8,6 +8,8 @@ import Search from 'components/Search/Search';
 import Loader from 'components/Loader/Loader';
 import ServiciesList from 'components/ServiciesList/ServiciesList';
 import ServicesDownload from 'components/CommercialOffer/ServicesDownload/ServicesDownload';
+import ButtonIcon from 'components/ButtonIcon/ButtonIcon';
+import DeleteIcon from 'components/Icons/DeleteIcon';
 
 import {initProfAreas} from 'redux/profAreas/profAreasActions';
 import {filterArea} from 'redux/areas/areasAction';
@@ -42,9 +44,9 @@ const CommercialOffer = ({
         }
     }, []);
 
-    const filterServices = () => {
+    useEffect(() => {
         fetchServices(companyId, competitors, date, choosenAreaId, choosenProfAreaId);
-    };
+    }, [choosenAreaId, choosenProfAreaId]);
 
     const filterProfAreas = (value) => {
         setFilteredProfAreas(Object.values(profAreas).filter(
@@ -60,8 +62,32 @@ const CommercialOffer = ({
             <div className="commercial-offer-section__header">
                 <div>
                     {`Фильтр услуг для компании ${companyName}`}<br />
-                    {`- по области: ${plainAreas && choosenAreaId && plainAreas[choosenAreaId].name || 'не определена'}`}<br />
-                    {`- по проф. области: ${profAreas && choosenProfAreaId && profAreas[choosenProfAreaId].name || 'не определена'}`}
+                    <div className="commercial-offer-section__filter-info">
+                        {"- по области: "}
+                        {(plainAreas && choosenAreaId) ?
+                            <>
+                            {plainAreas[choosenAreaId].name}
+                            <ButtonIcon onClick={() => setChoosenAreaId(null)}>
+                                <DeleteIcon size={13}/>
+                            </ButtonIcon>
+                            </>
+                            :
+                            'не определена'
+                        }<br />
+                    </div>
+                    <div className="commercial-offer-section__filter-info">
+                        {"- по проф. области: "}
+                        {(profAreas && choosenProfAreaId) ?
+                            <>
+                            {profAreas[choosenProfAreaId].name}
+                            <ButtonIcon onClick={() => setChoosenProfAreaId(null)}>
+                                <DeleteIcon size={13}/>
+                            </ButtonIcon>
+                            </>
+                            :
+                            'не определена'
+                        }
+                    </div>
                 </div>
                 <ServicesDownload
                     choosenAreaId={choosenAreaId}
@@ -75,6 +101,8 @@ const CommercialOffer = ({
                     choose={setChoosenAreaId}
                     payload={choosenAreaId}
                     placeholderText={'Выберите регион'}
+                    id={"area"}
+                    initialValue={choosenAreaId ? plainAreas[choosenAreaId].name : ""}
                 />
                 <Search
                     fetch={filterProfAreas}
@@ -82,21 +110,22 @@ const CommercialOffer = ({
                     choose={setChoosenProfAreaId}
                     payload={choosenProfAreaId}
                     placeholderText={'Выберите специализацию'}
+                    id={"profArea"}
+                    initialValue={choosenProfAreaId ? profAreas[choosenProfAreaId].name : ""}
                 />
-                <div className="commercial-offer-section__btn-filter">
-                    <Button onClick={filterServices}>Отфильтровать услуги</Button>
-                </div>
             </div>
             {isLoading ? (
                 <div className="competitors-list-section__loader">
                     <Loader/>
                 </div>) : (
-                <ServiciesList
-                    services={services}
-                    competitors={competitors}
-                    companyName={companyName}
-                    companyId={companyId}
-                />
+                <div className="commercial-offer-section__table">
+                    <ServiciesList
+                        services={services}
+                        competitors={competitors}
+                        companyName={companyName}
+                        companyId={companyId}
+                    />
+                </div>
                 )
             }
             <div className="commercial-offer-section__btn">

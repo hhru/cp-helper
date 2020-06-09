@@ -14,10 +14,43 @@
     &__name {
         position: absolute;
         left: 40%;
+
+        &_full {
+            opacity: 0;
+            position: absolute;
+            top: -20px;
+            left: -40px;
+            width: 220px;
+            background-color: #fff;
+            box-shadow: 0 30px 30px rgba(0, 0, 0, 0.15), 0 20px 20px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            padding: 10px;
+            box-sizing: border-box;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
     }
 
     &__delete {
         position: absolute;
         right: 20px;
+    }
+}
+
+@media (max-width: 767px) {
+    .competitor {
+        &__logo {
+            display: none;
+        }
+
+        &__name {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            left: unset;
+            flex-grow: 1;
+        }
     }
 }
