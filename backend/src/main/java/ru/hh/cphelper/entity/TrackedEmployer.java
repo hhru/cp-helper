@@ -33,7 +33,7 @@ public class TrackedEmployer implements Serializable {
   }
 
   public TrackedEmployer(Integer employerId, String employerName) {
-    this(employerId, employerName, null);
+    this(employerId, employerName, 0);
   }
 
   public Integer getEmployerId() {
