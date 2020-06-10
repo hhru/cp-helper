@@ -13,7 +13,16 @@ const Company = ({name, deleteCompany}) => {
         <Columns s={2} m={2} l={4}>
             <div className="company">
                 <div className="company__name">
-                    {name}
+                    {name.length < 20 ?
+                        name
+                        :
+                        <>
+                            {name.slice(0, 20)}...
+                            <div className="company__name_full">
+                                {name}
+                            </div>
+                        </>
+                    }
                 </div>
                 <div className="company__delete">
                     <ButtonIcon onClick={deleteCompany}>

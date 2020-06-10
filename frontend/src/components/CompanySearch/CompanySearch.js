@@ -86,7 +86,6 @@ const CompanySearch = ({
         setInputCompany({companyName, companyId, areaId, areaName});
         chooseCompany(companyId, companyName);
         chooseArea(areaId, areaName);
-
     };
 
     const handleClearHistory = () => {
@@ -114,6 +113,7 @@ const CompanySearch = ({
                             payload={companyId}
                             placeholderText={'Введите название компании'}
                             initialValue={inputCompany.companyName}
+                            id={"company"}
                         />
                     }
                 </div>
@@ -125,6 +125,7 @@ const CompanySearch = ({
                         payload={areaId}
                         placeholderText={'Введите регион'}
                         initialValue={inputCompany.areaName}
+                        id={"area"}
                     />
                 </div>
                 <div className="company-search-section__btn">

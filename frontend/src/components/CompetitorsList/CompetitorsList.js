@@ -132,7 +132,7 @@ CompetitorsList.propTypes = {
     companyName: PropTypes.string,
     resetServices: PropTypes.func,
     services: PropTypes.object,
-    isLoading: PropTypes.boolean,
+    isLoading: PropTypes.bool,
 };
 
 export default connect(

@@ -32,3 +32,11 @@ input[type=checkbox]:checked + label::before {
         font: 14px/16px ProximaNovaCond, Arial, sans-serif;
     }
 }
+
+@media (max-width: 767px) {
+    .checkbox {
+        &__label {
+            font: 12px/13px ProximaNovaCond, Arial, sans-serif;
+        }
+    }
+}

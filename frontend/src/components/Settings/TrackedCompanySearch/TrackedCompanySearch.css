@@ -6,3 +6,9 @@
         width: 100%;
     }
 }
+
+@media (max-width: 767px) {
+    .tracked-company-search {
+        width: 100%;
+    }
+}

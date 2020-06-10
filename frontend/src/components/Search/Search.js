@@ -15,14 +15,15 @@ const Search = ({
     placeholderText,
     children,
     initialValue,
+    id,
 }) => {
 
     const [selectOpen, setSelectOpen] = useState(false);
     const [inputValue, setInputValue] = useState('');
 
     const SELECT_ITEMS_LENGTH = 7;
-
     const input = useRef(null);
+
     useEffect(() => {
         setInputValue(initialValue);
     }, [initialValue]);
@@ -42,6 +43,26 @@ const Search = ({
         choose(id, name);
     };
 
+    const clickOutside = (event) => {
+        const domNodeSelect = document.getElementById(`node-select-${id}`);
+        const domNodeInput = document.getElementById(`node-input-${id}`);
+        if (domNodeSelect) {
+            if (!domNodeSelect.contains(event.target) && !(domNodeInput.contains(event.target))) {
+                if (!payload) {
+                    setInputValue('');
+                }
+            }
+            setSelectOpen(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('click', clickOutside, false);
+        return () => {
+            document.removeEventListener('click', clickOutside);
+        };
+    });
+
     return (
         <div className="search">
             <div className="search__select">
@@ -50,9 +71,10 @@ const Search = ({
                     placeholderText={placeholderText}
                     onChange={handleInputChange}
                     value={inputValue}
+                    id={`node-input-${id}`}
                 />
                 {
-                    selectOpen && items && <SelectWrapper lines=
+                    selectOpen && items && <SelectWrapper id={`node-select-${id}`} lines=
                         {
                             items.length > SELECT_ITEMS_LENGTH - 1 ? SELECT_ITEMS_LENGTH : items.length
                         }>
@@ -70,7 +92,6 @@ const Search = ({
             </div>
             {children}
         </div>
-
     );
 };
 
@@ -89,6 +110,7 @@ Search.propTypes = {
         PropTypes.node,
     ]),
     initialValue: PropTypes.string,
+    id: PropTypes.string,
 };
 
 export default Search;

@@ -8,6 +8,7 @@
         justify-content: center;
         border-radius: 4px 4px 0 0;
         font-size: 14px;
+        text-align: center;
 
         &_active {
             background-color: #eee;
@@ -28,10 +29,22 @@
     padding-bottom: 80px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .tab {
         &__element {
             justify-content: left;
+        }
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1000px) {
+    .tab {
+        &__element {
+            padding: 4px;
+
+            &_active {
+                font-weight: normal;
+            }
         }
     }
 }

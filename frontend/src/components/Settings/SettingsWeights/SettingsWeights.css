@@ -3,6 +3,7 @@
     padding: 20px 10px 20px 20px;
     box-sizing: border-box;
     font: 12px/14px ProximaNovaCond, Arial, sans-serif;
+    margin-bottom: 15px;
 
     &__title {
         margin-bottom: 15px;
