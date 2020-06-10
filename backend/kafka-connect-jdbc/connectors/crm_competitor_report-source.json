@@ -16,7 +16,7 @@
     "timestamp.interval.ms": 0,
     "transforms": "RenameFields, RenameTopic, TimestampConverterOfReportDate, TimestampConverterOfSpendingDate",
     "transforms.RenameFields.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
-    "transforms.RenameFields.renames": "report_id:reportId, report_date:reportDate, employer_id:employerId, service_code:serviceCode, responses_count:responsesCount, spending_id:spendingId, spending_date:spendingDate, report_spending_same_day:reportSpendingSameDay, vacancy_id:vacancyId, vacancy_area_id:vacancyAreaId",
+    "transforms.RenameFields.renames": "report_id:reportId, report_date:reportDate, employer_id:employerId, service_code:serviceCode, responses_count:responsesCount, spending_id:spendingId, spending_date:spendingDate, report_spending_same_day:reportSpendingSameDay, vacancy_id:vacancyId, vacancy_area_id:vacancyAreaId, vacancy_name:vacancyName, employees_number:employeesNumber",
     "transforms.RenameTopic.type":"org.apache.kafka.connect.transforms.RegexRouter",
     "transforms.RenameTopic.regex":".*",
     "transforms.RenameTopic.replacement":"crm_competitor_report",

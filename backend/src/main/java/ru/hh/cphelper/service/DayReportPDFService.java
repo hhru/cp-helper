@@ -108,7 +108,9 @@ public class DayReportPDFService extends DayReportDocument {
             .startY(startY)
             .endY(PADDING)
             .build()
-            .draw(() -> document, () -> new PDPage(PDRectangle.A4), PADDING);
+            .draw(() -> document,
+                () -> new PDPage(new PDRectangle(PDRectangle.A4.getHeight(), PDRectangle.A4.getWidth())),
+                PADDING);
         startY -= (table.getHeight() + PADDING);
       }
     }

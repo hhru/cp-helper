@@ -46,14 +46,6 @@ create TABLE vacancy_profarea (
 
 create index idx_vacancy_profarea_vacancy_id on vacancy_profarea(vacancy_id);
 
-insert into
-vacancy_profarea(vacancy_id, profarea_id)
-values
-(111, 1),
-(222, 1),
-(333, 2),
-(333, 1);
-
 CREATE TABLE tracked_employers (
     tracked_employers_id serial,
     employer_id integer PRIMARY KEY,
@@ -66,10 +58,10 @@ CREATE INDEX idx_tracked_employers_employer_id on tracked_employers(employer_id)
 insert into
 tracked_employers (employer_id, employer_name, employer_staff_number)
 values
-(1455, 'HeadHunter', 10000),
-(1870, 'Работа.ру', 100),
-(84585, 'Авито', 1000),
-(2096237,'Из рук в руки. Ярославль', 100),
-(2605703, 'Зарплата.ру', 100000),
-(2624107, 'MOS.RU', 100),
-(1269556,'Jooble', 1000);
+(1455, 'HeadHunter', 0),
+(1870, 'Работа.ру', 0),
+(84585, 'Авито', 0),
+(2096237,'Из рук в руки. Ярославль', 0),
+(2605703, 'Зарплата.ру', 0),
+(2624107, 'MOS.RU', 0),
+(1269556,'Jooble', 0);

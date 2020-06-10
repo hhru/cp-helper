@@ -28,18 +28,19 @@ public final class DayReportHelper {
   }
 
   public static DayReport map(DayReportConsumerDto dayReportConsumerDto) {
-    return new DayReport(
-        dayReportConsumerDto.getReportId(),
-        dayReportConsumerDto.getReportDate(),
-        dayReportConsumerDto.getEmployerId(),
-        dayReportConsumerDto.getServiceCode(),
-        dayReportConsumerDto.getResponsesCount(),
-        dayReportConsumerDto.getSpendingId(),
-        dayReportConsumerDto.getSpendingDate(),
-        dayReportConsumerDto.getReportSpendingSameDay(),
-        dayReportConsumerDto.getVacancyId(),
-        dayReportConsumerDto.getVacancyAreaId(),
-        dayReportConsumerDto.getCost()
-        );
+    return new DayReport.DayReportBuilder()
+        .setDayReportId(dayReportConsumerDto.getReportId())
+        .setReportDate(dayReportConsumerDto.getReportDate())
+        .setEmployerId(dayReportConsumerDto.getEmployerId())
+        .setServiceCode(dayReportConsumerDto.getServiceCode())
+        .setResponsesCount(dayReportConsumerDto.getResponsesCount())
+        .setSpendingId(dayReportConsumerDto.getSpendingId())
+        .setSpendingDate(dayReportConsumerDto.getSpendingDate())
+        .setReportSpendingSameDay(dayReportConsumerDto.getReportSpendingSameDay())
+        .setVacancyId(dayReportConsumerDto.getVacancyId())
+        .setVacancyAreaId(dayReportConsumerDto.getVacancyAreaId())
+        .setCost(dayReportConsumerDto.getCost())
+        .setVacancyName(dayReportConsumerDto.getVacancyName())
+        .createDayReport();
   }
 }

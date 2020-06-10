@@ -2,7 +2,9 @@ package ru.hh.cphelper.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.transaction.annotation.Transactional;
 import ru.hh.cphelper.entity.TrackedEmployer;
+import ru.hh.cphelper.utils.EmployeesNumberWeight;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -43,5 +45,12 @@ public class TrackedEmployersDao {
 
   public void delete(TrackedEmployer trackedEmployer) {
     getCurrentSession().delete(trackedEmployer);
+  }
+
+  @Transactional
+  public void setEmployeesNumber(Integer employerId, String employeesNumber) {
+    TrackedEmployer trackedEmployer = getEmployerById(employerId);
+    trackedEmployer.setEmployerStaffNumber(EmployeesNumberWeight.EMPLOYEES_NUMBER_WEIGHT.getOrDefault(employeesNumber, 0));
+    getCurrentSession().save(trackedEmployer);
   }
 }

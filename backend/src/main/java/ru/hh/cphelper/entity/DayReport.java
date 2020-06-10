@@ -76,7 +76,7 @@ public class DayReport implements Serializable {
   public DayReport(Long dayReportId, LocalDate reportDate, Integer employerId,
                    String serviceCode, Long responsesCount, Long spendingId,
                    LocalDateTime spendingDate, Boolean reportSpendingSameDay,
-                   Long vacancyId, Integer vacancyAreaId, BigDecimal cost) {
+                   Long vacancyId, Integer vacancyAreaId, BigDecimal cost, String vacancyName) {
     this.dayReportId = dayReportId;
     this.reportDate = reportDate;
     this.employerId = employerId;
@@ -88,6 +88,7 @@ public class DayReport implements Serializable {
     this.vacancyId = vacancyId;
     this.vacancyAreaId = vacancyAreaId;
     this.cost = cost;
+    this.vacancyName = vacancyName;
   }
 
   public static class DayReportBuilder {

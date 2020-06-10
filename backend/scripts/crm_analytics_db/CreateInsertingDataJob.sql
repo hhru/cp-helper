@@ -23,20 +23,20 @@ BEGIN
     UPDATE [TestShapshotData].[dbo].[tmp_cache] SET insert_date = DATEADD(day, 1, @insert_date)
 
     INSERT INTO [ActivationAnalysisData].[dbo].[orders_all_cleansed]
-    ([employer_id], [employer_service_id], [activation_time], [code], [original_cnt], [adjusted_cost])
-    SELECT [employer_id], [employer_service_id], [activation_time], [code], [original_cnt], [adjusted_cost]
+    ([employer_id], [account_id], [employer_service_id], [activation_time], [code], [original_cnt], [adjusted_cost])
+    SELECT [employer_id], [account_id], [employer_service_id], [activation_time], [code], [original_cnt], [adjusted_cost]
     FROM [TestShapshotData].[dbo].[orders_all_cleansed_test]
     WHERE [TestShapshotData].[dbo].[orders_all_cleansed_test].[activation_time] = @insert_date
 
     INSERT INTO [ActivationAnalysisData].[dbo].[orders_all_uncleansed]
-    ([employer_service_id], [activation_time], [employer_id], [code], [cnt])
-    SELECT [employer_service_id], [activation_time], [employer_id], [code], [cnt]
+    ([employer_service_id], [activation_time], [employer_id], [account_id], [code], [cnt])
+    SELECT [employer_service_id], [activation_time], [employer_id], [account_id], [code], [cnt]
     FROM [TestShapshotData].[dbo].[orders_all_uncleansed_test]
     WHERE [TestShapshotData].[dbo].[orders_all_uncleansed_test].[activation_time] = @insert_date
 
     INSERT INTO [ActivationAnalysisData].[dbo].[spending]
-    ([ID], [date], [employer_id], [employer_service_id], [code], [qtty], [t], [object_id])
-    SELECT [ID], [date], [employer_id], [employer_service_id], [code], [qtty], [t], [object_id]
+    ([ID], [date], [employer_id], [account_id], [employer_service_id], [code], [qtty], [t], [object_id])
+    SELECT [ID], [date], [employer_id], [account_id], [employer_service_id], [code], [qtty], [t], [object_id]
     FROM [TestShapshotData].[dbo].[spending_test]
     WHERE [TestShapshotData].[dbo].[spending_test].[date] = @insert_date
 
@@ -57,6 +57,12 @@ BEGIN
     SELECT RegionID, VacancyID, SnapshotDate, ArhivationDate
     FROM [TestShapshotData].[dbo].[VacancySnapshotLast_test]
     WHERE [TestShapshotData].[dbo].[VacancySnapshotLast_test].[SnapshotDate] = @insert_date
+
+    INSERT INTO [VacancySnapshot].[dbo].[VacancyTitle]
+    (VacancyId, LastTitle)
+    SELECT vacancy_id, vacancy_name
+    FROM [TestShapshotData].[dbo].[VacancyTitle_test]
+    WHERE [TestShapshotData].[dbo].[VacancyTitle_test].[creation_date] = @insert_date
 END
 GO
 

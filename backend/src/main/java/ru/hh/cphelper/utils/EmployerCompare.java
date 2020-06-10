@@ -72,12 +72,10 @@ public class EmployerCompare {
     if (staffNumber1.equals(staffNumber2)) {
       return BigDecimal.ZERO;
     }
-    int ec1Length = String.valueOf(staffNumber1).length();
-    int ec2Length = String.valueOf(staffNumber2).length();
-    if (ec1Length == ec2Length) {
+    if (Math.abs(staffNumber1 - staffNumber2) == 1) {
       return BigDecimal.valueOf(0.3);
     }
-    if (String.valueOf(Math.abs(staffNumber1 - staffNumber2)).length() <= Math.min(ec1Length, ec2Length)) {
+    if (Math.abs(staffNumber1 - staffNumber2) == 2) {
       return BigDecimal.valueOf(0.5);
     }
     return BigDecimal.ONE;
